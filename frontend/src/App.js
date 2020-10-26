@@ -6,6 +6,13 @@ import Chat from './components/chat/index'
 import { createBrowserHistory } from 'history'
 
 const history = createBrowserHistory();
+const webSocket = new WebSocket("ws://localhost:4567/chatapp")
+webSocket.onopen = () => {
+   webSocket.send("21314"); // this method will trigger OnMessage in the backend
+};
+/*
+webSocket.onmessage = (msg) => call method(msg);
+*/
 
 const App = () => {
   return (

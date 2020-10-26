@@ -1,5 +1,6 @@
 package controller;
 
+import model.DispatchAdapter;
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketClose;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketConnect;
@@ -11,15 +12,13 @@ import org.eclipse.jetty.websocket.api.annotations.WebSocket;
  */
 @WebSocket
 public class WebSocketController {
-
     /**
      * Open user's session.
      * @param user The user whose session is opened.
      */
     @OnWebSocketConnect
     public void onConnect(Session user) {
-        String username = "User" + ChatAppController.nextUserId++;
-        ChatAppController.userNameMap.put(user, username);
+        System.out.println("connected");
     }
 
     /**
@@ -39,6 +38,6 @@ public class WebSocketController {
      */
     @OnWebSocketMessage
     public void onMessage(Session user, String message) {
-        ChatAppController.broadcastMessage(user, message);
+        System.out.println(message);
     }
 }
