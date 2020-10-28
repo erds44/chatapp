@@ -1,17 +1,14 @@
 package cmd;
 
-import model.DispatchAdapter;
-import model.User;
 import org.eclipse.jetty.websocket.api.Session;
 
 /**
  * Login cmd create the user and stored in dispatchAdapter map.
  */
-public class LeaveRoomCmd extends ACmd {
+public class DeleteMsgCmd extends ACmd {
 
     /**
-     * A user can choose to exit one chat room or all chat rooms.
-     * Clear to remaining users why a user left the room.
+     * Perform the execution of a command.
      *
      * @param userSession user session
      * @param request     request

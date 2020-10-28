@@ -56,4 +56,19 @@ public abstract class ACmd {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Send websocket system message.
+     * @param session user session
+     * @param msg message
+     */
+    protected void sendWSSysMsg(Session session, String msg){
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("sysMsg", msg);
+        try {
+            session.getRemote().sendString(String.valueOf(jsonObject));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
