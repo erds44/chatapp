@@ -5,11 +5,11 @@ import org.eclipse.jetty.websocket.api.Session;
 /**
  * Login cmd create the user and stored in dispatchAdapter map.
  */
-public class NotifiyOwnerCmd extends ACmd {
+public class InviteCmd extends ACmd {
 
     /**
-     * Notify owner of the room for reporting.
-     *
+     * If the user to be invited does not exist. Notify the admin.
+     * If the user has been banned to enter the room before. Notify the user.
      * @param userSession user session
      * @param request     request
      */

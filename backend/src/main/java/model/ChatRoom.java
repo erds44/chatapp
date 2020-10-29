@@ -8,7 +8,7 @@ import java.util.List;
 public class ChatRoom {
     private String name;
     private User owner;
-    private List<String> interestsRequirement;
+    private List<String> interestsRequirement; // if list is null then no restriction, if not then private
 
     /**
      * Public constructor.
