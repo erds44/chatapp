@@ -1,14 +1,14 @@
-package cmd;
+package model.cmd;
 
 import org.eclipse.jetty.websocket.api.Session;
 
 /**
- * Login cmd create the user and stored in dispatchAdapter map.
+ * Login model.cmd create the user and stored in dispatchAdapter map.
  */
-public class BroadcastMsgCmd extends ACmd {
+public class GetRoomCmd extends ACmd {
 
     /**
-     * An unblocked user can send a direct or broadcast message to all users in the chat room.
+     * A user can determine what chat rooms they have joined and what public rooms they can join.
      *
      * @param userSession user session
      * @param request     request
