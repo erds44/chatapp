@@ -15,7 +15,7 @@ const Chat = () => {
         <Layout style={{ height: '100vh' }}>
             <Sider width='300px' theme='light'>
                 <div style={{ height: '50%' }}>
-                    Part 1
+                    Part 1 test
                 </div>
                 <Divider/>
                 <div>
