@@ -1,9 +1,9 @@
-package cmd;
+package model.cmd;
 
 import org.eclipse.jetty.websocket.api.Session;
 
 /**
- * Login cmd create the user and stored in dispatchAdapter map.
+ * Login model.cmd create the user and stored in dispatchAdapter map.
  */
 public class InviteCmd extends ACmd {
 

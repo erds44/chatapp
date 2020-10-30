@@ -1,4 +1,4 @@
-package cmd;
+package model.cmd;
 
 import model.ChatRoom;
 import model.DispatchAdapter;
@@ -8,7 +8,7 @@ import org.eclipse.jetty.websocket.api.Session;
 import java.util.ArrayList;
 
 /**
- * Login cmd create the user and stored in dispatchAdapter map.
+ * Login model.cmd create the user and stored in dispatchAdapter map.
  */
 public class CreateRoomCmd extends ACmd {
 

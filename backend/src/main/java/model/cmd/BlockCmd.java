@@ -1,14 +1,14 @@
-package cmd;
+package model.cmd;
 
 import org.eclipse.jetty.websocket.api.Session;
 
 /**
- * Login cmd create the user and stored in dispatchAdapter map.
+ * Login model.cmd create the user and stored in dispatchAdapter map.
  */
-public class NotifiyOwnerCmd extends ACmd {
+public class BlockCmd extends ACmd {
 
     /**
-     * Notify owner of the room for reporting.
+     * Perform the execution of a command.
      *
      * @param userSession user session
      * @param request     request

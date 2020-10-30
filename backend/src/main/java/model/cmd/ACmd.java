@@ -1,4 +1,4 @@
-package cmd;
+package model.cmd;
 
 import com.google.gson.JsonObject;
 import model.DispatchAdapter;
