@@ -16,6 +16,7 @@ public abstract class ACmd {
      * @param userSession user session
      * @param request     request
      */
+    public abstract void execute(Session userSession, String request);
 
     /**
      * Help method  to get the user by session.
