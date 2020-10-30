@@ -1,4 +1,5 @@
-import { List, Avatar, Button } from 'antd';
+import {  List, Avatar, Button } from 'antd';
+import inviteForm from "../inviteForm"
 
 const userList = () => {
     const data = [
@@ -12,7 +13,7 @@ const userList = () => {
     const ColorList = ['#f56a00', '#7265e6', '#ffbf00', '#00a2ae'];
 
     return (
-
+        <div>
         <List
             itemLayout="horizontal"
             dataSource={data}
@@ -35,8 +36,8 @@ const userList = () => {
                 </List.Item>
             )}
         />
-
-
+            {inviteForm()}
+        </div>
 
     )
 }
