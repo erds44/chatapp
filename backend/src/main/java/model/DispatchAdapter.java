@@ -48,6 +48,6 @@ public class DispatchAdapter {
      * @param request request body
      */
     public void Process(Session user, String request) {
-
+        System.out.println(request);
     }
 }

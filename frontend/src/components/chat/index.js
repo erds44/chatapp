@@ -1,41 +1,33 @@
 import React from 'react'
-import { Layout, Row, Col } from 'antd'
-import { Divider } from 'antd'
-import { Button } from 'antd'
-import {useHistory} from 'react-router-dom'
+import {Layout, Row, Col} from 'antd'
+import {Button, Popover} from 'antd'
+import {Route, useHistory} from 'react-router-dom'
+import Room from "../room/room";
 
-
-const { Header, Content, Footer, Sider } = Layout;
-
-const Chat = () => {
+const {Header, Content, Footer, Sider} = Layout;
+const Chat = (props) => {
 
     const history = useHistory();
 
     return (
-        <Layout style={{ height: '100vh' }}>
+        <Layout style={{height: '100vh'}}>
             <Sider width='300px' theme='light'>
-                <div style={{ height: '50%' }}>
-                    Part 1 test
-                </div>
-                <Divider/>
-                <div>
-                    Part 2
-                </div>
+                <Room/>
             </Sider>
             <Layout>
-                <Header style={{ padding: 0, backgroundColor: 'white', borderLeft: '2px solid rgba(0, 0, 0, 0.06)'}}>
+                <Header style={{padding: 0, backgroundColor: 'white', borderLeft: '2px solid rgba(0, 0, 0, 0.06)'}}>
                     <span>Chat Room</span>
-                    <Button style={{ right: '-500px' }}
+                    <Button style={{right: '-500px'}}
                             type="primary" shape="round" size='small'
                             onClick={() => history.push('/')}>
                         Logout
                     </Button>
                 </Header>
-                <Content style={{ margin: '24px 16px 0' }}>
+                <Content style={{margin: '24px 16px 0'}}>
                     <Row style={{height: '100%'}}>
                         <Col span={17}>
                             <div className="site-layout-background"
-                                 style={{ padding: 24, minHeight: 360, height: '100%' }}>
+                                 style={{padding: 24, minHeight: 360, height: '100%'}}>
                                 content
                             </div>
                         </Col>
@@ -44,7 +36,7 @@ const Chat = () => {
                         </Col>
                     </Row>
                 </Content>
-                <Footer style={{ textAlign: 'center' }}>Chat App ©2020 Created by Summy the Owl</Footer>
+                <Footer style={{textAlign: 'center'}}>Chat App ©2020 Created by Summy the Owl</Footer>
             </Layout>
         </Layout>
     )
