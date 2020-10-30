@@ -24,11 +24,13 @@ const validateMessages = {
 const RoomForm = (props) => {
     const interests = [];
     const {Option} = Select;
+    const {visible, setVisible} = props;
+
     for (let i = 1; i < 10; i++) {
         interests.push(<Option key={i}>{"Interest " + i}</Option>);
     }
 
-    const [visible, setVisible] = useState(false);
+    //const [visible, setVisible] = useState(false);
 
 
     const onFinish = (values) => {
@@ -48,31 +50,31 @@ const RoomForm = (props) => {
         <Popover placement="rightTop" title={"Create Room"}
                  content={<Form {...layout} name="nest-messages" onFinish={onFinish} validateMessages={validateMessages}
                                 style={{outerWidth: "500"}}>
-                          <Form.Item name={['user', 'name']}
+                     <Form.Item name={['user', 'name']}
                                 label="Name"
-                                rules={[{required: true,},]}><Input/>
-                          </Form.Item>
-                          <Form.Item name="switch" label="Private" valuePropName="checked"><Switch/>
-                          </Form.Item>
-                          <Form.Item name={['user', 'interest']}
+                                rules={[{required: true}]}><Input/>
+                     </Form.Item>
+                     <Form.Item name="switch" label="Private" valuePropName="checked"><Switch/>
+                     </Form.Item>
+                     <Form.Item name={['user', 'interest']}
                                 label="Interests">
-                          <Select mode="multiple"
+                         <Select mode="multiple"
                                  allowClear
                                  style={{width: '100%'}}
                                  placeholder="Please select">{interests}</Select>
                          <br/>
-                         </Form.Item>
+                     </Form.Item>
 
-                         <Form.Item wrapperCol={{...layout.wrapperCol, offset: 8}}>
+                     <Form.Item wrapperCol={{...layout.wrapperCol, offset: 8}}>
                          <Button type="primary" htmlType="submit">
                              Submit
                          </Button>
-                         </Form.Item>
-                         </Form>}
+                     </Form.Item>
+                 </Form>}
                  trigger="click"
                  visible={visible}
                  onVisibleChange={handleVisibleChange}>
-            <Menu.Item><span><PlusCircleOutlined/></span>Create</Menu.Item>
+            <span><PlusCircleOutlined/></span>Create
         </Popover>
     );
 };
