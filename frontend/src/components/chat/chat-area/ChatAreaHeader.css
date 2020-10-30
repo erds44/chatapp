@@ -1,0 +1,12 @@
+#chat-area-header {
+    text-align: center;
+}
+
+#chat-area-header-user-count {
+    font-size: medium;
+}
+
+#chat-area-header-room-name {
+    font-weight: bold;
+    font-size: larger;
+}
