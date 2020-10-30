@@ -14,7 +14,7 @@ public class ChatRoom {
      * Public constructor.
      * @param name name of the room
      * @param owner owner of the room
-     * @param interestsRequirement
+     * @param interestsRequirement requirement of interest
      */
     public ChatRoom(String name, User owner, List<String> interestsRequirement) {
         this.name = name;

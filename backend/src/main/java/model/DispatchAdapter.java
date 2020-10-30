@@ -47,7 +47,7 @@ public class DispatchAdapter {
      * @param user    user
      * @param request request body
      */
-    public void Process(Session user, String request) {
+    public void process(Session user, String request) {
         System.out.println(request);
     }
 }

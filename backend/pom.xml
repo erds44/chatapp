@@ -3,10 +3,10 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>edu.rice.comp504</groupId>
-    <artifactId>ex7</artifactId>
+    <artifactId>pj1</artifactId>
     <packaging>jar</packaging>
     <version>1.0-SNAPSHOT</version>
-    <name>ex7</name>
+    <name>pj1</name>
     <url>http://maven.apache.org</url>
 
     <properties>
@@ -95,7 +95,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>edu.rice.comp504.controller.ChatAppController</mainClass>
+                            <mainClass>controller.ChatAppController</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -107,11 +107,11 @@
                 <configuration>
                     <jdkVersion>${jdk.version}</jdkVersion>
                     <!-- Use your own application name -->
-                    <appName>zy43-ex7-chat</appName>
+                    <appName>chatapp-team-sammytheowl</appName>
                     <processTypes>
                         <!-- Tell Heroku how to launch your application -->
                         <!-- You might have to remove the ./ in front   -->
-                        <web>java -jar target/ex7-1.0-SNAPSHOT-jar-with-dependencies.jar</web>
+                        <web>java -jar target/pj1-1.0-SNAPSHOT-jar-with-dependencies.jar</web>
                     </processTypes>
                 </configuration>
             </plugin>

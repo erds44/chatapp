@@ -1,4 +1,4 @@
-package Constant;
+package constant;
 
 /**
  * Constant class stores string literals and magic numbers.

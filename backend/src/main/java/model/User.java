@@ -44,11 +44,11 @@ public class User {
         this.school = school;
     }
 
-    public String getInterest() {
+    public String[] getInterest() {
         return interest;
     }
 
-    public void setInterest(String interest) {
+    public void setInterest(String[] interest) {
         this.interest = interest;
     }
 }

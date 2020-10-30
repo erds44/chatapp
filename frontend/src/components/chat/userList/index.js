@@ -1,6 +1,6 @@
 import { List, Avatar, Button } from 'antd';
 
-const userList = () => {
+const UserList = () => {
     const data = [
         {"name":{"title":"Miss","first":"Weiwei","last":"Zhou"},"school":"Rice University","interest":"Reading"},
         {"name":{"title":"Mr","first":"Xiao","last":"Xia"},"school":"Rice University","interest":"Sports"},
@@ -41,4 +41,4 @@ const userList = () => {
     )
 }
 
-export default userList;
+export default UserList;
