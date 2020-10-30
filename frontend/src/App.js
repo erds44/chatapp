@@ -17,7 +17,7 @@ const App = () => {
     <div className="App">
        <Router history={history}>
         <Switch>
-          {/*<Route path="/" exact component={Login} />*/}
+          <Route path="/" exact component={Login} />
           <Route path="/chat" exact component={Chat}/>
         </Switch>
       </Router> 

@@ -4,8 +4,7 @@ import {Button, Popover} from 'antd'
 import {Route, useHistory} from 'react-router-dom'
 import ChatArea from "./chat-area/ChatArea";
 import Room from "../room/room";
-import moment from 'moment';
-
+import userList from "./userList";
 
 const {Header, Content, Footer, Sider} = Layout;
 const Chat = (props) => {
@@ -71,7 +70,7 @@ const Chat = (props) => {
                             </div>
                         </Col>
                         <Col span={7} style={{borderLeft: '2px solid rgba(0, 0, 0, 0.06)'}}>
-                            User List
+                            {userList()}
                         </Col>
                     </Row>
                 </Content>
