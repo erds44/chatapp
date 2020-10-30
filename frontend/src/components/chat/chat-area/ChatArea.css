@@ -1,0 +1,24 @@
+#chat-area {
+  height: 100%;
+  width: 100%;
+  background-color: #f0f2f5;
+  padding: 0 24px 0 12px;
+}
+
+#chat-area .ant-layout-header {
+  padding: 0;
+  background-color: #f0f2f5;
+}
+
+#chat-area .ant-layout-content {
+  padding: 0;
+  background-color: #f0f2f5;
+}
+
+#chat-area .ant-layout {
+  height: 100%;
+}
+
+#chat-area .ant-layout-footer {
+  padding: 0;
+}
