@@ -14,11 +14,12 @@ public class Message {
 
     /**
      * Public constructor.
-     * @param text text sent
-     * @param sender text sender
+     *
+     * @param text     text sent
+     * @param sender   text sender
      * @param chatRoom text sent chatroom
      */
-    public Message(String text, String sender, String chatRoom){
+    public Message(String text, String sender, String chatRoom) {
         this.text = text;
         this.sender = sender;
         this.chatRoom = chatRoom;

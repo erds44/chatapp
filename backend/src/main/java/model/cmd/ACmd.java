@@ -20,6 +20,7 @@ public abstract class ACmd {
 
     /**
      * Help method  to get the user by session.
+     *
      * @param session user session
      * @return user
      */
@@ -29,8 +30,9 @@ public abstract class ACmd {
 
     /**
      * Send websocket error message.
+     *
      * @param session user session
-     * @param msg message
+     * @param msg     message
      */
     protected void sendWSErrMsg(Session session, String msg) {
         JsonObject jsonObject = new JsonObject();
@@ -44,10 +46,11 @@ public abstract class ACmd {
 
     /**
      * Send websocket user message.
+     *
      * @param session user session
-     * @param msg message
+     * @param msg     message
      */
-    protected void sendWSUserMsg(Session session, String msg){
+    protected void sendWSUserMsg(Session session, String msg) {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("userMsg", msg);
         try {
@@ -59,10 +62,11 @@ public abstract class ACmd {
 
     /**
      * Send websocket system message.
+     *
      * @param session user session
-     * @param msg message
+     * @param msg     message
      */
-    protected void sendWSSysMsg(Session session, String msg){
+    protected void sendWSSysMsg(Session session, String msg) {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("sysMsg", msg);
         try {
