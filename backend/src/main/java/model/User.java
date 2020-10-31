@@ -7,7 +7,7 @@ public class User {
     private int age;
     private String name;
     private String school;
-    private String interest;
+    private String[] interest;
 
     /**
      * Public constructor.
@@ -17,7 +17,7 @@ public class User {
      * @param age age of the user
      */
 
-    public User(String name, String school, String interest, int age) {
+    public User(String name, String school, String[] interest, int age) {
         this.age = age;
         this.name = name;
         this.school = school;
@@ -44,11 +44,11 @@ public class User {
         this.school = school;
     }
 
-    public String getInterest() {
+    public String[] getInterest() {
         return interest;
     }
 
-    public void setInterest(String interest) {
+    public void setInterest(String[] interest) {
         this.interest = interest;
     }
 }
