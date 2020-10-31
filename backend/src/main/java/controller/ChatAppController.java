@@ -28,7 +28,7 @@ public class ChatAppController {
      */
     public static void main(String[] args) {
         port(getHerokuAssignedPort());
-        staticFiles.location("public/build");
+        staticFiles.location("build");
 
         webSocket("/chatapp", WebSocketController.class);
         init();

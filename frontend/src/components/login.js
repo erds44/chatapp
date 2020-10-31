@@ -44,8 +44,8 @@ const Login = () => {
 
     return (
         <Card title="Login Chat Room" style={{ width: '600px', margin: '80px auto'}}
-              headStyle={{fontSize:'30px', backgroundColor:'#2BB3D5'}}
-              bodyStyle={{backgroundColor:'#CCFFFF'}}>
+              headStyle={{fontSize:'30px', backgroundColor:'#d9d9d9'}}
+              bodyStyle={{backgroundColor:'#f5f5f5'}}>
             <Form {...layout} name="nest-messages" onFinish={onFinish} validateMessages={validateMessages}>
             <Form.Item name={['user', 'name']} label="Name" rules={[{ required: true }]} >
                 <Input placeholder="Your Name"/>

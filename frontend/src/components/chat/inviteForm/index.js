@@ -12,7 +12,7 @@ const inviteForm = () =>{
 
     return (
         <Popover content={content} title="Invite your friend!" trigger="click">
-            <Button>Click me to invite</Button>
+            <Button>Invite</Button>
         </Popover>
     );
 
