@@ -10,3 +10,9 @@ Documentation: https://docs.google.com/document/d/14ERNyOHXrQthazaYi3XmTf1jPK-Vm
  Developer: Xinru Xiao
  Developer: Wenlong Yan
 ```
+# TODO: 
+Login  
+- [ ] school interests required  
+- [ ] add ages
+- [ ] complete onFinish (returns name, school, ages, interests[])
+- [ ] catch username exists error
