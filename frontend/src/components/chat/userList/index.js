@@ -18,7 +18,7 @@ const UserList = () => {
             itemLayout="horizontal"
             dataSource={data}
             renderItem={item => (
-                <List.Item>
+                <List.Item style={{padding: '15px'}}>
 
                     <List.Item.Meta
                         avatar={      <Avatar style={{ backgroundColor: ColorList[Math.floor(Math.random()*5)], verticalAlign: 'middle' }} size="large" gap={4}>
