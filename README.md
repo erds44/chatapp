@@ -15,4 +15,9 @@ Login
 - [ ] school interests required  
 - [ ] add ages
 - [ ] complete onFinish (returns name, school, ages, interests[])
-- [ ] catch username exists error
+- [ ] catch username exists error  
+  
+UserList  
+- [ ] complete onFinish(start private chat, invite users)  
+- [ ] invite friends: catch username not exists error, user already in the room error, user has been banned error  
+- [ ] add "force leave" button for admin  
