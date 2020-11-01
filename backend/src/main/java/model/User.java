@@ -1,5 +1,7 @@
 package model;
 
+import java.util.List;
+
 /**
  * User stores necessary user infomations.
  */
@@ -7,7 +9,7 @@ public class User {
     private int age;
     private String name;
     private String school;
-    private String[] interest;
+    private List<String> interest;
 
     /**
      * Public constructor.
@@ -17,7 +19,7 @@ public class User {
      * @param age age of the user
      */
 
-    public User(String name, String school, String[] interest, int age) {
+    public User(String name, String school, List<String> interest, int age) {
         this.age = age;
         this.name = name;
         this.school = school;
@@ -44,11 +46,11 @@ public class User {
         this.school = school;
     }
 
-    public String[] getInterest() {
+    public List<String> getInterest() {
         return interest;
     }
 
-    public void setInterest(String[] interest) {
+    public void setInterest(List<String> interest) {
         this.interest = interest;
     }
 }
