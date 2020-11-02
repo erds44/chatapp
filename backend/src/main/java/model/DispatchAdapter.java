@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import model.cmd.ACmd;
+import model.cmd.CreateRoomCmd;
 import model.cmd.LoginCmd;
 import org.eclipse.jetty.websocket.api.Session;
 import utility.Debug;
@@ -21,12 +22,13 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class DispatchAdapter {
     private static DispatchAdapter singleton;
     public static Map<Session, String> session2username = new ConcurrentHashMap<>();
-    public static Map<String, ChatRoom> name2ChatRoom = new ConcurrentHashMap<>();
-    public static Map<ChatRoom, List<User>> chatRoom2listUser = new ConcurrentHashMap<>();
-    public static Map<List<User>, ChatRoom> listUser2chatRoom = new ConcurrentHashMap<>();
-    public static Map<User, Session> user2session = new ConcurrentHashMap<>();
-    public static Map<User, List<User>> user2blockList = new ConcurrentHashMap<>();
-    public static List<User> chatRoomBanList = new CopyOnWriteArrayList<>();
+    public static Map<Session, User> session2user = new ConcurrentHashMap<>();
+    public static Map<String, ChatRoom> chatRoomName2ChatRoom = new ConcurrentHashMap<>();
+    public static Map<String, List<String>> chatRoomName2listUser = new ConcurrentHashMap<>();
+    public static Map<List<String>, ChatRoom> listUserName2chatRoom = new ConcurrentHashMap<>();
+    public static Map<String, Session> userName2session = new ConcurrentHashMap<>();
+    public static Map<String, List<String>> userName2blockList = new ConcurrentHashMap<>();
+    public static List<String> chatRoomBanList = new CopyOnWriteArrayList<>();
 
     /**
      * Private Constructor for singleton pattern.
@@ -54,6 +56,7 @@ public class DispatchAdapter {
      * @param request request body
      */
     public void process(Session user, String request) {
+        System.out.println(request);
         JsonObject jRequest = new JsonParser().parse(request).getAsJsonObject();
         String command = jRequest.get("command").getAsString();
         JsonObject body = jRequest.get("body").getAsJsonObject();
@@ -61,9 +64,12 @@ public class DispatchAdapter {
         // below for testing
         // Debug.printMap(bodyMap, "bodyMap:");
         ACmd cmd = null;
-        switch (command){
+        switch (command) {
             case "login":
                 cmd = new LoginCmd();
+                break;
+            case "createRoom":
+                cmd = new CreateRoomCmd();
                 break;
             default:
                 break;

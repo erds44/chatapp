@@ -4,8 +4,11 @@ import model.ChatRoom;
 import model.DispatchAdapter;
 import model.User;
 import org.eclipse.jetty.websocket.api.Session;
+import utility.Constant;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -13,26 +16,7 @@ import java.util.Map;
  */
 public class CreateRoomCmd extends ACmd {
 
-    /**
-     * Perform the execution of a command.
-     *
-     * @param userSession user session
-     * @param request     request
-     */
-    @Override
-    public void execute(Session userSession, String request) {
-//        String chatRoomName = null;
-//        if (DispatchAdapter.name2ChatRoom.containsKey(chatRoomName)) {
-//            sendWSErrMsg(userSession, "Chat room name already used!");
-//            return;
-//        }
-//        ChatRoom room = new ChatRoom(null, null, null);
-//        DispatchAdapter.name2ChatRoom.put(chatRoomName, room);
-//        ArrayList<User> userList = new ArrayList<>();
-//        userList.add(getUser(userSession));
-//        DispatchAdapter.chatRoom2listUser.put(room, userList);
 
-    }
 
     /**
      * Perform the execution of a command.
@@ -41,8 +25,23 @@ public class CreateRoomCmd extends ACmd {
      * @param request     request
      */
     @Override
+    @SuppressWarnings("unchecked")
     public void execute(Session userSession, Map<String, Object> request) {
-
+        String roomName = (String) request.get("name");
+        String userName = "123"; // TODO: login first
+        // String userName = getUser(userSession);
+        if(DispatchAdapter.chatRoomName2ChatRoom.containsKey(roomName)){
+            sendWSMsg(userSession, Constant.REQUEST_CREATEROOM, Constant.SYS_ERR, Constant.CHATROOM_USED);
+            return;
+        }
+        List<String> requirement = null;
+        if(request.containsKey("interests")){
+            requirement = (ArrayList<String>) request.get("interests");
+        }
+        ChatRoom room = new ChatRoom(roomName, userName,requirement);
+        DispatchAdapter.chatRoomName2ChatRoom.put(roomName, room);
+        DispatchAdapter.chatRoomName2listUser.put(roomName, List.of(userName));
+        sendWSMsg(userSession, Constant.REQUEST_CREATEROOM, Constant.SYS_SR, Constant.CHATROOM_CREATED);
     }
 
 }

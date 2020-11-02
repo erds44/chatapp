@@ -55,7 +55,7 @@ const Login = () => {
     };
     webSocket.onmessage = message =>{
         let res = JSON.parse(message.data);
-        if(res.command === "login"){
+        if(res.request === "login"){
             if(res.type === "err"){
                 handleErr();
             }else{
