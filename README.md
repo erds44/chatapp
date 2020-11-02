@@ -29,3 +29,14 @@ Chat Message
 - [ ] compose area to compose a new message & edit an existing message
 - [ ] detect the hate word and ban the user
 - [ ] message could include images & emojis
+
+Room  
+- [ ] create room check for duplicates  
+- [ ] private room interest required
+- [ ] complete onFinish (returns room name, interest)
+- [ ] generate joined room with user  
+- [ ] Imeplement exist room  
+- [ ] Imeplement exist all rooms  
+- [ ] update userlist of a room for invite, ban event  
+- [ ] switch room changing message history  
+- [ ] add unread bubble tag (optional)
