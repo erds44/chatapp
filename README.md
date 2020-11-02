@@ -35,8 +35,11 @@ Room
 - [ ] private room interest required
 - [ ] complete onFinish (returns room name, interest)
 - [ ] generate joined room with user  
-- [ ] Imeplement exist room  
-- [ ] Imeplement exist all rooms  
+- [ ] generate all rooms
+- [ ] implement joining room
+- [ ] implement existing room  
+- [ ] imeplement existing all rooms  
 - [ ] update userlist of a room for invite, ban event  
-- [ ] switch room changing message history  
+- [ ] switch room changing message history
+
 - [ ] add unread bubble tag (optional)
