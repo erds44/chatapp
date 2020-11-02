@@ -1,16 +1,11 @@
 import './App.css';
 import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import Login from './components/login'
+import Login from './components/login/login'
 import Chat from './components/chat/index'
 import { createBrowserHistory } from 'history'
 
 const history = createBrowserHistory();
-
-
-/*
-webSocket.onmessage = (msg) => call method(msg);
-*/
 
 const App = () => {
   return (
