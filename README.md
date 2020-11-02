@@ -36,9 +36,9 @@ Room
 - [ ] complete onFinish (returns room name, interest)
 - [ ] generate joined room with user
 - [ ] generate all rooms
-- [ ] implement joining room
-- [ ] implement existing room
-- [ ] imeplement existing all rooms
+- [x] implement joining room
+- [x] implement existing room
+- [x] imeplement existing all rooms
 - [ ] update userlist of a room for invite, ban event
 - [ ] switch room changing message history
 - [ ] add unread bubble tag (optional)
