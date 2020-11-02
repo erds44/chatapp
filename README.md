@@ -42,3 +42,5 @@ Room
 - [ ] update userlist of a room for invite, ban event
 - [ ] switch room changing message history
 - [ ] add unread bubble tag (optional)
+- [ ] ban user
+- [ ] block user
