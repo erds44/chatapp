@@ -2,6 +2,7 @@ import {Form, Input, Switch, Select, Button, Popover, Menu} from 'antd';
 import React, {useState} from 'react';
 import {PlusCircleOutlined} from "@ant-design/icons";
 import webSocket from "../websocket/Websocket";
+
 const layout = {
     labelCol: {
         span: 8,

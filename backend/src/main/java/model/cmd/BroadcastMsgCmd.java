@@ -28,7 +28,6 @@ public class BroadcastMsgCmd extends ACmd {
      */
     @Override
     public void execute(Session userSession, Map<String, Object> request) {
-
     }
 
 }
