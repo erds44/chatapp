@@ -31,15 +31,14 @@ Chat Message
 - [ ] message could include images & emojis
 
 Room  
-- [ ] create room check for duplicates  
+- [ ] create room check for duplicates
 - [ ] private room interest required
 - [ ] complete onFinish (returns room name, interest)
-- [ ] generate joined room with user  
+- [ ] generate joined room with user
 - [ ] generate all rooms
 - [ ] implement joining room
-- [ ] implement existing room  
-- [ ] imeplement existing all rooms  
-- [ ] update userlist of a room for invite, ban event  
+- [ ] implement existing room
+- [ ] imeplement existing all rooms
+- [ ] update userlist of a room for invite, ban event
 - [ ] switch room changing message history
-
 - [ ] add unread bubble tag (optional)
