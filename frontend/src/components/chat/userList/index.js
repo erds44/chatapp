@@ -1,7 +1,16 @@
+import {React, useEffect} from 'react'
 import {  List, Avatar, Button } from 'antd';
 import inviteForm from "../inviteForm"
+import webSocket from '../../websocket/Websocket'
 
 const UserList = () => {
+
+    useEffect(() => {
+        webSocket.onmessage = () => {
+            console.log("userList");
+        }
+    }, []);
+
     const data = [
         {"name":{"title":"Miss","first":"Weiwei","last":"Zhou"},"school":"Rice University","interest":"Reading"},
         {"name":{"title":"Mr","first":"Xiao","last":"Xia"},"school":"Rice University","interest":"Sports"},
