@@ -31,8 +31,7 @@ Chat Message
 - [ ] message could include images & emojis
 
 Room  
-- [x] create room check for duplicates
-- [ ] private room interest required
+- [x] create room check for duplicates  
 - [ ] complete onFinish (returns room name, interest)
 - [ ] generate joined room with user
 - [ ] generate all rooms
