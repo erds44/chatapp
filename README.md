@@ -21,3 +21,11 @@ UserList
 - [ ] complete onFinish(start private chat, invite users)  
 - [ ] invite friends: catch username not exists error, user already in the room error, user has been banned error  
 - [ ] add "force leave" button for admin  
+
+Chat Message  
+- [ ] message area to show message text, sender, sender avatar, and date time
+- [ ] dropdown for each message for user to edit, delete, recall, or report
+- [ ] user could only edit, delete, or recall his/her own messages, and only report other's messages
+- [ ] compose area to compose a new message & edit an existing message
+- [ ] detect the hate word and ban the user
+- [ ] message could include images & emojis
