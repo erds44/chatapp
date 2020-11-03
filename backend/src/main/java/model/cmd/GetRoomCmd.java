@@ -9,16 +9,7 @@ import java.util.Map;
  */
 public class GetRoomCmd extends ACmd {
 
-    /**
-     * A user can determine what chat rooms they have joined and what public rooms they can join.
-     *
-     * @param userSession user session
-     * @param request     request
-     */
-    @Override
-    public void execute(Session userSession, String request) {
-        // TODO
-    }
+
 
     /**
      * Perform the execution of a command.

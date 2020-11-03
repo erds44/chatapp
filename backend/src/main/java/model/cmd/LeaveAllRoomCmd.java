@@ -1,7 +1,10 @@
 package model.cmd;
 
+import model.DispatchAdapter;
 import org.eclipse.jetty.websocket.api.Session;
+import utility.Constant;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -9,18 +12,7 @@ import java.util.Map;
  */
 public class LeaveAllRoomCmd extends ACmd {
 
-    /**
-     * A user can choose to exit one chat room or all chat rooms.
-     * Clear to remaining users why a user left the room.
-     * Owner leaves roomm dismisses the room.
-     *
-     * @param userSession user session
-     * @param request     request
-     */
-    @Override
-    public void execute(Session userSession, String request) {
-        // TODO
-    }
+
 
     /**
      * Perform the execution of a command.
@@ -30,7 +22,19 @@ public class LeaveAllRoomCmd extends ACmd {
      */
     @Override
     public void execute(Session userSession, Map<String, Object> request) {
-
+        String userName = getUser(userSession);
+        for(String chatRoomName: DispatchAdapter.userName2chatRoomName.get(userName)){
+            if(DispatchAdapter.chatRoomName2ChatRoom.get(chatRoomName).getOwner().equals(userName)){
+                DispatchAdapter.chatRoomName2ChatRoom.remove(chatRoomName);
+                DispatchAdapter.chatRoomName2listUser.remove(chatRoomName);
+                // TODO: notify other session if a chat room dismissed
+            }else{
+                DispatchAdapter.chatRoomName2listUser.get(chatRoomName).remove(userName);
+                // TODO: notify other session that a user left
+            }
+        }
+        DispatchAdapter.userName2chatRoomName.get(userName).clear();
+        sendWSMsg(userSession, Constant.REQUEST_EXITALLROOM, Constant.SYS_SR, Constant.CHATROOM_EXITALL);
     }
 
 }

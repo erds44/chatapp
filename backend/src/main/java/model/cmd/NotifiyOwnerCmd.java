@@ -9,16 +9,7 @@ import java.util.Map;
  */
 public class NotifiyOwnerCmd extends ACmd {
 
-    /**
-     * Notify owner of the room for reporting.
-     *
-     * @param userSession user session
-     * @param request     request
-     */
-    @Override
-    public void execute(Session userSession, String request) {
-        // TODO
-    }
+
 
     /**
      * Perform the execution of a command.

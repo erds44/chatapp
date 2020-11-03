@@ -9,16 +9,6 @@ import java.util.Map;
  */
 public class BlockCmd extends ACmd {
 
-    /**
-     * Perform the execution of a command.
-     *
-     * @param userSession user session
-     * @param request     request
-     */
-    @Override
-    public void execute(Session userSession, String request) {
-        // TODO
-    }
 
     /**
      * Perform the execution of a command.

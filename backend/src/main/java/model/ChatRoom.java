@@ -7,7 +7,7 @@ import java.util.List;
  */
 public class ChatRoom {
     private String name;
-    private User owner;
+    private String owner;
     private List<String> interestsRequirement; // if list is null then no restriction, if not then private
 
     /**
@@ -16,7 +16,7 @@ public class ChatRoom {
      * @param owner owner of the room
      * @param interestsRequirement requirement of interest
      */
-    public ChatRoom(String name, User owner, List<String> interestsRequirement) {
+    public ChatRoom(String name, String owner, List<String> interestsRequirement) {
         this.name = name;
         this.owner = owner;
         this.interestsRequirement = interestsRequirement;
@@ -30,11 +30,11 @@ public class ChatRoom {
         this.name = name;
     }
 
-    public User getOwner() {
+    public String getOwner() {
         return owner;
     }
 
-    public void setOwner(User owner) {
+    public void setOwner(String owner) {
         this.owner = owner;
     }
 

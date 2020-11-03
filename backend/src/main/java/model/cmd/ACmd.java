@@ -2,7 +2,6 @@ package model.cmd;
 
 import com.google.gson.JsonObject;
 import model.DispatchAdapter;
-import model.User;
 import org.eclipse.jetty.websocket.api.Session;
 
 import java.util.Map;
@@ -11,14 +10,6 @@ import java.util.Map;
  * Abstract command class for encapsulation.
  */
 public abstract class ACmd {
-
-    /**
-     * Perform the execution of a command.
-     *
-     * @param userSession user session
-     * @param request     request
-     */
-    public abstract void execute(Session userSession, String request);
 
     /**
      * Perform the execution of a command.
@@ -35,7 +26,7 @@ public abstract class ACmd {
      * @return user
      */
     protected String getUser(Session session) {
-        return DispatchAdapter.session2username.get(session);
+        return DispatchAdapter.session2userName.get(session);
     }
 
     /**
@@ -45,7 +36,7 @@ public abstract class ACmd {
      */
     protected void sendWSMsg(Session session, String command, String type, String body) {
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("command", command);
+        jsonObject.addProperty("request", command);
         jsonObject.addProperty("type", type);
         jsonObject.addProperty("body", body);
         try {
