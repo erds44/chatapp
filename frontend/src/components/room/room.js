@@ -1,15 +1,15 @@
 import {Menu, Button, Modal} from "antd";
 import React, {useState, useMemo} from "react";
-import CreateRoomForm from "./createRoomForm";
+import CreateRoom from "./createRoom";
 import JoinedRoom from "./joinedRoom";
 import ExitRoom from "./exitRoom";
 import ExitAllRooms from "./exitAllRooms";
 import AllRooms from "./allRooms";
 import webSocket from "../websocket/Websocket";
 
-const Room = () => {
+const Room = (props) => {
     const [joinedRooms, setJoinedRooms] = useState(() => []);
-    const [allRooms, setAllRooms] = useState(() => []);
+    const [allRooms, setAllRooms] = useState(() => []);  //global
     const [visible, setVisible] = useState(false);
     const getAllRooms = useMemo(() => allRooms, [allRooms])
     const getJoinedRooms = useMemo(() => joinedRooms, [joinedRooms])
@@ -59,7 +59,7 @@ const Room = () => {
     return (
         <Menu mode="inline" onClick={handleClick} selectedKeys={['']}>
             <Menu.Item key="create">
-                <CreateRoomForm visible={visible} setVisible={setVisible} addRoom={addRoom}/>
+                <CreateRoom visible={visible} setVisible={setVisible} addRoom={addRoom} handleCreateRoom={props.handleCreateRoom}/>
             </Menu.Item>
             <ExitRoom joinedRooms={getJoinedRooms} exitRoom={exitRoom}/>
             <ExitAllRooms exitAll={exitAll}/>

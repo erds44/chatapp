@@ -7,8 +7,7 @@ import Room from "../room/room";
 import UserList from "./userList";
 
 const {Header, Content, Footer, Sider} = Layout;
-const Chat = (props) => {
-
+const Chat = (props, ref) => {
     const history = useHistory();
     const [allMessages, setAllMessages] = useState({
         'Chat Room 1': [
@@ -45,7 +44,7 @@ const Chat = (props) => {
     return (
         <Layout style={{height: '100vh'}}>
             <Sider width='300px' theme='light'>
-                <Room/>
+                <Room handleCreateRoom={props.handleCreateRoom}/>
             </Sider>
             <Layout>
                 <Header style={{padding: 0, backgroundColor: 'white', borderLeft: '2px solid rgba(0, 0, 0, 0.06)'}}>

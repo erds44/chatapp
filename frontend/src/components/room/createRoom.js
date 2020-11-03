@@ -15,7 +15,7 @@ const validateMessages = {
     required: '${label} is required!',
 };
 
-const CreateRoomForm = (props) => {
+const CreateRoom = (props) => {
     const interests = [];
     const {Option} = Select;
     const {visible, setVisible, addRoom} = props;
@@ -24,6 +24,9 @@ const CreateRoomForm = (props) => {
     for (let i = 1; i < 10; i++) {
         interests.push(<Option key={i}>{"Interest " + i}</Option>);
     }
+
+
+
     const onFinish = (values) => {
         webSocket.send(
             JSON.stringify({
@@ -38,22 +41,27 @@ const CreateRoomForm = (props) => {
         setVisible(false);
         setRoom(values.name);
     };
-    webSocket.onmessage = message => {
-        let res = JSON.parse(message.data);
-        console.log(res);
-        if (res.request === "createRoom") {
-            if (res.type === "err") {
-                Modal.error({
-                    content: res.body
-                })
-            } else {
-                Modal.success({
-                    content: res.body
-                })
-                addRoom(room)
-            }
-        }
-    }
+
+
+    // function handleCreateRoom(res) {
+    //     console.log(res)
+    //     if (res.request === "createRoom") {
+    //         console.log("catch")
+    //         if (res.type === "err") {
+    //             Modal.error({
+    //                 content: res.body
+    //             })
+    //         } else {
+    //             Modal.success({
+    //                 content: res.body
+    //             })
+    //             addRoom(room)
+    //         }
+    //     }
+    // }
+
+
+
     const handleVisibleChange = visible => {
         setVisible(visible);
     };
@@ -90,5 +98,8 @@ const CreateRoomForm = (props) => {
             <span><PlusCircleOutlined/></span>Create
         </Popover>
     );
+
 };
-export default CreateRoomForm;
+export default CreateRoom;
+
+

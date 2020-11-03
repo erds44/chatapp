@@ -27,20 +27,22 @@ public class CreateRoomCmd extends ACmd {
     @Override
     @SuppressWarnings("unchecked")
     public void execute(Session userSession, Map<String, Object> request) {
-        String roomName = (String) request.get("name");
+        String roomName = (String) request.get(Constant.NAME);
         String userName = "123"; // TODO: login first
         // String userName = getUser(userSession);
         if(DispatchAdapter.chatRoomName2ChatRoom.containsKey(roomName)){
+            System.out.println("catch");
             sendWSMsg(userSession, Constant.REQUEST_CREATEROOM, Constant.SYS_ERR, Constant.CHATROOM_USED);
             return;
         }
         List<String> requirement = null;
-        if(request.containsKey("interests")){
-            requirement = (ArrayList<String>) request.get("interests");
+        if(request.containsKey(Constant.INTERESTS)){
+            requirement = (ArrayList<String>) request.get(Constant.INTERESTS);
         }
         ChatRoom room = new ChatRoom(roomName, userName,requirement);
         DispatchAdapter.chatRoomName2ChatRoom.put(roomName, room);
         DispatchAdapter.chatRoomName2listUser.put(roomName, List.of(userName));
+        DispatchAdapter.userName2chatRoomName.get(userName).add(roomName);
         sendWSMsg(userSession, Constant.REQUEST_CREATEROOM, Constant.SYS_SR, Constant.CHATROOM_CREATED);
     }
 

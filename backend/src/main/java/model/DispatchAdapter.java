@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import model.cmd.ACmd;
 import model.cmd.CreateRoomCmd;
+import model.cmd.LeaveRoomCmd;
 import model.cmd.LoginCmd;
 import org.eclipse.jetty.websocket.api.Session;
 import utility.Debug;
@@ -21,12 +22,18 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class DispatchAdapter {
     private static DispatchAdapter singleton;
-    public static Map<Session, String> session2username = new ConcurrentHashMap<>();
-    public static Map<Session, User> session2user = new ConcurrentHashMap<>();
+    public static Map<Session, String> session2userName = new ConcurrentHashMap<>();
+    public static Map<String, Session> userName2session = new ConcurrentHashMap<>();
+    public static Map<String, User> userName2user = new ConcurrentHashMap<>();
+    public static Map<String, List<String>> userName2chatRoomName = new ConcurrentHashMap<>();
     public static Map<String, ChatRoom> chatRoomName2ChatRoom = new ConcurrentHashMap<>();
     public static Map<String, List<String>> chatRoomName2listUser = new ConcurrentHashMap<>();
-    public static Map<List<String>, ChatRoom> listUserName2chatRoom = new ConcurrentHashMap<>();
-    public static Map<String, Session> userName2session = new ConcurrentHashMap<>();
+
+
+
+
+
+
     public static Map<String, List<String>> userName2blockList = new ConcurrentHashMap<>();
     public static List<String> chatRoomBanList = new CopyOnWriteArrayList<>();
 
@@ -70,6 +77,9 @@ public class DispatchAdapter {
                 break;
             case "createRoom":
                 cmd = new CreateRoomCmd();
+                break;
+            case "exitRoom":
+                cmd = new LeaveRoomCmd();
                 break;
             default:
                 break;

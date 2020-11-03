@@ -2,7 +2,6 @@ package model.cmd;
 
 import com.google.gson.JsonObject;
 import model.DispatchAdapter;
-import model.User;
 import org.eclipse.jetty.websocket.api.Session;
 
 import java.util.Map;
@@ -27,7 +26,7 @@ public abstract class ACmd {
      * @return user
      */
     protected String getUser(Session session) {
-        return DispatchAdapter.session2username.get(session);
+        return DispatchAdapter.session2userName.get(session);
     }
 
     /**
