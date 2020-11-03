@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import {Layout, Row, Col} from 'antd'
 import {Button, Popover} from 'antd'
-import {Route, useHistory} from 'react-router-dom'
+import {useHistory} from 'react-router-dom'
 import ChatArea from "./chat-area/ChatArea";
 import Room from "../room/room";
 import UserList from "./userList";
@@ -52,7 +52,7 @@ const Chat = (props, ref) => {
                     <span id={"chat-area-header-user-count"} style={{fontSize: 'medium'}}>{`  (${userMap[selectedChatRoom].length})`}</span>
                     <Button style={{right: '-500px'}}
                             type="primary" shape="round" size='small'
-                            onClick={() => history.push('/')}>
+                            onClick={() => {history.push('/')}}>
                         Logout
                     </Button>
                 </Header>

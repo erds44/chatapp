@@ -1,8 +1,9 @@
-import React from 'react'
-import {Form, Input, InputNumber, Button, Select} from 'antd'
+import {React, useEffect, useState} from 'react'
+import {Form, Input, message, Button, Select} from 'antd'
 import {Card} from 'antd'
-import {useHistory} from 'react-router-dom';
-import webSocket from "../websocket/Websocket";
+import {useHistory} from 'react-router-dom'
+import webSocket from "../websocket/Websocket"
+import { connect } from 'react-redux'
 
 
 const layout = {
@@ -12,16 +13,9 @@ const layout = {
 
 const validateMessages = {
     required: '${label} is required!'
-    // types: {
-    //   email: '${label} is not validate email!',
-    //   number: '${label} is not a validate number!',
-    // },
-    // number: {
-    //   range: '${label} must be between ${min} and ${max}',
-    // },
 };
 
-const Login = () => {
+const Login = (props) => {
 
     const history = useHistory();
     const {Option} = Select;
@@ -29,6 +23,9 @@ const Login = () => {
     const schools = [];
     const interest_string_list = ["Traveling", "Reading", "Music", "Sports", "Movies", "Games"];
     const school_string_list = ["Rice University", "Duke University", "USC", "UCLA", "New York University", "Other"];
+    const {dispatch, logIn} = props;
+    const [form] = Form.useForm();
+    const {validateFields} = form;
 
     for (let i = 0; i < school_string_list.length; i++) {
         schools.push(<Option key={i}>{school_string_list[i]}</Option>);
@@ -40,33 +37,28 @@ const Login = () => {
 
     const onFinish = values => {
         console.log(values.user);
-        history.push('/chat');
         webSocket.send(
             JSON.stringify({
                 command: "login",
                 body: {
-                    name: "123",  // values.user.name
-                    age: "10",    // values.user.age
-                    school: "Rice",
+                    name: values.user.name,  // values.user.name
+                    school: values.user.school,
                     interests: interest_string_list
                 }
             })
         )
     };
-    // webSocket.onmessage = message =>{
-    //     let res = JSON.parse(message.data);
-    //     if(res.request === "login"){
-    //         if(res.type === "err"){
-    //             handleErr();
-    //         }else{
-    //             // go to chatroom page
-    //         }
-    //     }
-    // }
 
-    const handleErr = () => {
-        console.log("handle");
-    }
+    useEffect(() => {
+        if(logIn.isSignedIn !== null) {
+            if(logIn.isSignedIn === true) {
+                history.push('/chat');
+            }
+            else {
+                message.error("This user name has been used, please try another one.")
+            }
+        }
+    }, [logIn])
 
     return (
         <Card title="Login Chat Room" style={{width: '600px', margin: '80px auto'}}
@@ -90,7 +82,7 @@ const Login = () => {
                 </Form.Item>
 
                 <Form.Item wrapperCol={{...layout.wrapperCol, offset: 20}}>
-                    <Button type="primary" htmlType="submit" size="large">
+                    <Button type="primary" htmlType="submit" size="large" >
                         Login
                     </Button>
                 </Form.Item>
@@ -100,4 +92,8 @@ const Login = () => {
     );
 };
 
-export default Login;
+const mapStateToProps = (state, ownProps) => {
+    return { logIn: state.login }
+  };
+
+export default connect(mapStateToProps, {})(Login);
