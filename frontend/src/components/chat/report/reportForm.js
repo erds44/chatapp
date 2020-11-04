@@ -8,9 +8,8 @@ import {reportReasons} from './constant'
 const ReportForm = () => {
 
     const [visible, setVisible] = useState(true);
-    const [value, setValue] = useState(-1);
-    const [checkedReason, setCheckedReason] = useState("No specific Reason");
-    const [reasonMore, setReasonMore] = useState(null);
+    const [value, setValue] = useState(undefined);
+    const [checkedReason, setCheckedReason] = useState("");
     const [okButtonDisabled, setOkButtonDisabled]  = useState(true);
 
     const handleOk = e => {
@@ -37,17 +36,18 @@ const ReportForm = () => {
         console.log('radio checked', e.target.value);
         setOkButtonDisabled(false);
         setValue(e.target.value);
-        if (e.target.value === 3) {
-            setCheckedReason(reasonMore);
-        }
-        else {
+
+        if (e.target.value !== 3) {
             setCheckedReason(reportReasons[e.target.value]);
         }
     };
 
     const onChangeInput = e => {
         console.log('input', e.target.value);
-        setReasonMore(e.target.value);
+
+        if (value === 3) {
+            setCheckedReason(e.target.value);
+        }
     };
 
     return (
