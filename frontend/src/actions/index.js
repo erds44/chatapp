@@ -1,5 +1,5 @@
 import { message } from 'antd';
-import { SIGN_IN, SIGN_OUT, ON_MESSAGE } from './type';
+import {SIGN_IN, SIGN_OUT, ON_MESSAGE, ON_REPORT} from './type';
 
 var mesId = 0;
 
@@ -13,6 +13,9 @@ export const onMessage = (messages) =>
         else {
           dispatch({ type: SIGN_IN, payload: {mesId: mesId++, isSignedIn: true, user: data.user }});
         }
+    }
+    else if (data.request === "report") {
+        dispatch({ type: ON_REPORT, payload: {reportedName: "test", reason: data.body}});
     }
     else {  
         dispatch({ type: ON_MESSAGE, payload: messages.data });

@@ -4,10 +4,7 @@ package model;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import model.cmd.ACmd;
-import model.cmd.CreateRoomCmd;
-import model.cmd.LeaveRoomCmd;
-import model.cmd.LoginCmd;
+import model.cmd.*;
 import org.eclipse.jetty.websocket.api.Session;
 import utility.Debug;
 
@@ -70,6 +67,7 @@ public class DispatchAdapter {
         HashMap bodyMap = new Gson().fromJson(body, HashMap.class);
         // below for testing
         // Debug.printMap(bodyMap, "bodyMap:");
+
         ACmd cmd = null;
         switch (command) {
             case "login":
@@ -80,6 +78,9 @@ public class DispatchAdapter {
                 break;
             case "exitRoom":
                 cmd = new LeaveRoomCmd();
+                break;
+            case "report":
+                cmd = new sendReportCmd();
                 break;
             default:
                 break;
