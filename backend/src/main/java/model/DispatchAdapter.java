@@ -67,6 +67,7 @@ public class DispatchAdapter {
         HashMap bodyMap = new Gson().fromJson(body, HashMap.class);
         // below for testing
         // Debug.printMap(bodyMap, "bodyMap:");
+
         ACmd cmd = null;
         switch (command) {
             case "login":
@@ -83,6 +84,8 @@ public class DispatchAdapter {
                 break;
             case "joinRoom":
                 cmd = new JoinRoomCmd();
+            case "report":
+                cmd = new sendReportCmd();
                 break;
             default:
                 break;

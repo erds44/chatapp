@@ -43,9 +43,13 @@ public abstract class ACmd {
         jsonObject.addProperty("request", command);
         jsonObject.addProperty("type", type);
         jsonObject.addProperty("msg", msg);
-        for(String parameter : body){
-            jsonObject.addProperty("param" + param++, parameter);
+
+        if (body != null) {
+            for(String parameter : body){
+                jsonObject.addProperty("param" + param++, parameter);
+            }
         }
+
         try {
             session.getRemote().sendString(String.valueOf(jsonObject));
         } catch (Exception e) {

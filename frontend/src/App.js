@@ -13,6 +13,7 @@ const history = createBrowserHistory();
 
 const App = (props) => {
     const handleCreateRoom = useRef();
+    const {dispatch, message} = props;
 
     webSocket.onopen = () => {
       console.log("connected");
@@ -35,4 +36,8 @@ const App = (props) => {
   );
 }
 
-export default connect(null, { onMessage })(App);
+const mapStateToProps = (state, ownProps) => {
+    return { message: state.message }
+};
+
+export default connect(mapStateToProps, { onMessage })(App);

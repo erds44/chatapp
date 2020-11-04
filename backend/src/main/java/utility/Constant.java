@@ -18,10 +18,11 @@ public class Constant {
     public static final String REQUEST_EXITROOM = "exitRoom";
     public static final String REQUEST_EXITALLROOM ="exitAllRoom";
     public static final String REQUEST_UPDATEALLROOM ="updateAllRoom";
+    public static final String REQUEST_REPORTUSER ="reportUser";
+    public static final String REPORT ="report";
     public static final String NAME = "name";
     public static final String ROOM = "room";
     public static final String INTERESTS = "interests";
     public static final String SYS_SR = "sr";
     public static final String SYS_ERR = "err";
-
 }
