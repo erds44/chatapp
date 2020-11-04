@@ -18,10 +18,20 @@ export const onMessage = (messages) =>
         //     dispatch({type: ON_MESSAGE, payload: messages.data});
         // }
         switch (data.section) {
+            case "login":
+                dispatch({type: SIGN_IN, payload: {isSignedIn: true}});
+                break;
             case "room":
                 dispatch({
                     type: ROOM,
-                    payload: {request: data.request, type: data.type, msg: data.msg, param1: data.param1, param2: data.param2, param3: data.param3}
+                    payload: {
+                        request: data.request,
+                        type: data.type,
+                        msg: data.msg,
+                        param1: data.param1,
+                        param2: data.param2,
+                        param3: data.param3
+                    }
                 });
                 break;
             default:

@@ -23,9 +23,14 @@ const Room = (props) => {
 
     }
     const exitRoom = roomName => {
-        let  r = joinedRooms.filter(x => x[0] !== roomName)
+        let r = joinedRooms.filter(x => x[0] !== roomName)
         setJoinedRooms(r);
-        console.log(joinedRooms);
+    }
+
+    const updateUserList = (key, value) => {
+        let r = joinedRooms.filter(x => x[0] !== key)
+        setJoinedRooms([...r, [key,value]])
+        console.log(joinedRooms)
     }
     const handleClick = (e) => {
         if (e.key === "create") {
@@ -39,6 +44,11 @@ const Room = (props) => {
                 let str = room.param1.replace('[', '').replace(']', '');
                 setAllRooms(str.split(","));
                 return;
+            } else if (room.request === "updateUserList") {
+                // let roomName = room.param1;
+                // let list = room.param2.replace('[', '').replace(']', '');
+                // updateUserList(roomName, list.split(","));
+                // return;
             }
             if (room.type === "err") Modal.error({content: room.msg})
             else {
@@ -49,6 +59,12 @@ const Room = (props) => {
                         let roomName = room.param1;
                         let list = room.param2.replace('[', '').replace(']', '');
                         addRoom(roomName, list.split(","));
+                        break;
+                    case "updateUserList":
+                        let chatRoom = room.param1;
+                        let userList = room.param2.replace('[', '').replace(']', '');
+                        updateUserList(chatRoom, userList.split(","));
+
                         break;
                     case "exitRoom":
                         exitRoom(room.param1);

@@ -29,8 +29,7 @@ public class CreateRoomCmd extends ACmd {
     @SuppressWarnings("unchecked")
     public void execute(Session userSession, Map<String, Object> request) {
         String roomName = (String) request.get(Constant.NAME);
-        String userName = "123"; // TODO: login first
-        // String userName = getUser(userSession);
+        String userName = getUser(userSession);
         if(DispatchAdapter.chatRoomName2ChatRoom.containsKey(roomName)){
             sendWSMsg(userSession, Constant.ROOM, Constant.REQUEST_CREATEROOM, Constant.SYS_ERR, Constant.CHATROOM_USED);
             return;
@@ -50,10 +49,9 @@ public class CreateRoomCmd extends ACmd {
 
         DispatchAdapter.userName2chatRoomName.get(userName).add(roomName);
         sendWSMsg(userSession,Constant.ROOM, Constant.REQUEST_CREATEROOM, Constant.SYS_SR, Constant.CHATROOM_CREATED, roomName, DispatchAdapter.chatRoomName2listUser.get(roomName).toString());
-        sendWSMsg(userSession, Constant.ROOM, Constant.REQUEST_UPDATEALLROOM, Constant.SYS_SR, null, DispatchAdapter.chatRoomName2ChatRoom.keySet().toString());
-
-        // TODO: update rooms for other sessions
-
+        for(Session session : DispatchAdapter.session2userName.keySet()){
+            sendWSMsg(session, Constant.ROOM, Constant.REQUEST_UPDATEALLROOM, Constant.SYS_SR, null, DispatchAdapter.chatRoomName2ChatRoom.keySet().toString());
+        }
     }
 
 }

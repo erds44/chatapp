@@ -10,7 +10,6 @@ const JoinedRoom = (props) => {
             <SubMenu title={<span><GroupOutlined/><span>Joined Rooms</span></span>}>
                 {
                     Object.entries(rooms).map(([key, value]) => {
-                        console.log(value);
                         return (
                             <SubMenu key={value} title={value[0]}>
                                 {
@@ -24,7 +23,6 @@ const JoinedRoom = (props) => {
                                 }
                             </SubMenu>
                         )
-
                     })
                 }
             </SubMenu>

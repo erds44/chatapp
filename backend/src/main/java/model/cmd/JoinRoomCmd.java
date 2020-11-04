@@ -25,25 +25,24 @@ public class JoinRoomCmd extends ACmd {
     @Override
     public void execute(Session userSession, Map<String, Object> request) {
         String userName = getUser(userSession);
-        userName = "123";
-//        if(DispatchAdapter.chatRoomBanList.contains(userName)){
-//            sendWSMsg(userSession, Constant.ROOM, Constant.REQUEST_JOINROOM, Constant.SYS_ERR, Constant.CHATROOM_BAN, null);
-//            return;
-//        }
+        if(DispatchAdapter.chatRoomBanList.contains(userName)){
+            sendWSMsg(userSession, Constant.ROOM, Constant.REQUEST_JOINROOM, Constant.SYS_ERR, Constant.CHATROOM_BAN, null);
+            return;
+        }
         String roomName = (String) request.get(Constant.NAME);
-//        List<String> roomRequirement = DispatchAdapter.chatRoomName2ChatRoom.get(roomName).getInterestsRequirement();
-//        if(roomRequirement != null){
-//            boolean qualified = false;
-//            for(String interest: DispatchAdapter.userName2user.get(userName).getInterest()){
-//                if(roomRequirement.contains(interest)){
-//                    qualified = true;
-//                }
-//            }
-//            if(!qualified){
-//                sendWSMsg(userSession, Constant.ROOM, Constant.REQUEST_JOINROOM, Constant.SYS_ERR, Constant.CHATROOM_JOINFALIURE, null);
-//                return;
-//            }
-//        }
+        List<String> roomRequirement = DispatchAdapter.chatRoomName2ChatRoom.get(roomName).getInterestsRequirement();
+        if(roomRequirement != null){
+            boolean qualified = false;
+            for(String interest: DispatchAdapter.userName2user.get(userName).getInterest()){
+                if(roomRequirement.contains(interest)){
+                    qualified = true;
+                }
+            }
+            if(!qualified){
+                sendWSMsg(userSession, Constant.ROOM, Constant.REQUEST_JOINROOM, Constant.SYS_ERR, Constant.CHATROOM_JOINFALIURE, null);
+                return;
+            }
+        }
         if(DispatchAdapter.userName2chatRoomName.get(userName).contains(roomName)){
             sendWSMsg(userSession, Constant.ROOM, Constant.REQUEST_JOINROOM, Constant.SYS_ERR, Constant.CHATROOM_JOINED);
             return;
@@ -51,6 +50,13 @@ public class JoinRoomCmd extends ACmd {
         DispatchAdapter.userName2chatRoomName.get(userName).add(roomName);
         DispatchAdapter.chatRoomName2listUser.get(roomName).add(userName);
         sendWSMsg(userSession, Constant.ROOM, Constant.REQUEST_JOINROOM, Constant.SYS_SR, Constant.CHATROOM_JOIN, roomName, DispatchAdapter.chatRoomName2listUser.get(roomName).toString());
-        // TODO: notify all other session
+        for(String user: DispatchAdapter.chatRoomName2listUser.get(roomName)){
+            if(!user.equals(userName)) {
+                Session session = DispatchAdapter.userName2session.get(user);
+                sendWSMsg(session, Constant.ROOM, Constant.REQUEST_UPDATEUSERLIST, Constant.SYS_SR, userName + " joins the room!", roomName, DispatchAdapter.chatRoomName2listUser.get(roomName).toString());
+                // TODO: notify all other session in chat
+            }
+
+        }
     }
 }

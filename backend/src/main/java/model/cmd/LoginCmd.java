@@ -22,27 +22,29 @@ public class LoginCmd extends ACmd {
         // TODO： replce string with constant
         String userName = (String)request.get(Constant.NAME);
         if (DispatchAdapter.session2userName.containsValue(userName)) {
-            sendWSMsg(userSession, "login", "login", Constant.SYS_ERR, Constant.USERNAME_USED);
+            sendWSMsg(userSession, Constant.LOGIN, Constant.LOGIN, Constant.SYS_ERR, Constant.USERNAME_USED);
             return;
         }
-        User user = new User(userName, (String) request.get("School"), (ArrayList<String>)request.get("interests"), 10);
+        User user = new User(userName, (String) request.get(Constant.SCHOOL), (ArrayList<String>)request.get(Constant.INTERESTS), 10);
         DispatchAdapter.session2userName.put(userSession, userName);
         DispatchAdapter.userName2session.put(userName, userSession);
         DispatchAdapter.userName2user.put(userName, user);
         DispatchAdapter.userName2chatRoomName.put(userName, new ArrayList<>());
-
+        sendWSMsg(userSession, Constant.LOGIN, Constant.LOGIN, Constant.SYS_SR, null);
+        sendWSMsg(userSession, Constant.ROOM, Constant.ROOM, Constant.SYS_SR, Constant.LOGIN_SR);
+        sendWSMsg(userSession, Constant.ROOM, Constant.REQUEST_UPDATEALLROOM, Constant.SYS_SR, null, DispatchAdapter.chatRoomName2ChatRoom.keySet().toString());
         //only use for test
-        System.out.println("hi, xiao");
-        JsonObject jo = new JsonObject();
-        jo.addProperty("request", "login");
-        jo.addProperty("user", userName);
-        if (userSession != null) {
-            try {
-                userSession.getRemote().sendString(String.valueOf(jo));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+//        System.out.println("hi, xiao");
+//        JsonObject jo = new JsonObject();
+//        jo.addProperty("request", "login");
+//        jo.addProperty("user", userName);
+//        if (userSession != null) {
+//            try {
+//                userSession.getRemote().sendString(String.valueOf(jo));
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
     }
 
 }

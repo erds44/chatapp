@@ -41,7 +41,7 @@ const Login = (props) => {
             JSON.stringify({
                 command: "login",
                 body: {
-                    name: values.user.name,  // values.user.name
+                    name: values.user.name,
                     school: values.user.school,
                     interests: interest_string_list
                 }
