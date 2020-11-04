@@ -18,15 +18,11 @@ const validateMessages = {
 const CreateRoom = (props) => {
     const interests = [];
     const {Option} = Select;
-    const {visible, setVisible, addRoom} = props;
+    const {visible, setVisible} = props;
     const [interestDisabled, setInterestDisabled] = useState(true);
-    const [room, setRoom] = useState();
     for (let i = 1; i < 10; i++) {
         interests.push(<Option key={i}>{"Interest " + i}</Option>);
     }
-
-
-
     const onFinish = (values) => {
         webSocket.send(
             JSON.stringify({
@@ -39,28 +35,7 @@ const CreateRoom = (props) => {
             )
         )
         setVisible(false);
-        setRoom(values.name);
     };
-
-
-    // function handleCreateRoom(res) {
-    //     console.log(res)
-    //     if (res.request === "createRoom") {
-    //         console.log("catch")
-    //         if (res.type === "err") {
-    //             Modal.error({
-    //                 content: res.body
-    //             })
-    //         } else {
-    //             Modal.success({
-    //                 content: res.body
-    //             })
-    //             addRoom(room)
-    //         }
-    //     }
-    // }
-
-
 
     const handleVisibleChange = visible => {
         setVisible(visible);

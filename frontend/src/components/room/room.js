@@ -1,13 +1,15 @@
-import {Menu, Button, Modal} from "antd";
-import React, {useState, useMemo} from "react";
+import {Menu, Button, Modal, message} from "antd";
+import React, {useState, useMemo, useEffect} from "react";
 import CreateRoom from "./createRoom";
 import JoinedRoom from "./joinedRoom";
 import ExitRoom from "./exitRoom";
 import ExitAllRooms from "./exitAllRooms";
 import AllRooms from "./allRooms";
 import webSocket from "../websocket/Websocket";
+import {connect} from "react-redux";
 
 const Room = (props) => {
+    const {room} = props;
     const [joinedRooms, setJoinedRooms] = useState(() => []);
     const [allRooms, setAllRooms] = useState(() => []);  //global
     const [visible, setVisible] = useState(false);
@@ -18,23 +20,10 @@ const Room = (props) => {
     }
     const addRoom = value => {
         setJoinedRooms([...joinedRooms, value]);
-        setAllRooms([...allRooms, value]);
     }
     const exitRoom = value => {
         let r = joinedRooms.filter(item => item !== value)
         setJoinedRooms(r);
-    }
-    const joinRoom = value => {
-        if (joinedRooms.includes(value)) {
-            Modal.error({
-                content: value + "already joined!"
-            })
-        } else {
-            Modal.success({
-                content: "Join " + value + " successfully!"
-            });
-            addRoom(value);
-        }
     }
     const handleClick = (e) => {
         if (e.key === "create") {
@@ -42,29 +31,53 @@ const Room = (props) => {
         }
     }
 
-    // webSocket.onmessage = message => {
-    //     let res = JSON.parse(message.data);
-    //     if (res.command === "room") {
-    //         if (res.type === "err") {
-    //             Modal.error({
-    //                 content: res.body
-    //             })
-    //         } else {
-    //             Modal.success({
-    //                 content: res.body
-    //             })
-    //         }
-    //     }
-    // }
+    useEffect(() => {
+        if (room.request != null) {
+            if(room.request === "updateAllRoom"){
+                console.log(room.body);
+                let str = room.body.replace('[', '').replace(']','');
+
+
+
+                //console.log(room.body.substring(1, room.body.length - 1))
+                setAllRooms(str.split(","));
+                return ;
+            }
+
+            if (room.type === "err") Modal.error({content: room.msg})
+            else {
+                Modal.success({content: room.msg});
+                switch (room.request) {
+                    case "createRoom":
+                        addRoom(room.body);
+                        break;
+                    case "exitRoom":
+                        exitRoom(room.body);
+                        break;
+                    case "exitAllRoom":
+                        exitAll();
+                        break;
+                    case "joinRoom":
+                        addRoom(room.body);
+                        break;
+                    default:
+                        break;
+
+                }
+            }
+        }
+    }, [room])
+
+
     return (
         <Menu mode="inline" onClick={handleClick} selectedKeys={['']}>
             <Menu.Item key="create">
-                <CreateRoom visible={visible} setVisible={setVisible} addRoom={addRoom} handleCreateRoom={props.handleCreateRoom}/>
+                <CreateRoom visible={visible} setVisible={setVisible}/>
             </Menu.Item>
-            <ExitRoom joinedRooms={getJoinedRooms} exitRoom={exitRoom}/>
-            <ExitAllRooms exitAll={exitAll}/>
+            <ExitRoom joinedRooms={getJoinedRooms}/>
+            <ExitAllRooms/>
             <JoinedRoom rooms={getJoinedRooms}/>
-            <AllRooms allRooms={getAllRooms} joinRoom={joinRoom}/>
+            <AllRooms allRooms={getAllRooms}/>
             {/*test method*/}
             {/*<Menu.Item onClick={() => {setAllRooms([...allRooms, "123"]);}}>Add all rooms</Menu.Item>*/}
             {/*<Menu.Item onClick={() => {setJoinedRooms([...joinedRooms, "456"]);}}>Add joined rooms</Menu.Item>*/}
@@ -73,4 +86,8 @@ const Room = (props) => {
 
     )
 }
-export default Room;
+const mapStateToProps = (state, ownProps) => {
+    return {room: state.room}
+};
+
+export default connect(mapStateToProps, {})(Room);

@@ -13,7 +13,6 @@ import java.util.Map;
 public class LeaveAllRoomCmd extends ACmd {
 
 
-
     /**
      * Perform the execution of a command.
      *
@@ -23,18 +22,20 @@ public class LeaveAllRoomCmd extends ACmd {
     @Override
     public void execute(Session userSession, Map<String, Object> request) {
         String userName = getUser(userSession);
-        for(String chatRoomName: DispatchAdapter.userName2chatRoomName.get(userName)){
-            if(DispatchAdapter.chatRoomName2ChatRoom.get(chatRoomName).getOwner().equals(userName)){
+        userName = "123"; // TODO: login first
+        for (String chatRoomName : DispatchAdapter.userName2chatRoomName.get(userName)) {
+            if (DispatchAdapter.chatRoomName2ChatRoom.get(chatRoomName).getOwner().equals(userName)) {
                 DispatchAdapter.chatRoomName2ChatRoom.remove(chatRoomName);
                 DispatchAdapter.chatRoomName2listUser.remove(chatRoomName);
+                sendWSMsg(userSession, Constant.ROOM, Constant.REQUEST_UPDATEALLROOM, Constant.SYS_SR, null, gson.toJson(DispatchAdapter.chatRoomName2ChatRoom.keySet()));
                 // TODO: notify other session if a chat room dismissed
-            }else{
+            } else {
                 DispatchAdapter.chatRoomName2listUser.get(chatRoomName).remove(userName);
                 // TODO: notify other session that a user left
             }
         }
         DispatchAdapter.userName2chatRoomName.get(userName).clear();
-        sendWSMsg(userSession, Constant.REQUEST_EXITALLROOM, Constant.SYS_SR, Constant.CHATROOM_EXITALL);
+        sendWSMsg(userSession, Constant.ROOM, Constant.REQUEST_EXITALLROOM, Constant.SYS_SR, Constant.CHATROOM_EXITALL, null);
     }
 
 }

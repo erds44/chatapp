@@ -19,18 +19,20 @@ public class LeaveRoomCmd extends ACmd {
     @Override
     public void execute(Session userSession, Map<String, Object> request) {
         String userName = getUser(userSession);
+        userName = "123"; // TODO: login first
         String chatRoomName = (String) request.get(Constant.NAME);
         // if user is the owner, remove chat room
         if(DispatchAdapter.chatRoomName2ChatRoom.get(chatRoomName).getOwner().equals("123")){
             DispatchAdapter.chatRoomName2ChatRoom.remove(chatRoomName);
             DispatchAdapter.chatRoomName2listUser.remove(chatRoomName);
+            sendWSMsg(userSession, Constant.ROOM, Constant.REQUEST_UPDATEALLROOM, Constant.SYS_SR, null, DispatchAdapter.chatRoomName2ChatRoom.keySet().toString());
             // TODO: notify other session if a chat room dismissed
         }else{ // remove user from list
             DispatchAdapter.chatRoomName2listUser.get(chatRoomName).remove(userName);
             // TODO: notify other session that a user left
         }
         DispatchAdapter.userName2chatRoomName.get(userName).remove(chatRoomName);
-        sendWSMsg(userSession, Constant.REQUEST_EXITROOM, Constant.SYS_SR, Constant.CHATROOM_EXIT);
+        sendWSMsg(userSession, Constant.ROOM, Constant.REQUEST_EXITROOM, Constant.SYS_SR, Constant.CHATROOM_EXIT, chatRoomName);
     }
 
 }

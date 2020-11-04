@@ -12,8 +12,9 @@ public class ChatRoom {
 
     /**
      * Public constructor.
-     * @param name name of the room
-     * @param owner owner of the room
+     *
+     * @param name                 name of the room
+     * @param owner                owner of the room
      * @param interestsRequirement requirement of interest
      */
     public ChatRoom(String name, String owner, List<String> interestsRequirement) {
@@ -40,6 +41,10 @@ public class ChatRoom {
 
     public void setInterestsRequirement(List<String> interestsRequirement) {
         this.interestsRequirement = interestsRequirement;
+    }
+
+    public List<String> getInterestsRequirement() {
+        return this.interestsRequirement;
     }
 
 }

@@ -9,8 +9,7 @@ import JoinedRoom from "./joinedRoom";
 const {SubMenu} = Menu;
 
 const ExitRoom = (props) => {
-    const {joinedRooms, exitRoom} = props;
-    const [room, setRoom] = useState();
+    const {joinedRooms} = props;
     const onFinish = (values) => {
         webSocket.send(
             JSON.stringify({
@@ -21,21 +20,8 @@ const ExitRoom = (props) => {
                 }
             )
         )
-        setRoom(values.key);
     };
-
-    // webSocket.onmessage = message => {
-    //     let res = JSON.parse(message.data);
-    //     if (res.request === "exitRoom") {
-    //         Modal.success({
-    //             content: res.body
-    //         })
-    //     }
-    //     exitRoom(room);
-    // }
-
     return (
-        // <Menu mode="inline" onClick={(e) => {exitRoom(e.key)}}>
         <Menu mode="inline" onClick={(e) => {
             onFinish(e)
         }}>

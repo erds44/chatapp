@@ -7,8 +7,7 @@ import webSocket from "../websocket/Websocket";
 import JoinedRoom from "./joinedRoom";
 
 
-const ExitAllRooms = (props) => {
-    const {exitAll} = props;
+const ExitAllRooms = () => {
     const onFinish = () => {
         webSocket.send(
             JSON.stringify({
@@ -20,15 +19,6 @@ const ExitAllRooms = (props) => {
         )
     };
 
-    // webSocket.onmessage = message => {
-    //     let res = JSON.parse(message.data);
-    //     if (res.request === "exitAllRoom") {
-    //         Modal.success({
-    //             content: res.body
-    //         })
-    //     }
-    //     exitAll();
-    // }
     return (
         <Menu mode="inline" selectedKeys={['']} onClick={onFinish}>
             <Menu.Item><span><CloseCircleOutlined/></span>Exit All</Menu.Item>

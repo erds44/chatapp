@@ -4,10 +4,7 @@ package model;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import model.cmd.ACmd;
-import model.cmd.CreateRoomCmd;
-import model.cmd.LeaveRoomCmd;
-import model.cmd.LoginCmd;
+import model.cmd.*;
 import org.eclipse.jetty.websocket.api.Session;
 import utility.Debug;
 
@@ -80,6 +77,12 @@ public class DispatchAdapter {
                 break;
             case "exitRoom":
                 cmd = new LeaveRoomCmd();
+                break;
+            case "exitAllRoom":
+                cmd = new LeaveAllRoomCmd();
+                break;
+            case "joinRoom":
+                cmd = new JoinRoomCmd();
                 break;
             default:
                 break;
