@@ -18,7 +18,6 @@ const AllRooms = (props) => {
         )
     };
 
-
     return (
         <Menu mode="inline" onClick={(e) => {onFinish(e)}}>
             <SubMenu key="allRooms" title={<span><GroupOutlined/><span>All Rooms</span></span>}>

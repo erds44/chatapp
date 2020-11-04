@@ -32,7 +32,7 @@ public class CreateRoomCmd extends ACmd {
         String userName = "123"; // TODO: login first
         // String userName = getUser(userSession);
         if(DispatchAdapter.chatRoomName2ChatRoom.containsKey(roomName)){
-            sendWSMsg(userSession, "room", Constant.REQUEST_CREATEROOM, Constant.SYS_ERR, Constant.CHATROOM_USED);
+            sendWSMsg(userSession, Constant.ROOM, Constant.REQUEST_CREATEROOM, Constant.SYS_ERR, Constant.CHATROOM_USED);
             return;
         }
         List<String> requirement = null;
@@ -49,10 +49,11 @@ public class CreateRoomCmd extends ACmd {
         }
 
         DispatchAdapter.userName2chatRoomName.get(userName).add(roomName);
-        sendWSMsg(userSession,Constant.ROOM, Constant.REQUEST_CREATEROOM, Constant.SYS_SR, Constant.CHATROOM_CREATED, roomName);
+        sendWSMsg(userSession,Constant.ROOM, Constant.REQUEST_CREATEROOM, Constant.SYS_SR, Constant.CHATROOM_CREATED, roomName, DispatchAdapter.chatRoomName2listUser.get(roomName).toString());
         sendWSMsg(userSession, Constant.ROOM, Constant.REQUEST_UPDATEALLROOM, Constant.SYS_SR, null, DispatchAdapter.chatRoomName2ChatRoom.keySet().toString());
+
         // TODO: update rooms for other sessions
-        Debug.printMap(DispatchAdapter.userName2chatRoomName, "create");
+
     }
 
 }

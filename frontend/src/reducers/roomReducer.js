@@ -7,6 +7,7 @@ const INTIAL_STATE = {
     msg: null,
     param1: null,
     param2: null,
+    param3: null
 };
 
 export default (state = INTIAL_STATE, action) => {
@@ -17,7 +18,8 @@ export default (state = INTIAL_STATE, action) => {
                 type: action.payload.type,
                 msg: action.payload.msg,
                 param1: action.payload.param1,
-                param2: action.payload.param2
+                param2: action.payload.param2,
+                param3: action.payload.param3
             };
         default:
             return state;

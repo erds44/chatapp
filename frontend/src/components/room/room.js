@@ -18,12 +18,14 @@ const Room = (props) => {
     const exitAll = () => {
         setJoinedRooms([])
     }
-    const addRoom = value => {
-        setJoinedRooms([...joinedRooms, value]);
+    const addRoom = (key, value) => {
+        setJoinedRooms([...joinedRooms, [key, value]])
+
     }
-    const exitRoom = value => {
-        let r = joinedRooms.filter(item => item !== value)
+    const exitRoom = roomName => {
+        let  r = joinedRooms.filter(x => x[0] !== roomName)
         setJoinedRooms(r);
+        console.log(joinedRooms);
     }
     const handleClick = (e) => {
         if (e.key === "create") {
@@ -33,27 +35,26 @@ const Room = (props) => {
 
     useEffect(() => {
         if (room.request != null) {
-            if(room.request === "updateAllRoom"){
-                let str = room.param1.replace('[', '').replace(']','');
+            if (room.request === "updateAllRoom") {
+                let str = room.param1.replace('[', '').replace(']', '');
                 setAllRooms(str.split(","));
-                return ;
+                return;
             }
-
             if (room.type === "err") Modal.error({content: room.msg})
             else {
                 Modal.success({content: room.msg});
                 switch (room.request) {
+                    case "joinRoom" :
                     case "createRoom":
-                        addRoom(room.param1);
+                        let roomName = room.param1;
+                        let list = room.param2.replace('[', '').replace(']', '');
+                        addRoom(roomName, list.split(","));
                         break;
                     case "exitRoom":
                         exitRoom(room.param1);
                         break;
                     case "exitAllRoom":
                         exitAll();
-                        break;
-                    case "joinRoom":
-                        addRoom(room.param1);
                         break;
                     default:
                         break;

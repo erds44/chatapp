@@ -26,11 +26,12 @@ const ExitRoom = (props) => {
             onFinish(e)
         }}>
             <SubMenu title={<span><span><MinusCircleOutlined/></span>Exit</span>}>
-                {joinedRooms.map(item => {
-                    return (
-                        <Menu.Item key={item}>{item}</Menu.Item>
-                    );
-                })
+                {
+                    Object.entries(joinedRooms).map(([key, value]) => {
+                      return(
+                          <Menu.Item key={value[0]}>{value[0]}</Menu.Item>
+                      )
+                    })
                 }
             </SubMenu>
         </Menu>

@@ -6,17 +6,26 @@ const {SubMenu} = Menu;
 const JoinedRoom = (props) => {
     const {rooms} = props;
     return (
-        <Menu mode="inline" selectedKeys = {['']}>
+        <Menu mode="inline" selectedKeys={['']}>
             <SubMenu title={<span><GroupOutlined/><span>Joined Rooms</span></span>}>
-                {rooms.map(item => {
-                    return (
-                        <SubMenu key={item} title={item}>
-                            <Menu.Item key="u1"><Tag color="magenta">Owner</Tag>User 1</Menu.Item>
-                            <Menu.Item key="u2"><Tag color="green">Member</Tag>User 2</Menu.Item>
-                            <Menu.Item key="u3"><Tag color="green">Member</Tag>User 3</Menu.Item>
-                        </SubMenu>
-                    );
-                })
+                {
+                    Object.entries(rooms).map(([key, value]) => {
+                        console.log(value);
+                        return (
+                            <SubMenu key={value} title={value[0]}>
+                                {
+                                    value[1].map(item => {
+                                        if (value[1][0] === item) {
+                                            return <Menu.Item key={item}><Tag color="magenta">Owner</Tag>{item}
+                                            </Menu.Item>
+                                        }
+                                        return <Menu.Item key={item}><Tag color="green">Member</Tag>{item}</Menu.Item>
+                                    })
+                                }
+                            </SubMenu>
+                        )
+
+                    })
                 }
             </SubMenu>
         </Menu>
