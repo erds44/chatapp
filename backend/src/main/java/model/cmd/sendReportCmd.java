@@ -1,5 +1,6 @@
 package model.cmd;
 
+import com.google.gson.JsonObject;
 import org.eclipse.jetty.websocket.api.Session;
 import utility.Constant;
 
@@ -19,13 +20,17 @@ public class sendReportCmd extends ACmd {
      */
     @Override
     public void execute(Session userSession, Map<String, Object> request) {
-        String reportedName = (String) request.get("reportedName");
+        String reportedUsername = (String) request.get("reportedUsername");
+        String reportedReason = (String) request.get("reportedReason");
         //String room
 
         // find the admin
 
         // send to admin
-        sendWSMsg(userSession, Constant.REPORT, Constant.SYS_SR, "say hate!");
+        JsonObject jo = new JsonObject();
+        jo.addProperty("reportedUsername", reportedUsername);
+        jo.addProperty("reportedReason", reportedReason);
+        sendWSMsg(userSession, Constant.REPORT, Constant.SYS_SR, String.valueOf(jo));
     }
 
 }

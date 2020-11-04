@@ -3,11 +3,15 @@ import React, { useState } from "react";
 import webSocket from "../../websocket/Websocket";
 import { Radio, Input } from 'antd';
 import './reportForm.css'
+import {reportReasons} from './constant'
 
 const ReportForm = () => {
 
     const [visible, setVisible] = useState(true);
-    const [value, setValue] = useState(1);
+    const [value, setValue] = useState(-1);
+    const [checkedReason, setCheckedReason] = useState("No specific Reason");
+    const [reasonMore, setReasonMore] = useState(null);
+    const [okButtonDisabled, setOkButtonDisabled]  = useState(true);
 
     const handleOk = e => {
         setVisible(false);
@@ -16,8 +20,9 @@ const ReportForm = () => {
             JSON.stringify({
                     command: "report",
                     body: {
-                        reportedName: "test",
-                        room: "1"
+                        reportedUsername: "user1",
+                        reportedReason: checkedReason,
+                        room: "1",
                     }
                 }
             )
@@ -30,9 +35,20 @@ const ReportForm = () => {
 
     const onChange = e => {
         console.log('radio checked', e.target.value);
+        setOkButtonDisabled(false);
         setValue(e.target.value);
+        if (e.target.value === 3) {
+            setCheckedReason(reasonMore);
+        }
+        else {
+            setCheckedReason(reportReasons[e.target.value]);
+        }
     };
 
+    const onChangeInput = e => {
+        console.log('input', e.target.value);
+        setReasonMore(e.target.value);
+    };
 
     return (
         <div>
@@ -41,21 +57,22 @@ const ReportForm = () => {
                 visible={visible}
                 onOk={handleOk}
                 onCancel={handleCancel}
+                okButtonProps={{disabled: okButtonDisabled}}
             >
                 <p>Please Choose Your Reasons</p>
                 <Radio.Group class="radio-group" onChange={onChange} value={value}>
+                    <Radio  class="radio-option" value={0}>
+                        {reportReasons[0]}
+                    </Radio>
                     <Radio  class="radio-option" value={1}>
-                        Option A
+                        {reportReasons[1]}
                     </Radio>
                     <Radio  class="radio-option" value={2}>
-                        Option B
+                        {reportReasons[2]}
                     </Radio>
                     <Radio  class="radio-option" value={3}>
-                        Option C
-                    </Radio>
-                    <Radio  class="radio-option" value={4}>
                         More...
-                        {value === 4 ? <Input style={{ width: 100, marginLeft: 10 }} /> : null}
+                        {value === 3 ? <Input style={{ width: 100, marginLeft: 10 }} onChange={onChangeInput} /> : null}
                     </Radio>
                 </Radio.Group>
             </Modal>

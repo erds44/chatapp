@@ -1,28 +1,34 @@
 import { Modal, Button } from 'antd';
-import React, { useState } from "react";
-import webSocket from "../../websocket/Websocket";
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux'
 
 const ReportAdminForm = (props) => {
-    const {visible, reason} = props.reportStore;
-    const handleOk = e => {
+    const {isReportAdminVisible, reportedReason, reportedUsername} = props.reportStore;
+    const [visible, setVisible] = useState(false);
 
+    useEffect(() => {
+        setVisible(isReportAdminVisible);
+    })
+    const handleOk = e => {
+        setVisible(false);
     };
 
     const handleCancel = e => {
-
+        setVisible(false);
     };
 
     return (
         <div>
             <Modal
-                title="Report"
+                title="Handle Report Message"
                 visible={visible}
                 onOk={handleOk}
                 onCancel={handleCancel}
+                okText={"Approve"}
+                cancelText={"Disapprove"}
             >
-                <p>Please Choose Your Reasons</p>
-                <p>{reason}</p>
+                <p>Reported User: {reportedUsername}</p>
+                <p>{reportedReason}</p>
             </Modal>
         </div>
     );

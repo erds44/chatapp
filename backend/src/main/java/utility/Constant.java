@@ -17,5 +17,4 @@ public class Constant {
     public static final String INTERESTS = "interests";
     public static final String SYS_SR = "sr";
     public static final String SYS_ERR = "err";
-
 }

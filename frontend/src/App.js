@@ -22,9 +22,6 @@ const App = (props) => {
     webSocket.onmessage = (message) => {
       console.log(message);
       props.onMessage(message);
-
-
-
     }
 
     return (

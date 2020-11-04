@@ -15,7 +15,8 @@ export const onMessage = (messages) =>
         }
     }
     else if (data.request === "report") {
-        dispatch({ type: ON_REPORT, payload: {reportedName: "test", reason: data.body}});
+        const body = JSON.parse(data.body)
+        dispatch({ type: ON_REPORT, payload: {reportedUsername: body.reportedUsername, reportedReason:body.reportedReason}});
     }
     else {  
         dispatch({ type: ON_MESSAGE, payload: messages.data });
