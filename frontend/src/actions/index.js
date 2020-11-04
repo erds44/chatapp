@@ -1,9 +1,9 @@
 import {message} from 'antd';
-import {SIGN_IN, SIGN_OUT, ON_MESSAGE, CREATE_ROOM, ROOM} from './type';
+import {SIGN_IN, SIGN_OUT, ON_MESSAGE, CREATE_ROOM, ROOM, ON_REPORT} from './type';
 
 var mesId = 0;
 
-export const onMessage = (messages) =>
+export const onMessage = (messages) => 
     dispatch => {
         const data = JSON.parse(messages.data);
         // if (data.request === "login") {
@@ -34,7 +34,14 @@ export const onMessage = (messages) =>
                     }
                 });
                 break;
+            case "report": 
+                console.log(data.msg);
+                const body = JSON.parse(data.msg);
+                console.log(body);
+                dispatch({ type: ON_REPORT, payload: {reportedUsername: body.reportedUsername, reportedReason:body.reportedReason}});
+                break;
             default:
                 break;
         }
     };
+

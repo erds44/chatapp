@@ -4,6 +4,7 @@ import loginReducer from './loginReducer';
 import messageReducer from './messageReducer';
 import userListReducer from './userListReducer';
 import roomReducer from "./roomReducer";
+import reportReducer from "./reportReducer";
 
 
 export default combineReducers({
@@ -11,4 +12,5 @@ export default combineReducers({
   message: messageReducer,
   userList: userListReducer,
   room: roomReducer,
+  report: reportReducer
 });

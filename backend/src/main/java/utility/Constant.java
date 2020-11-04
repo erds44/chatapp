@@ -5,7 +5,6 @@ package utility;
  */
 public class Constant {
     public static final String USERNAME_USED = "Username already used!";
-    public static final String LOGIN_SR = "Log in successfully!";
     public static final String CHATROOM_USED = "Chatroom name already used!";
     public static final String CHATROOM_CREATED = "Chatroom created successfully!";
     public static final String CHATROOM_EXIT = "Chatroom exits successfully!";
@@ -20,6 +19,8 @@ public class Constant {
     public static final String REQUEST_EXITALLROOM ="exitAllRoom";
     public static final String REQUEST_UPDATEALLROOM ="updateAllRoom";
     public static final String REQUEST_UPDATEUSERLIST ="updateUserList";
+    public static final String REQUEST_REPORTUSER ="reportUser";
+    public static final String REPORT ="report";
     public static final String NAME = "name";
     public static final String ROOM = "room";
     public static final String LOGIN = "login";

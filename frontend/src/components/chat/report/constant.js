@@ -1,0 +1,1 @@
+export const reportReasons = ["Sexual Content", "Violent or repulsive content", "Spam or misleading"];
