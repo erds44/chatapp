@@ -21,7 +21,7 @@ export const onMessage = (messages) =>
             case "room":
                 dispatch({
                     type: ROOM,
-                    payload: {request: data.request, type: data.type, msg: data.msg, body: data.body}
+                    payload: {request: data.request, type: data.type, msg: data.msg, param1: data.param1, param2: data.param2}
                 });
                 break;
             default:

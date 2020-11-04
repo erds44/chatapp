@@ -5,6 +5,7 @@ import model.DispatchAdapter;
 import model.User;
 import org.eclipse.jetty.websocket.api.Session;
 import utility.Constant;
+import utility.Debug;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,7 +32,7 @@ public class CreateRoomCmd extends ACmd {
         String userName = "123"; // TODO: login first
         // String userName = getUser(userSession);
         if(DispatchAdapter.chatRoomName2ChatRoom.containsKey(roomName)){
-            sendWSMsg(userSession, "room", Constant.REQUEST_CREATEROOM, Constant.SYS_ERR, Constant.CHATROOM_USED, null);
+            sendWSMsg(userSession, "room", Constant.REQUEST_CREATEROOM, Constant.SYS_ERR, Constant.CHATROOM_USED);
             return;
         }
         List<String> requirement = null;
@@ -40,15 +41,18 @@ public class CreateRoomCmd extends ACmd {
         }
         ChatRoom room = new ChatRoom(roomName, userName,requirement);
         DispatchAdapter.chatRoomName2ChatRoom.put(roomName, room);
-        DispatchAdapter.chatRoomName2listUser.put(roomName, List.of(userName));
+        DispatchAdapter.chatRoomName2listUser.put(roomName, new ArrayList<>());
+        DispatchAdapter.chatRoomName2listUser.get(roomName).add(userName);
         // to be deleted
         if(!DispatchAdapter.userName2chatRoomName.containsKey(userName)){
             DispatchAdapter.userName2chatRoomName.put(userName, new ArrayList<>());
         }
+
         DispatchAdapter.userName2chatRoomName.get(userName).add(roomName);
         sendWSMsg(userSession,Constant.ROOM, Constant.REQUEST_CREATEROOM, Constant.SYS_SR, Constant.CHATROOM_CREATED, roomName);
         sendWSMsg(userSession, Constant.ROOM, Constant.REQUEST_UPDATEALLROOM, Constant.SYS_SR, null, DispatchAdapter.chatRoomName2ChatRoom.keySet().toString());
         // TODO: update rooms for other sessions
+        Debug.printMap(DispatchAdapter.userName2chatRoomName, "create");
     }
 
 }

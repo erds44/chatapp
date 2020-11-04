@@ -22,7 +22,7 @@ public class LoginCmd extends ACmd {
         // TODO： replce string with constant
         String userName = (String)request.get(Constant.NAME);
         if (DispatchAdapter.session2userName.containsValue(userName)) {
-            sendWSMsg(userSession, "login", "login", Constant.SYS_ERR, Constant.USERNAME_USED, null);
+            sendWSMsg(userSession, "login", "login", Constant.SYS_ERR, Constant.USERNAME_USED);
             return;
         }
         User user = new User(userName, (String) request.get("School"), (ArrayList<String>)request.get("interests"), 10);

@@ -35,7 +35,7 @@ public class LeaveAllRoomCmd extends ACmd {
             }
         }
         DispatchAdapter.userName2chatRoomName.get(userName).clear();
-        sendWSMsg(userSession, Constant.ROOM, Constant.REQUEST_EXITALLROOM, Constant.SYS_SR, Constant.CHATROOM_EXITALL, null);
+        sendWSMsg(userSession, Constant.ROOM, Constant.REQUEST_EXITALLROOM, Constant.SYS_SR, Constant.CHATROOM_EXITALL);
     }
 
 }

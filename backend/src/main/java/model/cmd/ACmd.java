@@ -36,13 +36,16 @@ public abstract class ACmd {
      *
      * @param session user session
      */
-    protected void sendWSMsg(Session session, String section, String command, String type, String msg, String body) {
+    protected void sendWSMsg(Session session, String section, String command, String type, String msg, String ... body) {
+        int param = 1;
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("section", section);
         jsonObject.addProperty("request", command);
         jsonObject.addProperty("type", type);
         jsonObject.addProperty("msg", msg);
-        jsonObject.addProperty("body", body);
+        for(String parameter : body){
+            jsonObject.addProperty("param" + param++, parameter);
+        }
         try {
             session.getRemote().sendString(String.valueOf(jsonObject));
         } catch (Exception e) {

@@ -34,12 +34,7 @@ const Room = (props) => {
     useEffect(() => {
         if (room.request != null) {
             if(room.request === "updateAllRoom"){
-                console.log(room.body);
-                let str = room.body.replace('[', '').replace(']','');
-
-
-
-                //console.log(room.body.substring(1, room.body.length - 1))
+                let str = room.param1.replace('[', '').replace(']','');
                 setAllRooms(str.split(","));
                 return ;
             }
@@ -49,16 +44,16 @@ const Room = (props) => {
                 Modal.success({content: room.msg});
                 switch (room.request) {
                     case "createRoom":
-                        addRoom(room.body);
+                        addRoom(room.param1);
                         break;
                     case "exitRoom":
-                        exitRoom(room.body);
+                        exitRoom(room.param1);
                         break;
                     case "exitAllRoom":
                         exitAll();
                         break;
                     case "joinRoom":
-                        addRoom(room.body);
+                        addRoom(room.param1);
                         break;
                     default:
                         break;

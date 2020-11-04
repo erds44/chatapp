@@ -4,6 +4,7 @@ import model.DispatchAdapter;
 import model.User;
 import org.eclipse.jetty.websocket.api.Session;
 import utility.Constant;
+import utility.Debug;
 
 import java.util.List;
 import java.util.Map;
@@ -43,8 +44,8 @@ public class JoinRoomCmd extends ACmd {
 //                return;
 //            }
 //        }
-        if(DispatchAdapter.chatRoomName2listUser.get(roomName).contains(userName)){
-            sendWSMsg(userSession, Constant.ROOM, Constant.REQUEST_JOINROOM, Constant.SYS_ERR, Constant.CHATROOM_JOINED, null);
+        if(DispatchAdapter.userName2chatRoomName.get(userName).contains(roomName)){
+            sendWSMsg(userSession, Constant.ROOM, Constant.REQUEST_JOINROOM, Constant.SYS_ERR, Constant.CHATROOM_JOINED);
             return;
         }
         DispatchAdapter.userName2chatRoomName.get(userName).add(roomName);
