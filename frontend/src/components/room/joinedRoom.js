@@ -16,7 +16,7 @@ const JoinedRoom = (props) => {
                 {
                     Object.entries(rooms).map(([key, value]) => {
                         return (
-                            <SubMenu key={value[0]} title={value[0]}>
+                            <SubMenu key={value[0]} title={value[0]} >
                                 {
                                     value[1].map(item => {
                                         if (value[1][0] === item) {
@@ -40,6 +40,8 @@ const JoinedRoom = (props) => {
             </SubMenu>
         </Menu>
     );
+
+
 
 
 }

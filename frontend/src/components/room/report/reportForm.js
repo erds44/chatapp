@@ -11,7 +11,7 @@ const ReportForm = (props) => {
     const [okButtonDisabled, setOkButtonDisabled]  = useState(true);
     const {report, setReport} = props;
 
-    const handleOk = e => {
+    const handleOk = () => {
        setReport({...report, visible: false})
         webSocket.send(
             JSON.stringify({
@@ -26,8 +26,8 @@ const ReportForm = (props) => {
         )
     };
 
-    const handleCancel = e => {
-        setReport([...report, {visible: false}])
+    const handleCancel = () => {
+        setReport({...report, visible: false})
     };
 
     const onChange = e => {

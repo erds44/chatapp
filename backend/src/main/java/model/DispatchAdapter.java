@@ -84,6 +84,7 @@ public class DispatchAdapter {
                 break;
             case "joinRoom":
                 cmd = new JoinRoomCmd();
+                break;
             case "report":
                 cmd = new sendReportCmd();
                 break;

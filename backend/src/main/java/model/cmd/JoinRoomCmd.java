@@ -24,9 +24,11 @@ public class JoinRoomCmd extends ACmd {
      */
     @Override
     public void execute(Session userSession, Map<String, Object> request) {
+        System.out.println("catch");
+
         String userName = getUser(userSession);
         if(DispatchAdapter.chatRoomBanList.contains(userName)){
-            sendWSMsg(userSession, Constant.ROOM, Constant.REQUEST_JOINROOM, Constant.SYS_ERR, Constant.CHATROOM_BAN, null);
+            sendWSMsg(userSession, Constant.ROOM, Constant.REQUEST_JOINROOM, Constant.SYS_ERR, Constant.CHATROOM_BAN);
             return;
         }
         String roomName = (String) request.get(Constant.NAME);
@@ -39,7 +41,7 @@ public class JoinRoomCmd extends ACmd {
                 }
             }
             if(!qualified){
-                sendWSMsg(userSession, Constant.ROOM, Constant.REQUEST_JOINROOM, Constant.SYS_ERR, Constant.CHATROOM_JOINFALIURE, null);
+                sendWSMsg(userSession, Constant.ROOM, Constant.REQUEST_JOINROOM, Constant.SYS_ERR, Constant.CHATROOM_JOINFALIURE);
                 return;
             }
         }

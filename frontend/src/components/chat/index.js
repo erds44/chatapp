@@ -43,10 +43,14 @@ const Chat = (props) => {
         setAllMessages({...allMessages});
     }
 
+
+
+
+
     return (
         <Layout style={{height: '100vh'}}>
             <Sider width='300px' theme='light'>
-                <Room/>
+                <Room />
             </Sider>
             <Layout>
                 <Header style={{padding: 0, backgroundColor: 'white', borderLeft: '2px solid rgba(0, 0, 0, 0.06)'}}>

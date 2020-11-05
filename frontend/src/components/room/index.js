@@ -24,7 +24,6 @@ const Index = (props) => {
     }
     const addRoom = (key, value) => {
         setJoinedRooms([...joinedRooms, [key, value]])
-
     }
     const exitRoom = roomName => {
         let r = joinedRooms.filter(x => x[0] !== roomName)
@@ -34,7 +33,6 @@ const Index = (props) => {
     const updateUserList = (key, value) => {
         let r = joinedRooms.filter(x => x[0] !== key)
         setJoinedRooms([...r, [key,value]])
-        console.log(joinedRooms)
     }
     const handleClick = (e) => {
         if (e.key === "create") {
@@ -88,8 +86,8 @@ const Index = (props) => {
             <ExitAllRooms/>
             <JoinedRoom rooms={getJoinedRooms} setReport={setReport}/>
             <AllRooms allRooms={getAllRooms}/>
-            <ReportForm report={report} setReport={setReport}/>
-            <ReportAdminForm/>
+            {/*<ReportForm report={report} setReport={setReport}/>*/}
+            {/*<ReportAdminForm/>*/}
         </Menu>
 
 
