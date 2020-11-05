@@ -25,12 +25,6 @@ public class DispatchAdapter {
     public static Map<String, List<String>> userName2chatRoomName = new ConcurrentHashMap<>();
     public static Map<String, ChatRoom> chatRoomName2ChatRoom = new ConcurrentHashMap<>();
     public static Map<String, List<String>> chatRoomName2listUser = new ConcurrentHashMap<>();
-
-
-
-
-
-
     public static Map<String, List<String>> userName2blockList = new ConcurrentHashMap<>();
     public static List<String> chatRoomBanList = new CopyOnWriteArrayList<>();
 
@@ -59,7 +53,7 @@ public class DispatchAdapter {
      * @param user    user
      * @param request request body
      */
-    public void process(Session user, String request) {
+    public synchronized void process(Session user, String request) {
         System.out.println(request);
         JsonObject jRequest = new JsonParser().parse(request).getAsJsonObject();
         String command = jRequest.get("command").getAsString();

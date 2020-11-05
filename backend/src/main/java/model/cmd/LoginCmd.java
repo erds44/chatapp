@@ -8,6 +8,7 @@ import utility.Constant;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import static j2html.TagCreator.p;
 
@@ -29,7 +30,7 @@ public class LoginCmd extends ACmd {
         DispatchAdapter.session2userName.put(userSession, userName);
         DispatchAdapter.userName2session.put(userName, userSession);
         DispatchAdapter.userName2user.put(userName, user);
-        DispatchAdapter.userName2chatRoomName.put(userName, new ArrayList<>());
+        DispatchAdapter.userName2chatRoomName.put(userName, new CopyOnWriteArrayList<>());
         sendWSMsg(userSession, Constant.LOGIN, Constant.LOGIN, Constant.SYS_SR, null);
         sendWSMsg(userSession, Constant.ROOM, Constant.ROOM, Constant.SYS_SR, Constant.LOGIN_SR);
         sendWSMsg(userSession, Constant.ROOM, Constant.REQUEST_UPDATEALLROOM, Constant.SYS_SR, null, DispatchAdapter.chatRoomName2ChatRoom.keySet().toString());

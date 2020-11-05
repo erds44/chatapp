@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Login model.cmd create the user and stored in dispatchAdapter map.
@@ -70,7 +71,7 @@ public class CreateRoomCmd extends ACmd {
         }
         ChatRoom room = new ChatRoom(roomName, userName, requirement);
         DispatchAdapter.chatRoomName2ChatRoom.put(roomName, room);
-        DispatchAdapter.chatRoomName2listUser.put(roomName, new ArrayList<>());
+        DispatchAdapter.chatRoomName2listUser.put(roomName, new CopyOnWriteArrayList<>());
         DispatchAdapter.chatRoomName2listUser.get(roomName).add(userName);
     }
 

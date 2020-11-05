@@ -32,6 +32,7 @@ public class LeaveRoomCmd extends ACmd {
     private void dismissChatRoom(String chatRoomName) {
         // update joined rooms
         for (String user : DispatchAdapter.chatRoomName2listUser.get(chatRoomName)) {
+            DispatchAdapter.userName2chatRoomName.get(user).remove(chatRoomName);
             Session session = DispatchAdapter.userName2session.get(user);
             sendWSMsg(session, Constant.ROOM, Constant.REQUEST_EXITROOM, Constant.SYS_SR, chatRoomName + " is dismissed", chatRoomName);
         }

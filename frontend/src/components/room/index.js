@@ -18,10 +18,6 @@ const Index = (props) => {
     const getAllRooms = useMemo(() => allRooms, [allRooms])
     const getJoinedRooms = useMemo(() => joinedRooms, [joinedRooms])
     const [report, setReport] = useState({visible: false, reportRoom: null, reportName: null})
-
-    const exitAll = () => {
-        setJoinedRooms([])
-    }
     const addRoom = (key, value) => {
         setJoinedRooms([...joinedRooms, [key, value]])
     }
@@ -65,12 +61,8 @@ const Index = (props) => {
                     case "exitRoom":
                         exitRoom(room.param1);
                         break;
-                    case "exitAllRoom":
-                        exitAll();
-                        break;
                     default:
                         break;
-
                 }
             }
         }
@@ -86,8 +78,8 @@ const Index = (props) => {
             <ExitAllRooms/>
             <JoinedRoom rooms={getJoinedRooms} setReport={setReport}/>
             <AllRooms allRooms={getAllRooms}/>
-            {/*<ReportForm report={report} setReport={setReport}/>*/}
-            {/*<ReportAdminForm/>*/}
+            <ReportForm report={report} setReport={setReport}/>
+            <ReportAdminForm/>
         </Menu>
 
 
