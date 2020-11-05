@@ -11,37 +11,11 @@ import ReportAdminForm from "../room/report/reportAdminForm";
 const {Header, Content, Footer, Sider} = Layout;
 const Chat = (props) => {
     const history = useHistory();
-    const [allMessages, setAllMessages] = useState({
-        'Chat Room 1': [
-            {
-                'id': 1,
-                'sender': 'Xiao Xia',
-                'text': 'This is the first message for chat room 1',
-                'time': '2020-10-29 08:00:00'
-            },
-            {
-                'id': 2,
-                'sender': 'Zhijian Yao',
-                'text': 'This is the second message for chat room 1',
-                'time': '2020-10-29 08:05:00'
-            },
-            {
-                'id': 3,
-                'sender': 'Weiwei Zhou',
-                'text': 'This is the third message for chat room 1',
-                'time': '2020-10-29 08:15:30'
-            }
-        ]
-    });
     const userMap = {
-        'Chat Room 1': ["Xiao Xia", "Zhijian Yao", "Weiwei Zhou"]
+        'CR1': ["Xiao Xia", "Zhijian Yao", "Weiwei Zhou"]
     };
-    const selectedChatRoom = 'Chat Room 1';
+    const selectedChatRoom = 'CR1';
     const currentUser = { name: 'Xiao Xia' };
-    const handleMessageDelete = ( messageId, chatRoom) => {
-        allMessages[chatRoom] = allMessages[chatRoom].filter((m) => m.id !== messageId);
-        setAllMessages({...allMessages});
-    }
 
 
 
@@ -68,9 +42,7 @@ const Chat = (props) => {
                             <div className="site-layout-background"
                                  style={{ minHeight: 360, height: '100%' }}>
                                 <ChatArea
-                                    inputMessages={allMessages[selectedChatRoom]}
                                     chatRoom={selectedChatRoom}
-                                    onMessageDelete={handleMessageDelete}
                                 />
                             </div>
                         </Col>

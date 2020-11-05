@@ -3,23 +3,14 @@ import { Row } from "antd";
 import ChatMessage from "./ChatMessage";
 import "./ChatMessages.css";
 
-const ChatMessages = ({ inputMessages, onMessageDelete }) => {
-  const [messages, setMessages] = useState(inputMessages);
-  useEffect(() => {
-    if (inputMessages) {
-      setMessages(inputMessages);
-    }
-  }, [inputMessages]);
+const ChatMessages = ({ inputMessages }) => {
   return (
     <article id={"chat-messages"}>
-      {messages &&
-        messages.map(message => {
+      {inputMessages &&
+        inputMessages.map(message => {
           return (
             <Row className="message">
-              <ChatMessage
-                message={message}
-                onMessageDelete={onMessageDelete}
-              />
+              <ChatMessage message={message} />
             </Row>
           );
         })}

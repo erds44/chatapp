@@ -35,7 +35,7 @@ export const onMessage = (messages) =>
                     }
                 });
                 break;
-            case "report": 
+            case "report":
                 //console.log(data.msg);
                 const body = JSON.parse(data.msg);
                 //console.log(body);
@@ -45,6 +45,11 @@ export const onMessage = (messages) =>
                         reportedRoom: body.reportedRoom
                 }});
                 break;
+            case "message": {
+                const { type } = JSON.parse(data.payload);
+                dispatch({ type, payload: data.payload });
+                break;
+            }
             default:
                 break;
         }
