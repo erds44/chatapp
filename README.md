@@ -30,7 +30,7 @@ Chat Message
 - [ ] detect the hate word and ban the user
 - [ ] message could include images & emojis
 
-Room  
+Index  
 - [x] create room check for duplicates  
 - [ ] complete onFinish (returns room name, interest)
 - [ ] generate joined room with user

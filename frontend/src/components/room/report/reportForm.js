@@ -5,23 +5,21 @@ import { Radio, Input } from 'antd';
 import './reportForm.css'
 import {reportReasons} from './constant'
 
-const ReportForm = () => {
-
-    const [visible, setVisible] = useState(true);
+const ReportForm = (props) => {
     const [value, setValue] = useState(undefined);
     const [checkedReason, setCheckedReason] = useState("");
     const [okButtonDisabled, setOkButtonDisabled]  = useState(true);
+    const {report, setReport} = props;
 
     const handleOk = e => {
-        setVisible(false);
-
+       setReport({...report, visible: false})
         webSocket.send(
             JSON.stringify({
                     command: "report",
                     body: {
-                        reportedUsername: "user1",
+                        reportedUsername: report.reportName,
                         reportedReason: checkedReason,
-                        room: "1",
+                        room: report.reportRoom,
                     }
                 }
             )
@@ -29,7 +27,7 @@ const ReportForm = () => {
     };
 
     const handleCancel = e => {
-        setVisible(false);
+        setReport([...report, {visible: false}])
     };
 
     const onChange = e => {
@@ -54,7 +52,7 @@ const ReportForm = () => {
         <div>
             <Modal
                 title="Report"
-                visible={visible}
+                visible={report.visible}
                 onOk={handleOk}
                 onCancel={handleCancel}
                 okButtonProps={{disabled: okButtonDisabled}}

@@ -3,13 +3,13 @@ import {Layout, Row, Col} from 'antd'
 import {Button, Popover} from 'antd'
 import {useHistory} from 'react-router-dom'
 import ChatArea from "./chat-area/ChatArea";
-import Room from "../room/room";
+import Room from "../room";
 import UserList from "./userList";
-import ReportForm from "./report/reportForm";
-import ReportAdminForm from "./report/reportAdminForm";
+import ReportForm from "../room/report/reportForm";
+import ReportAdminForm from "../room/report/reportAdminForm";
 
 const {Header, Content, Footer, Sider} = Layout;
-const Chat = (props, ref) => {
+const Chat = (props) => {
     const history = useHistory();
     const [allMessages, setAllMessages] = useState({
         'Chat Room 1': [
@@ -46,7 +46,7 @@ const Chat = (props, ref) => {
     return (
         <Layout style={{height: '100vh'}}>
             <Sider width='300px' theme='light'>
-                <Room handleCreateRoom={props.handleCreateRoom}/>
+                <Room/>
             </Sider>
             <Layout>
                 <Header style={{padding: 0, backgroundColor: 'white', borderLeft: '2px solid rgba(0, 0, 0, 0.06)'}}>
@@ -72,12 +72,12 @@ const Chat = (props, ref) => {
                         </Col>
                         <Col span={7} style={{borderLeft: '2px solid rgba(0, 0, 0, 0.06)'}}>
                             {UserList()}
-                            {ReportForm()}
+                            {/*{ReportForm()}*/}
                         </Col>
                     </Row>
                 </Content>
                 {/*TEMP FOR Report*/}
-                <ReportAdminForm></ReportAdminForm>
+                {/*<ReportAdminForm report={report}/>*/}
                 <Footer style={{textAlign: 'center'}}>Chat App ©2020 Created by Summy the Owl</Footer>
             </Layout>
         </Layout>

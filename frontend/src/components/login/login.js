@@ -61,7 +61,7 @@ const Login = (props) => {
     }, [logIn])
 
     return (
-        <Card title="Login Chat Room" style={{width: '600px', margin: '80px auto'}}
+        <Card title="Login Chat Index" style={{width: '600px', margin: '80px auto'}}
               headStyle={{fontSize: '30px', backgroundColor: '#d9d9d9'}}
               bodyStyle={{backgroundColor: '#f5f5f5'}}>
             <Form {...layout} name="nest-messages" onFinish={onFinish} validateMessages={validateMessages}>

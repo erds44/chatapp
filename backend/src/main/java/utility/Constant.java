@@ -5,6 +5,7 @@ package utility;
  */
 public class Constant {
     public static final String USERNAME_USED = "Username already used!";
+    public static final String LOGIN_SR = "login successfully!";
     public static final String CHATROOM_USED = "Chatroom name already used!";
     public static final String CHATROOM_CREATED = "Chatroom created successfully!";
     public static final String CHATROOM_EXIT = "Chatroom exits successfully!";

@@ -4,11 +4,14 @@ import { connect } from 'react-redux'
 
 const ReportAdminForm = (props) => {
     const {isReportAdminVisible, reportedReason, reportedUsername} = props.reportStore;
+    // dont need props.reportStore, access isReportAdminVisible by report.isReportAdminVisible
+    const {report} = props;
     const [visible, setVisible] = useState(false);
 
     useEffect(() => {
         setVisible(isReportAdminVisible);
-    })
+    }, [report])
+
     const handleOk = e => {
         setVisible(false);
     };
@@ -39,4 +42,4 @@ const mapStateToProps = (state, ownProps) => {
     return { reportStore: state.report }
 };
 
-export default connect(mapStateToProps)(ReportAdminForm);
+export default connect(mapStateToProps, {})(ReportAdminForm);

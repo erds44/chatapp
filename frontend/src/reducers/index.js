@@ -12,5 +12,5 @@ export default combineReducers({
   message: messageReducer,
   userList: userListReducer,
   room: roomReducer,
-  report: reportReducer
+  report: reportReducer,
 });

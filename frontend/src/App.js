@@ -12,7 +12,6 @@ import { connect } from 'react-redux'
 const history = createBrowserHistory();
 
 const App = (props) => {
-    const handleCreateRoom = useRef();
     const {dispatch, message} = props;
 
     webSocket.onopen = () => {
@@ -29,7 +28,7 @@ const App = (props) => {
        <Router history={history}>
         <Switch>
           <Route path="/" exact component={Login} />
-          <Route path="/chat" exact component={Chat} handleCreationRoom = {handleCreateRoom} />
+          <Route path="/chat" exact component={Chat}/>
         </Switch>
       </Router> 
     </div>

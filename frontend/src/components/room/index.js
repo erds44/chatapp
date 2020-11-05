@@ -7,14 +7,18 @@ import ExitAllRooms from "./exitAllRooms";
 import AllRooms from "./allRooms";
 import webSocket from "../websocket/Websocket";
 import {connect} from "react-redux";
+import ReportForm from "./report/reportForm";
+import ReportAdminForm from "./report/reportAdminForm";
 
-const Room = (props) => {
+const Index = (props) => {
     const {room} = props;
     const [joinedRooms, setJoinedRooms] = useState(() => []);
     const [allRooms, setAllRooms] = useState(() => []);  //global
     const [visible, setVisible] = useState(false);
     const getAllRooms = useMemo(() => allRooms, [allRooms])
     const getJoinedRooms = useMemo(() => joinedRooms, [joinedRooms])
+    const [report, setReport] = useState({visible: false, reportRoom: null, reportName: null})
+
     const exitAll = () => {
         setJoinedRooms([])
     }
@@ -45,10 +49,10 @@ const Room = (props) => {
                 setAllRooms(str.split(","));
                 return;
             } else if (room.request === "updateUserList") {
-                // let roomName = room.param1;
-                // let list = room.param2.replace('[', '').replace(']', '');
-                // updateUserList(roomName, list.split(","));
-                // return;
+                let roomName = room.param1;
+                let list = room.param2.replace('[', '').replace(']', '');
+                updateUserList(roomName, list.split(","));
+                return;
             }
             if (room.type === "err") Modal.error({content: room.msg})
             else {
@@ -59,12 +63,6 @@ const Room = (props) => {
                         let roomName = room.param1;
                         let list = room.param2.replace('[', '').replace(']', '');
                         addRoom(roomName, list.split(","));
-                        break;
-                    case "updateUserList":
-                        let chatRoom = room.param1;
-                        let userList = room.param2.replace('[', '').replace(']', '');
-                        updateUserList(chatRoom, userList.split(","));
-
                         break;
                     case "exitRoom":
                         exitRoom(room.param1);
@@ -86,13 +84,12 @@ const Room = (props) => {
             <Menu.Item key="create">
                 <CreateRoom visible={visible} setVisible={setVisible}/>
             </Menu.Item>
-            <ExitRoom joinedRooms={getJoinedRooms}/>
+            <ExitRoom joinedRooms={getJoinedRooms} />
             <ExitAllRooms/>
-            <JoinedRoom rooms={getJoinedRooms}/>
+            <JoinedRoom rooms={getJoinedRooms} setReport={setReport}/>
             <AllRooms allRooms={getAllRooms}/>
-            {/*test method*/}
-            {/*<Menu.Item onClick={() => {setAllRooms([...allRooms, "123"]);}}>Add all rooms</Menu.Item>*/}
-            {/*<Menu.Item onClick={() => {setJoinedRooms([...joinedRooms, "456"]);}}>Add joined rooms</Menu.Item>*/}
+            <ReportForm report={report} setReport={setReport}/>
+            <ReportAdminForm/>
         </Menu>
 
 
@@ -102,4 +99,4 @@ const mapStateToProps = (state, ownProps) => {
     return {room: state.room}
 };
 
-export default connect(mapStateToProps, {})(Room);
+export default connect(mapStateToProps, {})(Index);
