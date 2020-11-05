@@ -32,9 +32,9 @@ Chat Message
 
 Index  
 - [x] create room check for duplicates  
-- [ ] complete onFinish (returns room name, interest)
-- [ ] generate joined room with user
-- [ ] generate all rooms
+- [x] complete onFinish (returns room name, interest)
+- [x] generate joined room with user
+- [x] generate all rooms
 - [x] implement joining room
 - [x] implement existing room
 - [x] imeplement existing all rooms
