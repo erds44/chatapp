@@ -19,7 +19,7 @@ const ReportForm = (props) => {
                     body: {
                         reportedUsername: report.reportName,
                         reportedReason: checkedReason,
-                        room: report.reportRoom,
+                        reportedRoom: report.reportRoom,
                     }
                 }
             )

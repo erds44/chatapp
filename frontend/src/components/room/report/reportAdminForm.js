@@ -4,13 +4,11 @@ import { connect } from 'react-redux'
 
 const ReportAdminForm = (props) => {
     const {isReportAdminVisible, reportedReason, reportedUsername} = props.reportStore;
-    // dont need props.reportStore, access isReportAdminVisible by report.isReportAdminVisible
-    const {report} = props;
     const [visible, setVisible] = useState(false);
 
     useEffect(() => {
         setVisible(isReportAdminVisible);
-    }, [report])
+    }, [props.reportStore])
 
     const handleOk = e => {
         setVisible(false);
