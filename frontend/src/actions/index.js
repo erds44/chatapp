@@ -30,7 +30,8 @@ export const onMessage = (messages) =>
                         msg: data.msg,
                         param1: data.param1,
                         param2: data.param2,
-                        param3: data.param3
+                        param3: data.param3,
+                        param4: data.param4
                     }
                 });
                 break;

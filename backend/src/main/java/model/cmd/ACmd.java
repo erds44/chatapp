@@ -71,7 +71,7 @@ public abstract class ACmd {
             for(String room : joinedRooms){
                 userlist.add(DispatchAdapter.chatRoomName2listUser.get(room));
             }
-            sendWSMsg(session, Constant.ROOM, Constant.REQUEST_UPDATEALLROOM, Constant.SYS_SR, null, joinedRooms, userlist, allRooms);
+            sendWSMsg(session, Constant.ROOM, Constant.REQUEST_UPDATEALLROOM, Constant.SYS_SR, null, joinedRooms, userlist, allRooms, userName);
         }
     }
 
