@@ -82,6 +82,8 @@ public class DispatchAdapter {
             case "report":
                 cmd = new sendReportCmd();
                 break;
+            case "ban":
+                cmd = new BanCmd();
             default:
                 break;
         }
