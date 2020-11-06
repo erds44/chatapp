@@ -4,15 +4,15 @@ import moment from "moment";
 import "./ChatMessage.css";
 import colorHelper from "../../../helpers/color-user-helper";
 import { useSelector, useDispatch } from "react-redux";
-import {DELETE_MESSAGE} from "../../../actions/type";
+import { DELETE_MESSAGE, RECALL_MESSAGE, EDIT_MESSAGE } from "../../../actions/type";
 
-const ChatMessage = ({ message }) => {
+const ChatMessage = ({ message, onClickEdit }) => {
   const dispatch = useDispatch();
   const { id: messageId, text, time, sender } = message;
 
-  const user = { name: 'Xiao Xia' };
-  const chatRoom = 'CR1';
-  
+  const user = { name: "Xiao Xia" };
+  const chatRoom = "CR1";
+
   const isMyMessage = user.name === message.sender;
   const operationForMyMessage = ["edit", "delete", "recall"];
   const operationForOthersMessage = ["report"];
@@ -22,6 +22,7 @@ const ChatMessage = ({ message }) => {
     }
     switch (event.key) {
       case "edit": {
+        onClickEdit(message);
         break;
       }
       case "delete": {
@@ -31,13 +32,23 @@ const ChatMessage = ({ message }) => {
             messageId,
             chatRoom
           }
-        })
+        });
+        // TODO @Xiao web socket
         break;
       }
       case "recall": {
+        dispatch({
+          type: RECALL_MESSAGE,
+          payload: {
+            messageId,
+            chatRoom
+          }
+        });
+        // TODO @Xiao web socket
         break;
       }
       case "report": {
+        // TODO @Xiao web socket
         break;
       }
     }

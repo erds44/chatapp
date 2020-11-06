@@ -72,6 +72,7 @@ export default (state = INITIAL_STATE, action) => {
         if (m.id === messageId) {
           m.text = editedText;
         }
+        return m;
       });
       const newMessages = { ...messages };
       newMessages[chatRoom] = newChatRoomMessages;
