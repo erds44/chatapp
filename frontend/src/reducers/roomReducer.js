@@ -5,9 +5,9 @@ const INTIAL_STATE = {
     request: null,
     type: null,
     msg: null,
-    param1: null,
-    param2: null,
-    param3: null
+    joinedRoom: [],
+    userList: [[]],
+    allRooms: []
 };
 
 export default (state = INTIAL_STATE, action) => {
@@ -17,11 +17,35 @@ export default (state = INTIAL_STATE, action) => {
                 request: action.payload.request,
                 type: action.payload.type,
                 msg: action.payload.msg,
-                param1: action.payload.param1,
-                param2: action.payload.param2,
-                param3: action.payload.param3
+
+                joinedRoom: parse(action.payload.param1),
+                userList: parseNestedList(action.payload.param1, action.payload.param2),
+                allRooms: parse(action.payload.param3)
             };
         default:
             return state;
     }
 };
+
+const parse = (value)=>{
+    if(value){
+        return JSON.parse(value);
+    }
+}
+const parseNestedList = (param1, value) =>{
+    if(value) {
+        let length = JSON.parse(param1).length;
+        let list = []
+        let v = value.substring(1, value.length - 1)
+        for(let i = 0; i < length; i++){
+            let start = v.indexOf("[");
+            let end = v.indexOf("]");
+            let ele = v.substring(start + 1, end).split(",");
+            list.push(ele);
+            v = v.substring(end + 1);
+        }
+        return list;
+    }
+}
+
+

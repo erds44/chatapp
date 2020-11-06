@@ -30,31 +30,8 @@ public class LeaveAllRoomCmd extends ACmd {
             }
         }
         sendWSMsg(userSession, Constant.ROOM, Constant.REQUEST_EXITALLROOM, Constant.SYS_SR, Constant.CHATROOM_EXITALL);
+        updateAllSession();
     }
 
-    private void dismissChatRoom(String chatRoomName) {
-        // update joined rooms
-        for (String user : DispatchAdapter.chatRoomName2listUser.get(chatRoomName)) {
-            DispatchAdapter.userName2chatRoomName.get(user).remove(chatRoomName);
-            Session session = DispatchAdapter.userName2session.get(user);
-            sendWSMsg(session, Constant.ROOM, Constant.REQUEST_EXITROOM, Constant.SYS_SR, chatRoomName + " is dismissed", chatRoomName);
-        }
-        DispatchAdapter.chatRoomName2ChatRoom.remove(chatRoomName);
-        DispatchAdapter.chatRoomName2listUser.remove(chatRoomName);
-        // update all rooms
-        for (Session session : DispatchAdapter.session2userName.keySet()) {
-            sendWSMsg(session, Constant.ROOM, Constant.REQUEST_UPDATEALLROOM, Constant.SYS_SR, null, DispatchAdapter.chatRoomName2ChatRoom.keySet().toString());
-        }
-    }
-
-    private void userLeftChatRoom(Session userSession, String chatRoomName, String userName) {
-        DispatchAdapter.chatRoomName2listUser.get(chatRoomName).remove(userName);
-        for (String user : DispatchAdapter.chatRoomName2listUser.get(chatRoomName)) {
-            Session session = DispatchAdapter.userName2session.get(user);
-            sendWSMsg(session, Constant.ROOM, Constant.REQUEST_UPDATEUSERLIST, Constant.SYS_SR, null, chatRoomName, DispatchAdapter.chatRoomName2listUser.get(chatRoomName).toString());
-            // TODO: notify other session that a user left
-        }
-        sendWSMsg(userSession, Constant.ROOM, Constant.REQUEST_EXITROOM, Constant.SYS_SR, Constant.CHATROOM_EXIT, chatRoomName);
-    }
 
 }

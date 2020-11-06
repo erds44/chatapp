@@ -13,23 +13,13 @@ import ReportAdminForm from "./report/reportAdminForm";
 const Index = (props) => {
     const {room} = props;
     const [joinedRooms, setJoinedRooms] = useState(() => []);
+    const [userList, setUserList] = useState(() => [[]]);
     const [allRooms, setAllRooms] = useState(() => []);  //global
     const [visible, setVisible] = useState(false);
     const getAllRooms = useMemo(() => allRooms, [allRooms])
     const getJoinedRooms = useMemo(() => joinedRooms, [joinedRooms])
+    const getUserList = useMemo(() => userList, [userList])
     const [report, setReport] = useState({visible: false, reportRoom: null, reportName: null})
-    const addRoom = (key, value) => {
-        setJoinedRooms([...joinedRooms, [key, value]])
-    }
-    const exitRoom = roomName => {
-        let r = joinedRooms.filter(x => x[0] !== roomName)
-        setJoinedRooms(r);
-    }
-
-    const updateUserList = (key, value) => {
-        let r = joinedRooms.filter(x => x[0] !== key)
-        setJoinedRooms([...r, [key,value]])
-    }
     const handleClick = (e) => {
         if (e.key === "create") {
             setVisible(true);
@@ -37,34 +27,13 @@ const Index = (props) => {
     }
 
     useEffect(() => {
-        if (room.request != null) {
-            if (room.request === "updateAllRoom") {
-                let str = room.param1.replace('[', '').replace(']', '');
-                setAllRooms(str.split(","));
-                return;
-            } else if (room.request === "updateUserList") {
-                let roomName = room.param1;
-                let list = room.param2.replace('[', '').replace(']', '');
-                updateUserList(roomName, list.split(","));
-                return;
-            }
-            if (room.type === "err") Modal.error({content: room.msg})
-            else {
-                Modal.success({content: room.msg});
-                switch (room.request) {
-                    case "joinRoom" :
-                    case "createRoom":
-                        let roomName = room.param1;
-                        let list = room.param2.replace('[', '').replace(']', '');
-                        addRoom(roomName, list.split(","));
-                        break;
-                    case "exitRoom":
-                        exitRoom(room.param1);
-                        break;
-                    default:
-                        break;
-                }
-            }
+        if(room.msg == null){
+            setJoinedRooms(room.joinedRoom);
+            setUserList(room.userList);
+            setAllRooms(room.allRooms);
+        }else{
+            if(room.type === "err") Modal.error({content: room.msg});
+            else Modal.success({content: room.msg});
         }
     }, [room])
 
@@ -76,7 +45,7 @@ const Index = (props) => {
             </Menu.Item>
             <ExitRoom joinedRooms={getJoinedRooms} />
             <ExitAllRooms/>
-            <JoinedRoom rooms={getJoinedRooms} setReport={setReport}/>
+            <JoinedRoom joinedRooms={getJoinedRooms} userList={getUserList} setReport={setReport}/>
             <AllRooms allRooms={getAllRooms}/>
             <ReportForm report={report} setReport={setReport}/>
             <ReportAdminForm/>

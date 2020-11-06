@@ -24,7 +24,6 @@ public class JoinRoomCmd extends ACmd {
      */
     @Override
     public void execute(Session userSession, Map<String, Object> request) {
-        System.out.println("catch");
 
         String userName = getUser(userSession);
         if(DispatchAdapter.chatRoomBanList.contains(userName)){
@@ -51,14 +50,14 @@ public class JoinRoomCmd extends ACmd {
         }
         DispatchAdapter.userName2chatRoomName.get(userName).add(roomName);
         DispatchAdapter.chatRoomName2listUser.get(roomName).add(userName);
-        sendWSMsg(userSession, Constant.ROOM, Constant.REQUEST_JOINROOM, Constant.SYS_SR, Constant.CHATROOM_JOIN, roomName, DispatchAdapter.chatRoomName2listUser.get(roomName).toString());
+        sendWSMsg(userSession, Constant.ROOM, Constant.REQUEST_JOINROOM, Constant.SYS_SR, roomName + Constant.CHATROOM_JOIN);
         for(String user: DispatchAdapter.chatRoomName2listUser.get(roomName)){
             if(!user.equals(userName)) {
                 Session session = DispatchAdapter.userName2session.get(user);
-                sendWSMsg(session, Constant.ROOM, Constant.REQUEST_UPDATEUSERLIST, Constant.SYS_SR, userName + " joins the room!", roomName, DispatchAdapter.chatRoomName2listUser.get(roomName).toString());
+                sendWSMsg(session, Constant.ROOM, Constant.REQUEST_UPDATEUSERLIST, Constant.SYS_SR, userName + " joins the room!");
                 // TODO: notify all other session in chat
             }
-
         }
+        updateAllSession();
     }
 }

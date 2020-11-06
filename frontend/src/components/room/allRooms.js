@@ -11,7 +11,7 @@ const AllRooms = (props) => {
             JSON.stringify({
                     command: "joinRoom",
                     body: {
-                        name:values.key.replace(' ','')
+                        name: values.key.replace(' ', '')
                     }
                 }
             )
@@ -19,13 +19,17 @@ const AllRooms = (props) => {
     };
 
     return (
-        <Menu mode="inline" onClick={(e) => {onFinish(e)}}>
+        <Menu mode="inline" onClick={(e) => {
+            onFinish(e)
+        }}>
             <SubMenu key="allRooms" title={<span><GroupOutlined/><span>All Rooms</span></span>}>
-                {allRooms.map(item => {
+                {
+                    allRooms.map(name => {
                     return (
-                        <Menu.Item key={item}>{item}</Menu.Item>
+                    <Menu.Item key={name}>{name}</Menu.Item>
                     );
                 })
+
                 }
             </SubMenu>
         </Menu>

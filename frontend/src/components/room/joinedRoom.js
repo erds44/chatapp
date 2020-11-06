@@ -5,43 +5,39 @@ import React, {useState} from "react";
 
 const {SubMenu} = Menu;
 const JoinedRoom = (props) => {
-    const {rooms, setReport} = props;
+    const {joinedRooms, userList, setReport} = props;
     const report = (reportRoom, reportName) => {
         setReport({visible: true, reportRoom: reportRoom, reportName: reportName})
     }
 
+    const getRoomUserList = () => {
+        for (let i = 0; i < joinedRooms.length; i++) {
+            return (
+                <SubMenu key={joinedRooms[i]} title={joinedRooms[i]}>
+                    {userList[i].map(name => {
+                        let color = (userList[i][0] === name) ? "magenta" : "green";
+                        let tag = (userList[i][0] === name) ? "Admin" : "Member";
+                        return <Menu.Item key={name}><Tag color={color}>{tag}</Tag>{name}
+                            <Button type="text" danger onClick={() => {
+                                report(joinedRooms[i], name)
+                            }}>!</Button>
+                        </Menu.Item>
+                    })
+
+                    }
+                </SubMenu>
+            )
+        }
+    }
+
+
     return (
         <Menu mode="inline" selectedKeys={['']}>
             <SubMenu title={<span><GroupOutlined/><span>Joined Rooms</span></span>}>
-                {
-                    Object.entries(rooms).map(([key, value]) => {
-                        return (
-                            <SubMenu key={value[0]} title={value[0]} >
-                                {
-                                    value[1].map(item => {
-                                        if (value[1][0] === item) {
-                                            return <Menu.Item key={item}><Tag color="magenta">Owner</Tag>{item}
-                                                <Button type="text" danger onClick={() => {
-                                                    report(value[0], item)
-                                                }}>!</Button>
-                                            </Menu.Item>
-                                        }
-                                        return <Menu.Item key={item}><Tag color="green">Member</Tag>{item}
-                                            <Button type="text" danger onClick={() => {
-                                                report(value[0], item)
-                                            }}>!</Button>
-                                        </Menu.Item>
-                                    })
-                                }
-                            </SubMenu>
-                        )
-                    })
-                }
+                {getRoomUserList()}
             </SubMenu>
         </Menu>
     );
-
-
 
 
 }

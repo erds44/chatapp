@@ -35,9 +35,9 @@ export const onMessage = (messages) =>
                 });
                 break;
             case "report": 
-                console.log(data.msg);
+                //console.log(data.msg);
                 const body = JSON.parse(data.msg);
-                console.log(body);
+                //console.log(body);
                 dispatch({ type: ON_REPORT, payload: {reportedUsername: body.reportedUsername, reportedReason:body.reportedReason}});
                 break;
             default:

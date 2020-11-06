@@ -33,7 +33,8 @@ public class LoginCmd extends ACmd {
         DispatchAdapter.userName2chatRoomName.put(userName, new CopyOnWriteArrayList<>());
         sendWSMsg(userSession, Constant.LOGIN, Constant.LOGIN, Constant.SYS_SR, null);
         sendWSMsg(userSession, Constant.ROOM, Constant.ROOM, Constant.SYS_SR, Constant.LOGIN_SR);
-        sendWSMsg(userSession, Constant.ROOM, Constant.REQUEST_UPDATEALLROOM, Constant.SYS_SR, null, DispatchAdapter.chatRoomName2ChatRoom.keySet().toString());
+        updateAllSession();
+       // sendWSMsg(userSession, Constant.ROOM, Constant.REQUEST_UPDATEALLROOM, Constant.SYS_SR, null, DispatchAdapter.chatRoomName2ChatRoom.keySet().toString());
         //only use for test
 //        System.out.println("hi, xiao");
 //        JsonObject jo = new JsonObject();

@@ -7,10 +7,7 @@ import org.eclipse.jetty.websocket.api.Session;
 import utility.Constant;
 import utility.Debug;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -30,12 +27,12 @@ public class CreateRoomCmd extends ACmd {
     public void execute(Session userSession, Map<String, Object> request) {
         String roomName = (String) request.get(Constant.NAME);
         String userName = getUser(userSession);
-        if (checkDuplicate(userSession, roomName, userName)) {
+        if (checkDuplicate(userSession, roomName)) {
             return;
         }
         createRoom(request, roomName, userName);
         DispatchAdapter.userName2chatRoomName.get(userName).add(roomName);
-        sendWSMsg(userSession, Constant.ROOM, Constant.REQUEST_CREATEROOM, Constant.SYS_SR, Constant.CHATROOM_CREATED, roomName, DispatchAdapter.chatRoomName2listUser.get(roomName).toString());
+        sendWSMsg(userSession, Constant.ROOM, Constant.REQUEST_CREATEROOM, Constant.SYS_SR, roomName + Constant.CHATROOM_CREATED);
         updateAllSession();
     }
 
@@ -44,10 +41,9 @@ public class CreateRoomCmd extends ACmd {
      *
      * @param userSession current session
      * @param roomName    chat room name
-     * @param userName    username
      * @return isDuplicated
      */
-    private boolean checkDuplicate(Session userSession, String roomName, String userName) {
+    private boolean checkDuplicate(Session userSession, String roomName) {
         if (DispatchAdapter.chatRoomName2ChatRoom.containsKey(roomName)) {
             sendWSMsg(userSession, Constant.ROOM, Constant.REQUEST_CREATEROOM, Constant.SYS_ERR, Constant.CHATROOM_USED);
             return true;
@@ -75,13 +71,5 @@ public class CreateRoomCmd extends ACmd {
         DispatchAdapter.chatRoomName2listUser.get(roomName).add(userName);
     }
 
-    /**
-     * Help method to update all other session.
-     */
-    private void updateAllSession() {
-        for (Session session : DispatchAdapter.session2userName.keySet()) {
-            sendWSMsg(session, Constant.ROOM, Constant.REQUEST_UPDATEALLROOM, Constant.SYS_SR, null, DispatchAdapter.chatRoomName2ChatRoom.keySet().toString());
-        }
-    }
 
 }

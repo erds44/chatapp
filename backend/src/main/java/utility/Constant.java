@@ -7,13 +7,13 @@ public class Constant {
     public static final String USERNAME_USED = "Username already used!";
     public static final String LOGIN_SR = "login successfully!";
     public static final String CHATROOM_USED = "Chatroom name already used!";
-    public static final String CHATROOM_CREATED = "Chatroom created successfully!";
-    public static final String CHATROOM_EXIT = "Chatroom exits successfully!";
+    public static final String CHATROOM_CREATED = " created successfully!";
+    public static final String CHATROOM_EXIT = " exits successfully!";
     public static final String CHATROOM_EXITALL = "All chatroom(s) exit(s) successfully!";
     public static final String CHATROOM_JOINFALIURE = "Sorry, you are not qualified to join the room!";
     public static final String CHATROOM_BAN = "Sorry, you are banned from entering all chat rooms!";
     public static final String CHATROOM_JOINED = "Room is joined!";
-    public static final String CHATROOM_JOIN = "Join room successfully!";
+    public static final String CHATROOM_JOIN = "joins successfully!";
     public static final String REQUEST_CREATEROOM = "createRoom";
     public static final String REQUEST_JOINROOM ="joinRoom";
     public static final String REQUEST_EXITROOM = "exitRoom";
