@@ -111,7 +111,7 @@ const ChatMessage = ({ message, onClickEdit }) => {
           <Col span={22}>
             <Row className="message-header">
               <Col className="message-sender">{sender}</Col>
-              <Col className="message-time">{time}</Col>
+              <Col className="message-time">{moment(time).format('ddd MMM DD hh:mm:ss')}</Col>
             </Row>
             <Row>
               <Col className="message-text">{text}</Col>
