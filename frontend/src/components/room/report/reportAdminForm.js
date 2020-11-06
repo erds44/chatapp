@@ -1,9 +1,10 @@
 import { Modal, Button } from 'antd';
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux'
+import webSocket from "../../websocket/Websocket";
 
 const ReportAdminForm = (props) => {
-    const {isReportAdminVisible, reportedReason, reportedUsername} = props.reportStore;
+    const {isReportAdminVisible, reportedReason, reportedUsername, reportedRoom} = props.reportStore;
     const [visible, setVisible] = useState(false);
 
     useEffect(() => {
@@ -12,6 +13,16 @@ const ReportAdminForm = (props) => {
 
     const handleOk = e => {
         setVisible(false);
+        webSocket.send(
+            JSON.stringify({
+                    command: "ban",
+                    body: {
+                        username: reportedUsername.trim(),
+                        room: reportedRoom.trim()
+                    }
+                }
+            )
+        )
     };
 
     const handleCancel = e => {

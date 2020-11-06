@@ -13,6 +13,7 @@ const INTIAL_STATE = {
 export default (state = INTIAL_STATE, action) => {
     switch (action.type) {
         case ROOM:
+            console.log("in user!!!")
             return {
                 request: action.payload.request,
                 type: action.payload.type,
@@ -20,7 +21,6 @@ export default (state = INTIAL_STATE, action) => {
 
                 joinedRoom: parse(action.payload.param1),
                 userList: parseNestedList(action.payload.param1, action.payload.param2),
-                //userList: [],
                 allRooms: parse(action.payload.param3)
             };
         default:

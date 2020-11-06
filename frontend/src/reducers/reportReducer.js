@@ -1,16 +1,17 @@
 import {ON_REPORT} from '../actions/type';
 
-const INTIAL_STATE = {
+const INITIAL_STATE = {
     isReportAdminVisible: false,
     reportedUsername:"",
-    reportedReason: ""
+    reportedReason: "",
+    reportedRoom:""
 };
 
-export default (state = INTIAL_STATE, action) => {
+export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case ON_REPORT:
             return { ...state, isReportAdminVisible: true, reportedReason: action.payload.reportedReason,
-                reportedUsername: action.payload.reportedUsername};
+                reportedUsername: action.payload.reportedUsername, reportedRoom: action.payload.reportedRoom};
         default:
             return state;
     }

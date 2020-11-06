@@ -38,7 +38,11 @@ export const onMessage = (messages) =>
                 //console.log(data.msg);
                 const body = JSON.parse(data.msg);
                 //console.log(body);
-                dispatch({ type: ON_REPORT, payload: {reportedUsername: body.reportedUsername, reportedReason:body.reportedReason}});
+                dispatch({ type: ON_REPORT, payload: {
+                        reportedUsername: body.reportedUsername,
+                        reportedReason: body.reportedReason,
+                        reportedRoom: body.reportedRoom
+                }});
                 break;
             default:
                 break;

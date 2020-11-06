@@ -17,9 +17,9 @@ const ReportForm = (props) => {
             JSON.stringify({
                     command: "report",
                     body: {
-                        reportedUsername: report.reportName,
+                        reportedUsername: report.reportName.trim(),
                         reportedReason: checkedReason,
-                        reportedRoom: report.reportRoom,
+                        reportedRoom: report.reportRoom.trim(),
                     }
                 }
             )
