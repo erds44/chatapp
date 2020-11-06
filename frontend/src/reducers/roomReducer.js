@@ -29,10 +29,13 @@ export default (state = INTIAL_STATE, action) => {
 
 const parse = (value)=>{
     if(value){
+        console.log("parse: " + value)
         return JSON.parse(value);
     }
 }
 const parseNestedList = (param1, value) =>{
+    console.log("before: " + value);
+
     if(value) {
         let length = JSON.parse(param1).length;
         let list = []
@@ -44,6 +47,7 @@ const parseNestedList = (param1, value) =>{
             list.push(ele);
             v = v.substring(end + 1);
         }
+        console.log("after: " + list);
         return list;
     }
 }

@@ -28,9 +28,10 @@ const Index = (props) => {
 
     useEffect(() => {
         if(room.msg == null){
-            setJoinedRooms(room.joinedRoom);
-            setUserList(room.userList);
-            setAllRooms(room.allRooms);
+            setJoinedRooms(prevState => room.joinedRoom);
+            setUserList(()=>room.userList);
+            setAllRooms(()=>room.allRooms);
+
         }else{
             if(room.type === "err") Modal.error({content: room.msg});
             else Modal.success({content: room.msg});
@@ -43,10 +44,10 @@ const Index = (props) => {
             <Menu.Item key="create">
                 <CreateRoom visible={visible} setVisible={setVisible}/>
             </Menu.Item>
-            <ExitRoom joinedRooms={getJoinedRooms} />
+            <ExitRoom joinedRooms={joinedRooms} />
             <ExitAllRooms/>
-            <JoinedRoom joinedRooms={getJoinedRooms} userList={getUserList} setReport={setReport}/>
-            <AllRooms allRooms={getAllRooms}/>
+            <JoinedRoom joinedRooms={joinedRooms} userList={userList} setReport={setReport}/>
+            <AllRooms allRooms={allRooms}/>
             <ReportForm report={report} setReport={setReport}/>
             <ReportAdminForm/>
         </Menu>

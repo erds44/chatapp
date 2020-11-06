@@ -11,30 +11,59 @@ const JoinedRoom = (props) => {
     }
 
     const getRoomUserList = () => {
-        for (let i = 0; i < joinedRooms.length; i++) {
-            return (
-                <SubMenu key={joinedRooms[i]} title={joinedRooms[i]}>
-                    {userList[i].map(name => {
-                        let color = (userList[i][0] === name) ? "magenta" : "green";
-                        let tag = (userList[i][0] === name) ? "Admin" : "Member";
-                        return <Menu.Item key={name}><Tag color={color}>{tag}</Tag>{name}
-                            <Button type="text" danger onClick={() => {
-                                report(joinedRooms[i], name)
-                            }}>!</Button>
-                        </Menu.Item>
-                    })
 
-                    }
-                </SubMenu>
-            )
-        }
+        joinedRooms.map((roomName, index) => {
+                console.log("roomName: " + roomName);
+                return (
+                    <SubMenu key={roomName} title={roomName}>
+                        {userList[index].map(name => {
+                            console.log("name: " + name);
+                            let color = (userList[index][0] === name) ? "magenta" : "green";
+                            let tag = (userList[index][0] === name) ? "Admin" : "Member";
+                            return (
+                                <Menu.Item key={name}><Tag color={color}>{tag}</Tag>{name}
+                                    <Button type="text" danger onClick={() => {
+                                        report(joinedRooms[index], name)
+                                    }}>!</Button>
+                                </Menu.Item>
+                            )
+                        })
+
+                        }
+                    </SubMenu>
+                )
+            }
+        )
+
+
     }
+    // const getRoomUserList = () => {
+    //
+    //     joinedRooms.forEach((roomName, index) => {
+    //
+    //             return (
+    //                 <Menu.Item>{roomName}</Menu.Item>
+    //             )
+    //         }
+    //     )
+    //
+    //
+    // }
 
 
     return (
         <Menu mode="inline" selectedKeys={['']}>
             <SubMenu title={<span><GroupOutlined/><span>Joined Rooms</span></span>}>
-                {getRoomUserList()}
+                {
+                    joinedRooms.map((name, index) => {
+                        console.log(index);
+                        return (
+                            <SubMenu key={name} title={name}>
+                                <Menu.Item key={name}>{name}</Menu.Item>
+                            </SubMenu>
+                        )
+                    })
+                }
             </SubMenu>
         </Menu>
     );
