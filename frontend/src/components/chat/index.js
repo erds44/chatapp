@@ -4,7 +4,7 @@ import {Button, Popover} from 'antd'
 import {useHistory} from 'react-router-dom'
 import ChatArea from "./chat-area/ChatArea";
 import Room from "../room";
-import UserList from "./userList";
+import UserList from "./UserList";
 import ReportForm from "../room/report/reportForm";
 import ReportAdminForm from "../room/report/reportAdminForm";
 
