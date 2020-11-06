@@ -19,7 +19,15 @@ export const onMessage = (messages) =>
         // }
         switch (data.section) {
             case "login":
-                dispatch({type: SIGN_IN, payload: {isSignedIn: true}});
+                if(data.type === "err") {
+                    dispatch({type: SIGN_IN, payload: {mesId: mesId++, isSignedIn: false, user: null, msg: data.msg}});
+                }
+                else {
+                    dispatch({type: SIGN_IN, payload: {mesId: mesId++, isSignedIn: true, user: data.msg, msg: data.msg}});
+                }
+                break;
+            case "logout":
+                    dispatch({type: SIGN_OUT, payload: {mesId: mesId++, isSignedIn: false, user: null, msg: data.msg}});
                 break;
             case "room":
                 dispatch({
@@ -30,11 +38,12 @@ export const onMessage = (messages) =>
                         msg: data.msg,
                         param1: data.param1,
                         param2: data.param2,
-                        param3: data.param3
+                        param3: data.param3,
+                        param4: data.param4
                     }
                 });
                 break;
-            case "report": 
+            case "report":
                 //console.log(data.msg);
                 const body = JSON.parse(data.msg);
                 //console.log(body);
@@ -44,6 +53,11 @@ export const onMessage = (messages) =>
                         reportedRoom: body.reportedRoom
                 }});
                 break;
+            case "message": {
+                const { type } = JSON.parse(data.payload);
+                dispatch({ type, payload: data.payload });
+                break;
+            }
             default:
                 break;
         }

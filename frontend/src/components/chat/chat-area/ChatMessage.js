@@ -3,17 +3,17 @@ import { Row, Col, Menu, Dropdown, Button, Avatar } from "antd";
 import moment from "moment";
 import "./ChatMessage.css";
 import colorHelper from "../../../helpers/color-user-helper";
+import { useSelector, useDispatch } from "react-redux";
+import { DELETE_MESSAGE, RECALL_MESSAGE, EDIT_MESSAGE } from "../../../actions/type";
 
-const ChatMessage = ({
-  message,
-  currentUser,
-  onMessageRecall,
-  onMessageDelete,
-  onMessageEdit
-}) => {
+const ChatMessage = ({ message, onClickEdit }) => {
+  const dispatch = useDispatch();
   const { id: messageId, text, time, sender } = message;
-  // const isMyMessage = currentUser.id === message.userId;
-  const isMyMessage = true;
+
+  const user = { name: "Xiao Xia" };
+  const chatRoom = "CR1";
+
+  const isMyMessage = user.name === message.sender;
   const operationForMyMessage = ["edit", "delete", "recall"];
   const operationForOthersMessage = ["report"];
   const handleMenuClick = event => {
@@ -22,16 +22,33 @@ const ChatMessage = ({
     }
     switch (event.key) {
       case "edit": {
+        onClickEdit(message);
         break;
       }
       case "delete": {
-        onMessageDelete(messageId);
+        dispatch({
+          type: DELETE_MESSAGE,
+          payload: {
+            messageId,
+            chatRoom
+          }
+        });
+        // TODO @Xiao web socket
         break;
       }
       case "recall": {
+        dispatch({
+          type: RECALL_MESSAGE,
+          payload: {
+            messageId,
+            chatRoom
+          }
+        });
+        // TODO @Xiao web socket
         break;
       }
       case "report": {
+        // TODO @Xiao web socket
         break;
       }
     }
@@ -94,7 +111,7 @@ const ChatMessage = ({
           <Col span={22}>
             <Row className="message-header">
               <Col className="message-sender">{sender}</Col>
-              <Col className="message-time">{time}</Col>
+              <Col className="message-time">{moment(time).format('ddd MMM DD hh:mm:ss')}</Col>
             </Row>
             <Row>
               <Col className="message-text">{text}</Col>

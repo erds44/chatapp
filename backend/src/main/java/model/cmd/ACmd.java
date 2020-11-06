@@ -17,6 +17,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public abstract class ACmd {
     protected Gson gson = new Gson();
+
     /**
      * Perform the execution of a command.
      *
@@ -40,7 +41,7 @@ public abstract class ACmd {
      *
      * @param session user session
      */
-    protected <T> void sendWSMsg(Session session, String section, String command, String type, String msg, T ... body) {
+    protected void sendWSMsg(Session session, String section, String command, String type, String msg, String... body) {
         int param = 1;
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("section", section);
@@ -48,10 +49,8 @@ public abstract class ACmd {
         jsonObject.addProperty("type", type);
         jsonObject.addProperty("msg", msg);
 
-        for(T parameter : body){
-            if(parameter !=null){
-                jsonObject.addProperty("param" + param++, parameter.toString());
-            }
+        for (String parameter : body) {
+            jsonObject.addProperty("param" + param++, parameter);
         }
         try {
             session.getRemote().sendString(String.valueOf(jsonObject));
@@ -59,6 +58,7 @@ public abstract class ACmd {
             e.printStackTrace();
         }
     }
+
     /**
      * Help method to update all other session.
      */
@@ -68,10 +68,10 @@ public abstract class ACmd {
             String userName = getUser(session);
             List<String> joinedRooms = DispatchAdapter.userName2chatRoomName.get(userName);
             List<List<String>> userlist = new CopyOnWriteArrayList<>();
-            for(String room : joinedRooms){
+            for (String room : joinedRooms) {
                 userlist.add(DispatchAdapter.chatRoomName2listUser.get(room));
             }
-            sendWSMsg(session, Constant.ROOM, Constant.REQUEST_UPDATEALLROOM, Constant.SYS_SR, null, joinedRooms, userlist, allRooms);
+            sendWSMsg(session, Constant.ROOM, Constant.REQUEST_UPDATEALLROOM, Constant.SYS_SR, null, joinedRooms.toString(), userlist.toString(), allRooms.toString(), userName);
         }
     }
 
@@ -84,14 +84,19 @@ public abstract class ACmd {
         }
         DispatchAdapter.chatRoomName2ChatRoom.remove(chatRoomName);
         DispatchAdapter.chatRoomName2listUser.remove(chatRoomName);
+        updateAllSession();
     }
 
     protected void userLeftChatRoom(Session userSession, String chatRoomName, String userName) {
         DispatchAdapter.chatRoomName2listUser.get(chatRoomName).remove(userName);
         for (String user : DispatchAdapter.chatRoomName2listUser.get(chatRoomName)) {
-            Session session = DispatchAdapter.userName2session.get(user);
-            // TODO: notify other session that a user left
+            if(!user.equals(userName)) {
+                Session session = DispatchAdapter.userName2session.get(user);
+                sendWSMsg(session, Constant.ROOM, Constant.REQUEST_UPDATEUSERLIST, Constant.SYS_SR, userName + " left the room!");
+                // TODO: notify all other session in chat
+            }
         }
         sendWSMsg(userSession, Constant.ROOM, Constant.REQUEST_EXITROOM, Constant.SYS_SR, chatRoomName + Constant.CHATROOM_EXIT);
+        updateAllSession();
     }
 }

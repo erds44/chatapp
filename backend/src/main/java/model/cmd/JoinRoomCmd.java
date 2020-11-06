@@ -50,7 +50,7 @@ public class JoinRoomCmd extends ACmd {
         }
         DispatchAdapter.userName2chatRoomName.get(userName).add(roomName);
         DispatchAdapter.chatRoomName2listUser.get(roomName).add(userName);
-        sendWSMsg(userSession, Constant.ROOM, Constant.REQUEST_JOINROOM, Constant.SYS_SR, roomName + Constant.CHATROOM_JOIN);
+        sendWSMsg(userSession, Constant.ROOM, Constant.REQUEST_JOINROOM, Constant.SYS_SR, roomName + " " + Constant.CHATROOM_JOIN);
         for(String user: DispatchAdapter.chatRoomName2listUser.get(roomName)){
             if(!user.equals(userName)) {
                 Session session = DispatchAdapter.userName2session.get(user);

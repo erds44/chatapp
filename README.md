@@ -23,7 +23,7 @@ UserList
 - [ ] add "force leave" button for admin  
 
 Chat Message  
-- [ ] message area to show message text, sender, sender avatar, and date time
+- [x] message area to show message text, sender, sender avatar, and date time
 - [ ] dropdown for each message for user to edit, delete, recall, or report
 - [ ] user could only edit, delete, or recall his/her own messages, and only report other's messages
 - [ ] compose area to compose a new message & edit an existing message

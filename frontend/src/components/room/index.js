@@ -12,13 +12,14 @@ import ReportAdminForm from "./report/reportAdminForm";
 
 const Index = (props) => {
     const {room} = props;
-    const [joinedRooms, setJoinedRooms] = useState(() => []);
+    const [joinedRooms, setJoinedRooms] = useState([]);
     const [userList, setUserList] = useState(() => [[]]);
-    const [allRooms, setAllRooms] = useState(() => []);  //global
+    const [allRooms, setAllRooms] = useState(() => []);
     const [visible, setVisible] = useState(false);
-    const getAllRooms = useMemo(() => allRooms, [allRooms])
-    const getJoinedRooms = useMemo(() => joinedRooms, [joinedRooms])
-    const getUserList = useMemo(() => userList, [userList])
+    const [userName, setUserName] = useState();
+    // const getAllRooms = useMemo(() => allRooms, [allRooms])
+    // const getJoinedRooms = useMemo(() => joinedRooms, [joinedRooms])
+    // const getUserList = useMemo(() => userList, [userList])
     const [report, setReport] = useState({visible: false, reportRoom: null, reportName: null})
     const handleClick = (e) => {
         if (e.key === "create") {
@@ -27,13 +28,14 @@ const Index = (props) => {
     }
 
     useEffect(() => {
-        if(room.msg == null){
-            setJoinedRooms(prevState => room.joinedRoom);
-            setUserList(()=>room.userList);
-            setAllRooms(()=>room.allRooms);
+        if (room.msg == null) {
+            if (room.joinedRoom) setJoinedRooms(room.joinedRoom);
+            if (room.userList) setUserList(room.userList);
+            if (room.allRooms) setAllRooms(room.allRooms);
+            if (room.userName) setUserName(room.userName);
 
-        }else{
-            if(room.type === "err") Modal.error({content: room.msg});
+        } else {
+            if (room.type === "err") Modal.error({content: room.msg});
             else Modal.success({content: room.msg});
         }
     }, [room])
@@ -44,9 +46,9 @@ const Index = (props) => {
             <Menu.Item key="create">
                 <CreateRoom visible={visible} setVisible={setVisible}/>
             </Menu.Item>
-            <ExitRoom joinedRooms={joinedRooms} />
+            <ExitRoom joinedRooms={joinedRooms}/>
             <ExitAllRooms/>
-            <JoinedRoom joinedRooms={joinedRooms} userList={userList} setReport={setReport}/>
+            <JoinedRoom joinedRooms={joinedRooms} userList={userList} userName={userName} setReport={setReport}/>
             <AllRooms allRooms={allRooms}/>
             <ReportForm report={report} setReport={setReport}/>
             <ReportAdminForm/>

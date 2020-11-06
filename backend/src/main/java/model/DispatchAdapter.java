@@ -67,6 +67,9 @@ public class DispatchAdapter {
             case "login":
                 cmd = new LoginCmd();
                 break;
+            case "logout":
+                cmd = new LogoutCmd();
+                break;
             case "createRoom":
                 cmd = new CreateRoomCmd();
                 break;
