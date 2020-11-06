@@ -84,14 +84,19 @@ public abstract class ACmd {
         }
         DispatchAdapter.chatRoomName2ChatRoom.remove(chatRoomName);
         DispatchAdapter.chatRoomName2listUser.remove(chatRoomName);
+        updateAllSession();
     }
 
     protected void userLeftChatRoom(Session userSession, String chatRoomName, String userName) {
         DispatchAdapter.chatRoomName2listUser.get(chatRoomName).remove(userName);
         for (String user : DispatchAdapter.chatRoomName2listUser.get(chatRoomName)) {
-            Session session = DispatchAdapter.userName2session.get(user);
-            // TODO: notify other session that a user left
+            if(!user.equals(userName)) {
+                Session session = DispatchAdapter.userName2session.get(user);
+                sendWSMsg(session, Constant.ROOM, Constant.REQUEST_UPDATEUSERLIST, Constant.SYS_SR, userName + " left the room!");
+                // TODO: notify all other session in chat
+            }
         }
         sendWSMsg(userSession, Constant.ROOM, Constant.REQUEST_EXITROOM, Constant.SYS_SR, chatRoomName + Constant.CHATROOM_EXIT);
+        updateAllSession();
     }
 }

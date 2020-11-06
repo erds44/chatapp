@@ -19,7 +19,15 @@ export const onMessage = (messages) =>
         // }
         switch (data.section) {
             case "login":
-                dispatch({type: SIGN_IN, payload: {isSignedIn: true}});
+                if(data.type === "err") {
+                    dispatch({type: SIGN_IN, payload: {mesId: mesId++, isSignedIn: false, user: null, msg: data.msg}});
+                }
+                else {
+                    dispatch({type: SIGN_IN, payload: {mesId: mesId++, isSignedIn: true, user: data.user, msg: data.msg}});
+                }
+                break;
+            case "logout":
+                    dispatch({type: SIGN_OUT, payload: {mesId: mesId++, isSignedIn: false, user: null, msg: data.msg}});
                 break;
             case "room":
                 dispatch({

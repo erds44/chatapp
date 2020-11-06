@@ -1,5 +1,5 @@
 import {React, useEffect, useState} from 'react'
-import {Form, Input, message, Button, Select} from 'antd'
+import {Form, Input, message, Button, Select, Modal} from 'antd'
 import {Card} from 'antd'
 import {useHistory} from 'react-router-dom'
 import webSocket from "../websocket/Websocket"
@@ -56,7 +56,7 @@ const Login = (props) => {
                 history.push('/chat');
             }
             else {
-                message.error("This user name has been used, please try another one.")
+                Modal.error({content: "This user has been logged in"});
             }
         }
     }, [logIn])

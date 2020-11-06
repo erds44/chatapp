@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import {Layout, Row, Col} from 'antd'
+import React, {useEffect, useState} from 'react'
+import {Layout, Row, Col, Modal} from 'antd'
 import {Button, Popover} from 'antd'
 import {useHistory} from 'react-router-dom'
 import ChatArea from "./chat-area/ChatArea";
@@ -7,19 +7,47 @@ import Room from "../room";
 import UserList from "./UserList";
 import ReportForm from "../room/report/reportForm";
 import ReportAdminForm from "../room/report/reportAdminForm";
+import webSocket from "../websocket/Websocket";
+import {connect} from "react-redux";
 
 const {Header, Content, Footer, Sider} = Layout;
 const Chat = (props) => {
     const history = useHistory();
+    const {dispatch, logIn} = props;
+    const [allMessages, setAllMessages] = useState({
+        'Chat Room 1': [
+            {
+                'id': 1,
+                'sender': 'Xiao Xia',
+                'text': 'This is the first message for chat room 1',
+                'time': '2020-10-29 08:00:00'
+            },
+            {
+                'id': 2,
+                'sender': 'Zhijian Yao',
+                'text': 'This is the second message for chat room 1',
+                'time': '2020-10-29 08:05:00'
+            },
+            {
+                'id': 3,
+                'sender': 'Weiwei Zhou',
+                'text': 'This is the third message for chat room 1',
+                'time': '2020-10-29 08:15:30'
+            }
+        ]
+    });
     const userMap = {
         'CR1': ["Xiao Xia", "Zhijian Yao", "Weiwei Zhou"]
     };
     const selectedChatRoom = 'CR1';
     const currentUser = { name: 'Xiao Xia' };
 
-
-
-
+    useEffect(() => {
+        if(logIn.isSignedIn === null && logIn.user === null && logIn.msg !== null) {
+            history.push('/');
+            Modal.success(({content: logIn.msg}))
+        }
+    }, [logIn])
 
     return (
         <Layout style={{height: '100vh'}}>
@@ -32,7 +60,14 @@ const Chat = (props) => {
                     <span id={"chat-area-header-user-count"} style={{fontSize: 'medium'}}>{`  (${userMap[selectedChatRoom].length})`}</span>
                     <Button style={{right: '-500px'}}
                             type="primary" shape="round" size='small'
-                            onClick={() => {history.push('/')}}>
+                            onClick={() => {
+                                webSocket.send(
+                                    JSON.stringify({
+                                        command: "logout",
+                                        body: {}
+                                    })
+                                )
+                                }}>
                         Logout
                     </Button>
                 </Header>
@@ -60,4 +95,8 @@ const Chat = (props) => {
     )
 }
 
-export default Chat;
+const mapStateToProps = (state, ownProps) => {
+    return { logIn: state.login }
+};
+
+export default connect(mapStateToProps, {})(Chat);

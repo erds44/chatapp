@@ -5,7 +5,7 @@ const INTIAL_STATE = {
     request: null,
     type: null,
     msg: null,
-    joinedRoom:[],
+    joinedRoom: [],
     userList: [[]],
     allRooms: []
 };
@@ -13,6 +13,7 @@ const INTIAL_STATE = {
 export default (state = INTIAL_STATE, action) => {
     switch (action.type) {
         case ROOM:
+            console.log("in user!!!")
             return {
                 request: action.payload.request,
                 type: action.payload.type,
@@ -29,12 +30,15 @@ export default (state = INTIAL_STATE, action) => {
 
 const parse = (value)=>{
     if (value) {
+        if(value.length <= 4)
+            return [];
         let v = value.substring(1, value.length - 1);
         return v.split(", ");
     }
 }
 
 const parseNestedList = (param1, value) =>{
+    console.log("before nest: " + value);
     if(value) {
         let length = parse(param1).length;
         let list = []
@@ -46,6 +50,7 @@ const parseNestedList = (param1, value) =>{
             list.push(ele);
             v = v.substring(end + 1);
         }
+        console.log("after: " + list);
         return list;
     }
 }
