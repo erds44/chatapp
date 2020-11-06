@@ -38,7 +38,8 @@ public class sendReportCmd extends ACmd {
         JsonObject jo = new JsonObject();
         jo.addProperty("reportedUsername", reportedUsername);
         jo.addProperty("reportedReason", reportedReason);
-        sendWSMsg(adminSession, Constant.REPORT, Constant.REQUEST_REPORTUSER, Constant.SYS_SR, String.valueOf(jo), null);
+        jo.addProperty("reportedRoom", reportedRoom);
+        sendWSMsg(adminSession, Constant.REPORT, Constant.REQUEST_REPORTUSER, Constant.SYS_SR, String.valueOf(jo));
     }
 
 }
