@@ -49,6 +49,7 @@ const parseNestedList = (param1, value) =>{
             list.push(ele);
             v = v.substring(end + 1);
         }
+        console.log("after: " + list);
         return list;
     }
     return null;

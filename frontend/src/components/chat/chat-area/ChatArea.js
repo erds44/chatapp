@@ -1,4 +1,5 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { Row, Layout } from "antd";
 import ChatMessages from "./ChatMessages";
 import Compose from "./Compose";
@@ -7,27 +8,17 @@ import "./ChatArea.css";
 
 const { Content, Footer, Header } = Layout;
 
-const ChatArea = ({ inputMessages, chatRoom, onMessageDelete }) => {
-  const [messages, setMessages] = useState(inputMessages);
-
-  useEffect(() => {
-    if (inputMessages) {
-      setMessages(inputMessages);
-    }
-  }, [inputMessages]);
-
-  const handleMessageDelete = messageId => {
-    onMessageDelete(messageId, chatRoom);
-  };
+const ChatArea = ({ chatRoom }) => {
+  const messages = useSelector(state => {
+    console.log(state);
+    return state.message.messages;
+  });
 
   return (
     <div id={"chat-area"}>
       <Layout>
         <Content>
-          <ChatMessages
-            inputMessages={messages}
-            onMessageDelete={handleMessageDelete}
-          />
+          <ChatMessages inputMessages={messages[chatRoom]} />
         </Content>
         <Footer>
           <Compose />

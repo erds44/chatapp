@@ -26,6 +26,7 @@ const JoinedRoom = (props) => {
     return (
         <Menu mode="inline" selectedKeys={['']}>
             <SubMenu title={<span><GroupOutlined/><span>Joined Rooms</span></span>}>
+                {console.log(joinedRooms)}
                 {
                     joinedRooms.map((name, index) => {
                         return (
