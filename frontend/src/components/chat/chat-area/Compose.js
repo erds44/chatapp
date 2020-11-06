@@ -8,7 +8,8 @@ const { TextArea } = Input;
 
 const Compose = () => {
   const dispatch = useDispatch();
-  const currentUser = useSelector(state => state.login.user);
+  // const currentUser = useSelector(state => state.login.user);
+  const currentUser = 'Xiao Xia';
   const selectedChatroom = 'CR1';
   const handleMessageSend = () => {
     const composeTextArea = document.getElementById(`compose-textarea`);
@@ -22,7 +23,7 @@ const Compose = () => {
         text: composeTextArea.value,
         id: uuid.v4(),
         time: new Date().getTime(),
-        sender: currentUser?.name
+        sender: currentUser
       }
     });
     // TODO @Xiao web socket
