@@ -20,6 +20,7 @@ export default (state = INTIAL_STATE, action) => {
 
                 joinedRoom: parse(action.payload.param1),
                 userList: parseNestedList(action.payload.param1, action.payload.param2),
+                //userList: [],
                 allRooms: parse(action.payload.param3)
             };
         default:
@@ -28,16 +29,16 @@ export default (state = INTIAL_STATE, action) => {
 };
 
 const parse = (value)=>{
-    if(value){
-        console.log("parse: " + value)
-        return JSON.parse(value);
+    if (value) {
+        let v = value.substring(1, value.length - 1);
+        return v.split(",");
     }
 }
-const parseNestedList = (param1, value) =>{
-    console.log("before: " + value);
 
+const parseNestedList = (param1, value) =>{
+    console.log("before nest: " + value);
     if(value) {
-        let length = JSON.parse(param1).length;
+        let length = parse(param1).length;
         let list = []
         let v = value.substring(1, value.length - 1)
         for(let i = 0; i < length; i++){
