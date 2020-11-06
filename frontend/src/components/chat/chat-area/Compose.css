@@ -2,6 +2,6 @@
   width: 100%;
 }
 
-#compose #compose-textarea {
+#compose .ant-input-textarea {
   width: 100%;
 }
