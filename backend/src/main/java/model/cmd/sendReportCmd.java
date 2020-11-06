@@ -1,6 +1,9 @@
 package model.cmd;
 
 import com.google.gson.JsonObject;
+import model.ChatRoom;
+import model.DispatchAdapter;
+import model.User;
 import org.eclipse.jetty.websocket.api.Session;
 import utility.Constant;
 
@@ -22,15 +25,20 @@ public class sendReportCmd extends ACmd {
     public void execute(Session userSession, Map<String, Object> request) {
         String reportedUsername = (String) request.get("reportedUsername");
         String reportedReason = (String) request.get("reportedReason");
-        //String room
+        String reportedRoom = (String) request.get("reportedRoom");
 
-        // find the admin
+        ChatRoom room = DispatchAdapter.chatRoomName2ChatRoom.getOrDefault(reportedRoom, null);
 
+        // TODO  if room is null ....
+
+        String adminName = room.getOwner();
+        Session adminSession = DispatchAdapter.userName2session.getOrDefault(adminName, null);
+        System.out.println(adminSession == null);
         // send to admin
         JsonObject jo = new JsonObject();
         jo.addProperty("reportedUsername", reportedUsername);
         jo.addProperty("reportedReason", reportedReason);
-        sendWSMsg(userSession, Constant.REPORT, Constant.REQUEST_REPORTUSER, Constant.SYS_SR, String.valueOf(jo), null);
+        sendWSMsg(adminSession, Constant.REPORT, Constant.REQUEST_REPORTUSER, Constant.SYS_SR, String.valueOf(jo), null);
     }
 
 }
