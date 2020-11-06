@@ -21,6 +21,7 @@ public class Constant {
     public static final String REQUEST_UPDATEALLROOM ="updateAllRoom";
     public static final String REQUEST_UPDATEUSERLIST ="updateUserList";
     public static final String REQUEST_REPORTUSER ="reportUser";
+    public static final String REQUEST_BANUSER ="banUser";
     public static final String REPORT ="report";
     public static final String NAME = "name";
     public static final String ROOM = "room";

@@ -13,13 +13,14 @@ const ReportForm = (props) => {
 
     const handleOk = () => {
        setReport({...report, visible: false})
+        console.log("aa", report.reportName);
         webSocket.send(
             JSON.stringify({
                     command: "report",
                     body: {
-                        reportedUsername: report.reportName.trim(),
+                        reportedUsername: report.reportName,
                         reportedReason: checkedReason,
-                        reportedRoom: report.reportRoom.trim(),
+                        reportedRoom: report.reportRoom,
                     }
                 }
             )

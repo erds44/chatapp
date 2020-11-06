@@ -26,41 +26,40 @@ public class BanCmd extends ACmd {
     public void execute(Session userSession, Map<String, Object> request) {
         String username = (String) request.get("username");
         String room = (String) request.get("room");
-        Debug.printMap(DispatchAdapter.userName2chatRoomName,"userName2chatRoomName");
-
-        Debug.printMap(DispatchAdapter.chatRoomName2listUser,"userName2chatRoomName");
+//        Debug.printMap(DispatchAdapter.userName2chatRoomName,"userName2chatRoomName");
+//        Debug.printMap(DispatchAdapter.chatRoomName2listUser,"userName2chatRoomName");
         if (!DispatchAdapter.userName2chatRoomName.containsKey(username)) {
-            System.out.println("in ban9");
             return;
         }
         if (!DispatchAdapter.userName2chatRoomName.get(username).remove(room)) {
-            System.out.println("in ban8");
             return;
         }
 
         if (!DispatchAdapter.chatRoomName2listUser.containsKey(room)) {
-            System.out.println("in ban7");
             return;
         }
         if (!DispatchAdapter.chatRoomName2listUser.get(room).remove(username)) {
-            System.out.println("in ban6");
             return;
         }
 
         // Ban the reported user to the chatRoomBanList.
         DispatchAdapter.chatRoomBanList.add(username);
-        System.out.println("in ban1");
 
-        //sendWSMsg(userSession, Constant.ROOM, Constant.REQUEST_JOINROOM, Constant.SYS_SR, roomName + Constant.CHATROOM_JOIN);
+        // Notify the reported user.
+        Session reportedUserSession = DispatchAdapter.userName2session.get(username);
+        if (reportedUserSession != null) {
+            sendWSMsg(userSession, Constant.ROOM, Constant.REQUEST_BANUSER, Constant.SYS_ERR, "You are banned from all rooms!");
+        }
 
+        // Notify the other user in the room.
         for(String user: DispatchAdapter.chatRoomName2listUser.get(room)){
             if(!user.equals(username)) {
                 Session session = DispatchAdapter.userName2session.get(user);
                 System.out.println("in ban");
-                sendWSMsg(session, Constant.ROOM, Constant.REQUEST_UPDATEUSERLIST, Constant.SYS_SR, username + " has been banned because of report!");
-                // TODO: notify all other session in chat
+                sendWSMsg(session, Constant.ROOM, Constant.REQUEST_UPDATEUSERLIST, Constant.SYS_SR, username + " has been banned due to inappropriate behaviors!");
             }
         }
+
         updateAllSession();
 
     }
