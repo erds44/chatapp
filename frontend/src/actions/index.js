@@ -23,7 +23,7 @@ export const onMessage = (messages) =>
                     dispatch({type: SIGN_IN, payload: {mesId: mesId++, isSignedIn: false, user: null, msg: data.msg}});
                 }
                 else {
-                    dispatch({type: SIGN_IN, payload: {mesId: mesId++, isSignedIn: true, user: data.user, msg: data.msg}});
+                    dispatch({type: SIGN_IN, payload: {mesId: mesId++, isSignedIn: true, user: data.msg, msg: data.msg}});
                 }
                 break;
             case "logout":
