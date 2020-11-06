@@ -48,7 +48,7 @@ public class BanCmd extends ACmd {
         // Notify the reported user.
         Session reportedUserSession = DispatchAdapter.userName2session.get(username);
         if (reportedUserSession != null) {
-            sendWSMsg(userSession, Constant.ROOM, Constant.REQUEST_BANUSER, Constant.SYS_ERR, "You are banned from all rooms!");
+            sendWSMsg(reportedUserSession, Constant.ROOM, Constant.REQUEST_BANUSER, Constant.SYS_ERR, "You are banned from all rooms!");
         }
 
         // Notify the other user in the room.
