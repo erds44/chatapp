@@ -29,10 +29,10 @@ const Index = (props) => {
 
     useEffect(() => {
         if (room.msg == null) {
-            setJoinedRooms(room.joinedRoom);
-            setUserList(room.userList);
-            setAllRooms(room.allRooms);
-            setUserName(room.userName);
+            if (room.joinedRoom) setJoinedRooms(room.joinedRoom);
+            if (room.userList) setUserList(room.userList);
+            if (room.allRooms) setAllRooms(room.allRooms);
+            if (room.userName) setUserName(room.userName);
 
         } else {
             if (room.type === "err") Modal.error({content: room.msg});

@@ -29,13 +29,16 @@ export default (state = INTIAL_STATE, action) => {
 
 const parse = (value)=>{
     if (value) {
+        if(value === "[]") return [];
         let v = value.substring(1, value.length - 1);
         return v.split(", ");
     }
+    return null;
 }
 
 const parseNestedList = (param1, value) =>{
     if(value) {
+        if(value === "[]") return [];
         let length = parse(param1).length;
         let list = []
         let v = value.substring(1, value.length - 1)
@@ -48,6 +51,7 @@ const parseNestedList = (param1, value) =>{
         }
         return list;
     }
+    return null;
 }
 
 
