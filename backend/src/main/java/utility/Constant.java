@@ -6,6 +6,7 @@ package utility;
 public class Constant {
     public static final String USERNAME_USED = "Username already used!";
     public static final String LOGIN_SR = "login successfully!";
+    public static final String LOGOUT_SR = "logout successfully!";
     public static final String CHATROOM_USED = "Chatroom name already used!";
     public static final String CHATROOM_CREATED = " created successfully!";
     public static final String CHATROOM_EXIT = " exits successfully!";
@@ -29,5 +30,5 @@ public class Constant {
     public static final String INTERESTS = "interests";
     public static final String SYS_SR = "sr";
     public static final String SYS_ERR = "err";
-
+    public static final String LOGOUT = "logout";
 }
