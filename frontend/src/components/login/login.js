@@ -50,6 +50,7 @@ const Login = (props) => {
     };
 
     useEffect(() => {
+        console.log(logIn);
         if(logIn.isSignedIn !== null) {
             if(logIn.isSignedIn === true) {
                 history.push('/chat');

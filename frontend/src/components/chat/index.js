@@ -37,14 +37,10 @@ const Chat = (props) => {
         ]
     });
     const userMap = {
-        'Chat Room 1': ["Xiao Xia", "Zhijian Yao", "Weiwei Zhou"]
+        'CR1': ["Xiao Xia", "Zhijian Yao", "Weiwei Zhou"]
     };
-    const selectedChatRoom = 'Chat Room 1';
+    const selectedChatRoom = 'CR1';
     const currentUser = { name: 'Xiao Xia' };
-    const handleMessageDelete = ( messageId, chatRoom) => {
-        allMessages[chatRoom] = allMessages[chatRoom].filter((m) => m.id !== messageId);
-        setAllMessages({...allMessages});
-    }
 
     useEffect(() => {
         if(logIn.isSignedIn === null && logIn.user === null && logIn.msg !== null) {
@@ -81,9 +77,7 @@ const Chat = (props) => {
                             <div className="site-layout-background"
                                  style={{ minHeight: 360, height: '100%' }}>
                                 <ChatArea
-                                    inputMessages={allMessages[selectedChatRoom]}
                                     chatRoom={selectedChatRoom}
-                                    onMessageDelete={handleMessageDelete}
                                 />
                             </div>
                         </Col>
