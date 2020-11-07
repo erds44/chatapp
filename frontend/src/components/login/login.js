@@ -1,6 +1,5 @@
 import {React, useEffect, useState} from 'react'
-import {Form, Input, message, Button, Select, Modal, InputNumber} from 'antd'
-import {Card} from 'antd'
+import {Card, Form, Input, message, Button, Select, Modal, InputNumber} from 'antd'
 import {useHistory} from 'react-router-dom'
 import webSocket from "../websocket/Websocket"
 import { connect } from 'react-redux'
@@ -26,6 +25,7 @@ const Login = (props) => {
     const {dispatch, logIn} = props;
     const [form] = Form.useForm();
     const {validateFields} = form;
+    const ss=[{value:'a', label:'a'}]
 
     for (let i = 0; i < school_string_list.length; i++) {
         schools.push(<Option key={i}>{school_string_list[i]}</Option>);
@@ -65,27 +65,26 @@ const Login = (props) => {
     }, [logIn])
 
     return (
-        <Card title="Login Chat Index" style={{width: '600px', margin: '80px auto'}}
+        <Card title="Login Chat Room" style={{width: '600px', margin: '80px auto'}}
               headStyle={{fontSize: '30px', backgroundColor: '#d9d9d9'}}
               bodyStyle={{backgroundColor: '#f5f5f5'}}>
-            <Form {...layout} name="nest-messages" onFinish={onFinish} validateMessages={validateMessages} align="left">
+            <Form {...layout} name="LoginForm" form={form} onFinish={onFinish} validateMessages={validateMessages} align="left">
                 <Form.Item name={['user', 'name']} label="Name" rules={[{required: true}]}>
                     <Input placeholder="Your Name"/>
                 </Form.Item>
                 <Form.Item name={['user', 'age']} label="Age" rules={[{required: true}]}>
-                    <InputNumber/>
+                    <InputNumber min={0} max={200}/>
                 </Form.Item>
                 <Form.Item name={['user', 'school']} label="School" rules={[{required: true}]}>
                     <Select style={{width: '100%', textAlign: 'left'}}
+                            allowClear
                             placeholder="Please select your school">{schools}</Select>
-                    <br/>
                 </Form.Item>
                 <Form.Item name={['user', 'interests']} label="Interests" rules={[{required: true}]}>
                     <Select mode="multiple"
                             allowClear
                             style={{width: '100%', textAlign: 'left'}}
                             placeholder="Please select your interests">{interests}</Select>
-                    <br/>
                 </Form.Item>
 
                 <Form.Item wrapperCol={{...layout.wrapperCol, offset: 20}}>
