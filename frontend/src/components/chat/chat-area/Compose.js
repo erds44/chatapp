@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Row, Col, Input, Button } from "antd";
 import "./Compose.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,14 +11,14 @@ const Compose = () => {
   const dispatch = useDispatch();
   const currentUser = useSelector(state => state.login.user);
   const currentRoom = useSelector(state => state.room.currentRoom);
+  const [textAreaText, setTextAreaText] = useState("");
   const handleMessageSend = () => {
-    const composeTextArea = document.getElementById(`compose-textarea`);
-    if (!composeTextArea.value) {
+    if (!textAreaText) {
       return;
     }
     const payload = {
       chatRoom: currentRoom,
-      text: composeTextArea.value,
+      text: textAreaText,
       id: uuid.v4(),
       time: new Date().getTime(),
       sender: currentUser
@@ -27,25 +27,29 @@ const Compose = () => {
       type: ON_MESSAGE,
       payload
     });
-    // TODO @Xiao web socket
     webSocket.send(
       JSON.stringify({
         command: "sendMessage",
         body: payload
       })
     );
-
-    composeTextArea.value = null;
+    setTextAreaText("");
+  };
+  const handleMessageChange = event => {
+    setTextAreaText(event.target.value);
   };
   return (
     <div id={"compose"}>
       <Row>
         <TextArea
+          allowClear={true}
           id={"compose-textarea"}
           rows={4}
-          defaultValue={""}
+          // defaultValue={""}
+          value={textAreaText}
           showCount={true}
           onPressEnter={handleMessageSend}
+          onChange={handleMessageChange}
         />
       </Row>
       <Row>
