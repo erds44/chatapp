@@ -16,28 +16,51 @@ const Compose = () => {
     if (!textAreaText) {
       return;
     }
-    const payload = {
-      chatRoom: currentRoom,
-      text: textAreaText,
-      id: uuid.v4(),
-      time: new Date().getTime(),
-      sender: currentUser
-    };
-    dispatch({
-      type: ON_MESSAGE,
-      payload
-    });
-    webSocket.send(
-      JSON.stringify({
-        command: "sendMessage",
-        body: payload
-      })
-    );
+
+    if (!messageCensor(textAreaText)) {
+        webSocket.send(
+            JSON.stringify({
+                  command: "ban",
+                  body: {
+                    username: currentUser.trim(),
+                    room: currentRoom.trim()
+                  }
+                }
+            )
+        );
+    }
+    else {
+        sendMessage();
+    }
+
     setTextAreaText("");
   };
   const handleMessageChange = event => {
-    setTextAreaText(event.target.value);
+      setTextAreaText(event.target.value);
   };
+
+  const sendMessage = () => {
+      const payload = {
+        chatRoom: currentRoom,
+        text: textAreaText,
+        id: uuid.v4(),
+        time: new Date().getTime(),
+        sender: currentUser
+      };
+      dispatch({
+        type: ON_MESSAGE,
+        payload
+      });
+      webSocket.send(
+          JSON.stringify({
+            command: "broadcast",
+            body: payload
+          })
+      );
+  }
+  const messageCensor = (content) => {
+    return !content.toLowerCase().includes("hate");
+  }
   return (
     <div id={"compose"}>
       <Row>

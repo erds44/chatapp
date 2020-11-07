@@ -99,7 +99,7 @@ public class DispatchAdapter {
             case "forceToLeave":
                 cmd = new RemoveUserCmd();
                 break;
-            case "sendMessage":
+            case "broadcast":
                 cmd = new SendMsgCmd();
                 break;
             case "recallMessage":
