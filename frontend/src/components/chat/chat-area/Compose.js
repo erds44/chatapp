@@ -23,7 +23,8 @@ const Compose = () => {
                   command: "ban",
                   body: {
                     username: currentUser.trim(),
-                    room: currentRoom.trim()
+                    room: currentRoom.trim(),
+                    isViaReport: false
                   }
                 }
             )

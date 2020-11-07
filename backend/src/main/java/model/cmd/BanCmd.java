@@ -26,6 +26,7 @@ public class BanCmd extends ACmd {
     public void execute(Session userSession, Map<String, Object> request) {
         String username = (String) request.get("username");
         String room = (String) request.get("room");
+        Boolean isViaReport = (Boolean) request.get("isViaReport");
 
         if (!DispatchAdapter.userName2chatRoomName.containsKey(username) || !DispatchAdapter.userName2chatRoomName.get(username).remove(room)) {
             return;
@@ -41,7 +42,7 @@ public class BanCmd extends ACmd {
         // Notify the reported user.
         Session reportedUserSession = DispatchAdapter.userName2session.get(username);
         if (reportedUserSession != null) {
-            sendWSMsg(reportedUserSession, Constant.ROOM, Constant.REQUEST_BANUSER, Constant.SYS_ERR, "You are banned from all rooms!");
+            sendWSMsg(reportedUserSession, Constant.ROOM, Constant.REQUEST_BANUSER, Constant.SYS_ERR, "You are banned from all rooms " + (isViaReport ? "due to report!" : "due to using hate!"));
         }
 
         // Notify the other user in the room.

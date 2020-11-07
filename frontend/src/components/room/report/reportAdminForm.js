@@ -18,7 +18,8 @@ const ReportAdminForm = (props) => {
                     command: "ban",
                     body: {
                         username: reportedUsername.trim(),
-                        room: reportedRoom.trim()
+                        room: reportedRoom.trim(),
+                        isViaReport: true
                     }
                 }
             )
