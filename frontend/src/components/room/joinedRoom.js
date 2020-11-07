@@ -25,7 +25,7 @@ const JoinedRoom = (props) => {
 
     const getButton = (name, roomName, admin) => {
         if (name === userName || name === admin) return null;
-        if (userName === admin) return <Button type="text" danger onClick={() => forceToLeave(name, roomName)}>Ban</Button>
+        if (userName === admin) return <Button type="text" danger onClick={() => forceToLeave(name, roomName)}>Remove</Button>
         return <Button type="text" danger onClick={() => {report(roomName, name)}}>Report</Button>
     }
 
