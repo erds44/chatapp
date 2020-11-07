@@ -1,10 +1,11 @@
-import {ROOM} from "../actions/type";
+import {ROOM, JOIN_ROOM} from "../actions/type";
 import {act} from "@testing-library/react";
 
 const INTIAL_STATE = {
     request: null,
     type: null,
     msg: null,
+    currentRoom: null,
     joinedRoom:[],
     userList: [[]],
     allRooms: []
@@ -22,6 +23,12 @@ export default (state = INTIAL_STATE, action) => {
                 allRooms: parse(action.payload.param3),
                 userName: action.payload.param4
             };
+        case JOIN_ROOM: {
+            return {
+                ...state,
+                currentRoom: action.payload
+            }
+        }
         default:
             return state;
     }

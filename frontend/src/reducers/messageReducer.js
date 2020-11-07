@@ -6,28 +6,7 @@ import {
 } from "../actions/type";
 
 const INITIAL_STATE = {
-  messages: {
-    CR1: [
-      {
-        id: '1',
-        sender: "Xiao Xia",
-        text: "This is the first message for chat room 1",
-        time: new Date("2020-10-29 08:00:00").getTime()
-      },
-      {
-        id: '2',
-        sender: "Zhijian Yao",
-        text: "This is the second message for chat room 1",
-        time: new Date("2020-10-29 08:05:00").getTime()
-      },
-      {
-        id: '3',
-        sender: "Weiwei Zhou",
-        text: "This is the third message for chat room 1",
-        time: new Date("2020-10-29 08:15:30").getTime()
-      }
-    ]
-  }
+  messages: {}
 };
 
 export default function (state = INITIAL_STATE, action)  {
@@ -36,6 +15,9 @@ export default function (state = INITIAL_STATE, action)  {
     case ON_MESSAGE: {
       const { messages } = state;
       const { id, text, time, sender, chatRoom } = action.payload;
+      if (!messages[chatRoom]) {
+        messages[chatRoom] = [];
+      }
       messages[chatRoom].push({
         id,
         text,

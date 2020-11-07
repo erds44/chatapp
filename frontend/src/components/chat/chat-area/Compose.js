@@ -9,40 +9,34 @@ const { TextArea } = Input;
 
 const Compose = () => {
   const dispatch = useDispatch();
-  // const currentUser = useSelector(state => state.login.user);
-  const currentUser = "Xiao Xia";
-  const selectedChatroom = "CR1";
+  const currentUser = useSelector(state => state.login.user);
+  const currentRoom = useSelector(state => state.room.currentRoom);
   const handleMessageSend = () => {
     const composeTextArea = document.getElementById(`compose-textarea`);
     if (!composeTextArea.value) {
       return;
     }
+    const payload = {
+      chatRoom: currentRoom,
+      text: composeTextArea.value,
+      id: uuid.v4(),
+      time: new Date().getTime(),
+      sender: currentUser
+    };
     dispatch({
       type: ON_MESSAGE,
-      payload: {
-        chatRoom: selectedChatroom,
-        text: composeTextArea.value,
-        id: uuid.v4(),
-        time: new Date().getTime(),
-        sender: currentUser
-      }
+      payload
     });
     // TODO @Xiao web socket
     webSocket.send(
-        JSON.stringify({
-              command: "createRoom",
-              body: {
-                name: values.name,
-                interests: values.interest
-              }
-            }
-        )
-    )
+      JSON.stringify({
+        command: "sendMessage",
+        body: payload
+      })
+    );
 
     composeTextArea.value = null;
-    console.log(composeTextArea.value)
   };
-  console.log(document.getElementById(`compose-textarea`)?.value)
   return (
     <div id={"compose"}>
       <Row>

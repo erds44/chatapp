@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Row, Input, Modal } from "antd";
 import ChatMessage from "./ChatMessage";
 import "./ChatMessages.css";
-import { useDispatch } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import { EDIT_MESSAGE } from "../../../actions/type";
 const { TextArea } = Input;
 
@@ -10,7 +10,7 @@ const ChatMessages = ({ inputMessages }) => {
   const dispatch = useDispatch();
   const [modalVisible, setModalVisible] = useState(false);
   const [messageToEdit, setMessageToEdit] = useState("");
-  const selectedChatRoom = "CR1";
+  const selectedChatRoom = useSelector(state => state.room.currentRoom);
 
   const handleModalOK = () => {
     setModalVisible(false);
