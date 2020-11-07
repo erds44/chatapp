@@ -48,6 +48,14 @@ public class DispatchAdapter {
     }
 
     /**
+     * Handle for websocket close.
+     */
+    public synchronized void leave(Session user) {
+        ACmd cmd = new LogoutCmd();
+        cmd.execute(user, new HashMap<>());
+    }
+
+    /**
      * Process request for a given user session.
      *
      * @param user    user
