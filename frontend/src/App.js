@@ -9,6 +9,7 @@ import webSocket from "./components/websocket/Websocket"
 import { onMessage } from './actions/index'
 import { connect } from 'react-redux'
 import {Modal} from "antd";
+import PrivateRoute from "./auth/privateRoute";
 
 const history = createBrowserHistory();
 
@@ -33,7 +34,8 @@ const App = (props) => {
        <Router history={history}>
         <Switch>
           <Route path="/" exact component={Login} />
-          <Route path="/chat" exact component={Chat}/>
+          <PrivateRoute path="/chat" exact component={Chat}/>
+          {/*<Route path="/chat" exact component={Chat}/>*/}
         </Switch>
       </Router> 
     </div>

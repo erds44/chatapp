@@ -1,10 +1,14 @@
-import React from "react";
+import {React, useState} from "react";
 import { List, Avatar, Button } from "antd";
 import inviteForm from "../inviteForm";
 import webSocket from "../../websocket/Websocket";
 import colorHelper from "../../../helpers/color-user-helper";
+import Message from "./message";
 
 const UserList = () => {
+
+    const [visible, setVisible] = useState(false);
+    const [userName, setUserName] = useState("");
   const data = [
     {
       name: { title: "Miss", first: "Weiwei", last: "Zhou" },
@@ -41,6 +45,7 @@ const UserList = () => {
 
   return (
     <div>
+        <Message userName={userName} visible={visible} setVisible={setVisible}/>
       <List
         itemLayout="horizontal"
         dataSource={data}
@@ -69,10 +74,11 @@ const UserList = () => {
               type="primary"
               shape="round"
               size="small"
-              onClick={() => alert("to complete")}
+              onClick={() => {setUserName(item.name.first + " " + item.name.last); setVisible(true)}}
             >
               Chat!
             </Button>
+
           </List.Item>
         )}
       />

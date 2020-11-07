@@ -1,5 +1,5 @@
 import {message} from 'antd';
-import {SIGN_IN, SIGN_OUT, ON_MESSAGE, CREATE_ROOM, ROOM, ON_REPORT} from './type';
+import {SIGN_IN, SIGN_OUT, ON_MESSAGE, CREATE_ROOM, ROOM, ON_REPORT, PRI_MESSAGE} from './type';
 
 var mesId = 0;
 
@@ -47,12 +47,16 @@ export const onMessage = (messages) =>
                     }
                 });
                 break;
-            case "message": {
+            case "message":
                 const type = data.request;
                 const payload = JSON.parse(data.msg);
-                dispatch({type, payload});
+                dispatch({ type, payload});
                 break;
-            }
+            case "privateMessage":
+                const sender = data.request;
+                //const payload = JSON.parse(data.msg);
+                dispatch({type: PRI_MESSAGE, payload: JSON.parse(data.msg), sender: sender});
+                break;
             default:
                 break;
         }
