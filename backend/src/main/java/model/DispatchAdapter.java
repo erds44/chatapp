@@ -87,6 +87,10 @@ public class DispatchAdapter {
                 break;
             case "ban":
                 cmd = new BanCmd();
+                break;
+            case "forceToLeave":
+                cmd = new RemoveUserCmd();
+                break;
             default:
                 break;
         }

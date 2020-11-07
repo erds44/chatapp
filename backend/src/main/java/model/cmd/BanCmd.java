@@ -26,19 +26,12 @@ public class BanCmd extends ACmd {
     public void execute(Session userSession, Map<String, Object> request) {
         String username = (String) request.get("username");
         String room = (String) request.get("room");
-//        Debug.printMap(DispatchAdapter.userName2chatRoomName,"userName2chatRoomName");
-//        Debug.printMap(DispatchAdapter.chatRoomName2listUser,"userName2chatRoomName");
-        if (!DispatchAdapter.userName2chatRoomName.containsKey(username)) {
-            return;
-        }
-        if (!DispatchAdapter.userName2chatRoomName.get(username).remove(room)) {
+
+        if (!DispatchAdapter.userName2chatRoomName.containsKey(username) || !DispatchAdapter.userName2chatRoomName.get(username).remove(room)) {
             return;
         }
 
-        if (!DispatchAdapter.chatRoomName2listUser.containsKey(room)) {
-            return;
-        }
-        if (!DispatchAdapter.chatRoomName2listUser.get(room).remove(username)) {
+        if (!DispatchAdapter.chatRoomName2listUser.containsKey(room) || !DispatchAdapter.chatRoomName2listUser.get(room).remove(username)) {
             return;
         }
 
