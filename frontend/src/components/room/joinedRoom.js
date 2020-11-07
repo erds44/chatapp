@@ -1,6 +1,7 @@
 import {Menu, Tag, Button} from "antd";
 import {GroupOutlined} from "@ant-design/icons";
 import React, {useState} from "react";
+import webSocket from "../websocket/Websocket";
 
 
 const {SubMenu} = Menu;
@@ -9,17 +10,23 @@ const JoinedRoom = (props) => {
     const report = (reportRoom, reportName) => {
         setReport({visible: true, reportRoom: reportRoom, reportName: reportName})
     }
+    const forceToLeave = (name, room) => {
+        webSocket.send(
+            JSON.stringify({
+                    command: "forceToLeave",
+                    body: {
+                        userName: name,
+                        roomName: room
+                    }
+                }
+            )
+        )
+    };
 
     const getButton = (name, roomName, admin) => {
-        console.log("current name: " + name);
-        console.log("admin name: " + admin);
-        console.log("username: " + userName);
-
-
         if (name === userName || name === admin) return null;
-        return <Button type="text" danger onClick={() => {
-            report(roomName, name)
-        }}>{userName === admin ? "Ban" : "Report"}</Button>
+        if (userName === admin) return <Button type="text" danger onClick={() => forceToLeave(name, roomName)}>Ban</Button>
+        return <Button type="text" danger onClick={() => {report(roomName, name)}}>Report</Button>
     }
 
 

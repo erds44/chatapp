@@ -90,6 +90,8 @@ public class DispatchAdapter {
             default:
                 break;
         }
-        cmd.execute(user, bodyMap);
+        if(cmd != null) {
+            cmd.execute(user, bodyMap);
+        }
     }
 }
