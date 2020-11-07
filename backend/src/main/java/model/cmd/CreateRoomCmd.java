@@ -61,11 +61,11 @@ public class CreateRoomCmd extends ACmd {
 
     @SuppressWarnings("unchecked")
     private void createRoom(Map<String, Object> request, String roomName, String userName) {
-        List<String> requirement = null;
-        if (request.containsKey(Constant.INTERESTS)) {
+        List<String> requirement = new CopyOnWriteArrayList<>();
+        if (request.containsKey(Constant.INTERESTS) && (boolean)request.get("isPrivate")) {
             requirement = (ArrayList<String>) request.get(Constant.INTERESTS);
         }
-        ChatRoom room = new ChatRoom(roomName, userName, requirement);
+        ChatRoom room = new ChatRoom(roomName, userName, requirement, (boolean)request.get("isPrivate"));
         DispatchAdapter.chatRoomName2ChatRoom.put(roomName, room);
         DispatchAdapter.chatRoomName2listUser.put(roomName, new CopyOnWriteArrayList<>());
         DispatchAdapter.chatRoomName2listUser.get(roomName).add(userName);

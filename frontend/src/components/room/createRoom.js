@@ -29,7 +29,8 @@ const CreateRoom = (props) => {
                     command: "createRoom",
                     body: {
                         name: values.name,
-                        interests: values.interest
+                        interests: values.interest,
+                        isPrivate: values.switch || false
                     }
                 }
             )
@@ -53,7 +54,8 @@ const CreateRoom = (props) => {
                      }}/>
                      </Form.Item>
                      <Form.Item name={"interest"}
-                                label="Interests">
+                                label="Interests"
+                                rules={[{required: !interestDisabled}]}>
                          <Select mode="multiple"
                                  allowClear
                                  style={{width: '100%'}}

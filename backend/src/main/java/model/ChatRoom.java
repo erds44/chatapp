@@ -9,6 +9,7 @@ public class ChatRoom {
     private String name;
     private String owner;
     private List<String> interestsRequirement; // if list is null then no restriction, if not then private
+    private boolean isPublic;
 
     /**
      * Public constructor.
@@ -17,34 +18,29 @@ public class ChatRoom {
      * @param owner                owner of the room
      * @param interestsRequirement requirement of interest
      */
-    public ChatRoom(String name, String owner, List<String> interestsRequirement) {
+    public ChatRoom(String name, String owner, List<String> interestsRequirement, boolean isPrivate) {
         this.name = name;
         this.owner = owner;
         this.interestsRequirement = interestsRequirement;
+        this.isPublic = !isPrivate;
     }
 
     public String getName() {
         return this.name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public String getOwner() {
         return this.owner;
     }
 
-    public void setOwner(String owner) {
-        this.owner = owner;
-    }
-
-    public void setInterestsRequirement(List<String> interestsRequirement) {
-        this.interestsRequirement = interestsRequirement;
-    }
 
     public List<String> getInterestsRequirement() {
         return this.interestsRequirement;
+    }
+
+    public boolean getIsPublic() {
+        return this.isPublic;
     }
 
 }

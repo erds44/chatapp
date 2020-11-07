@@ -1,11 +1,12 @@
-import {Menu, Tag, Popover, Button} from "antd";
-import {CloseCircleOutlined, GroupOutlined, MinusCircleOutlined, PlusCircleOutlined} from "@ant-design/icons";
-import React, {useState, useEffect} from "react";
+import {Menu} from "antd";
+import {LockOutlined} from "@ant-design/icons";
+import {GroupOutlined} from "@ant-design/icons";
+import React from "react";
 import webSocket from "../websocket/Websocket";
 
 const {SubMenu} = Menu;
 const AllRooms = (props) => {
-    const {allRooms} = props;
+    const {allRooms, isPublic} = props;
     const onFinish = (values) => {
         webSocket.send(
             JSON.stringify({
@@ -24,11 +25,13 @@ const AllRooms = (props) => {
         }}>
             <SubMenu key="allRooms" title={<span><GroupOutlined/><span>All Rooms</span></span>}>
                 {
-                    allRooms.map(name => {
-                    return (
-                    <Menu.Item key={name}>{name}</Menu.Item>
-                    );
-                })
+                    allRooms.map((name, index) => {
+                        return (
+
+                            <Menu.Item key={name}><span>{isPublic[index] === "false" ?
+                                <span><LockOutlined/></span> : null}{name}</span></Menu.Item>
+                        );
+                    })
 
                 }
             </SubMenu>

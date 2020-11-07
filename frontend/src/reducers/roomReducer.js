@@ -8,7 +8,8 @@ const INTIAL_STATE = {
     currentRoom: null,
     joinedRoom:[],
     userList: [[]],
-    allRooms: []
+    allRooms: [],
+    isPublic: []
 };
 
 export default (state = INTIAL_STATE, action) => {
@@ -21,11 +22,13 @@ export default (state = INTIAL_STATE, action) => {
                 joinedRoom: parse(action.payload.param1),
                 userList: parseNestedList(action.payload.param1, action.payload.param2),
                 allRooms: parse(action.payload.param3),
-                userName: action.payload.param4
+                userName: action.payload.param4,
+                isPublic: parse(action.payload.param5)
             };
         case JOIN_ROOM: {
             return {
                 ...state,
+                msg: null,
                 currentRoom: action.payload
             }
         }

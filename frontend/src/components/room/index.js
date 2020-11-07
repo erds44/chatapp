@@ -17,9 +17,7 @@ const Index = (props) => {
     const [allRooms, setAllRooms] = useState(() => []);
     const [visible, setVisible] = useState(false);
     const [userName, setUserName] = useState();
-    // const getAllRooms = useMemo(() => allRooms, [allRooms])
-    // const getJoinedRooms = useMemo(() => joinedRooms, [joinedRooms])
-    // const getUserList = useMemo(() => userList, [userList])
+    const [isPublic, setIsPublic] = useState(() => []);
     const [report, setReport] = useState({visible: false, reportRoom: null, reportName: null})
     const handleClick = (e) => {
         if (e.key === "create") {
@@ -33,6 +31,7 @@ const Index = (props) => {
             if (room.userList) setUserList(room.userList);
             if (room.allRooms) setAllRooms(room.allRooms);
             if (room.userName) setUserName(room.userName);
+            if (room.isPublic) setIsPublic(room.isPublic);
 
         } else {
             if (room.type === "err") Modal.error({content: room.msg});
@@ -49,7 +48,7 @@ const Index = (props) => {
             <ExitRoom joinedRooms={joinedRooms}/>
             <ExitAllRooms/>
             <JoinedRoom joinedRooms={joinedRooms} userList={userList} userName={userName} setReport={setReport}/>
-            <AllRooms allRooms={allRooms}/>
+            <AllRooms allRooms={allRooms} isPublic={isPublic}/>
             <ReportForm report={report} setReport={setReport}/>
             <ReportAdminForm/>
         </Menu>

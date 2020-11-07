@@ -2,6 +2,7 @@ package model.cmd;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import model.ChatRoom;
 import model.DispatchAdapter;
 import org.eclipse.jetty.websocket.api.Session;
 import utility.Constant;
@@ -53,7 +54,7 @@ public abstract class ACmd {
             jsonObject.addProperty("param" + param++, parameter);
         }
         try {
-            if(session.isOpen()) {
+            if (session.isOpen()) {
                 session.getRemote().sendString(String.valueOf(jsonObject));
             }
         } catch (Exception e) {
@@ -66,6 +67,10 @@ public abstract class ACmd {
      */
     protected void updateAllSession() {
         Set<String> allRooms = DispatchAdapter.chatRoomName2ChatRoom.keySet();
+        List<Boolean> isPublic = new CopyOnWriteArrayList<>();
+        for(ChatRoom room : DispatchAdapter.chatRoomName2ChatRoom.values()){
+            isPublic.add(room.getIsPublic());
+        }
         for (Session session : DispatchAdapter.session2userName.keySet()) {
             String userName = getUser(session);
             List<String> joinedRooms = DispatchAdapter.userName2chatRoomName.get(userName);
@@ -73,7 +78,7 @@ public abstract class ACmd {
             for (String room : joinedRooms) {
                 userlist.add(DispatchAdapter.chatRoomName2listUser.get(room));
             }
-            sendWSMsg(session, Constant.ROOM, Constant.REQUEST_UPDATEALLROOM, Constant.SYS_SR, null, joinedRooms.toString(), userlist.toString(), allRooms.toString(), userName);
+            sendWSMsg(session, Constant.ROOM, Constant.REQUEST_UPDATEALLROOM, Constant.SYS_SR, null, joinedRooms.toString(), userlist.toString(), allRooms.toString(), userName, isPublic.toString());
         }
     }
 
@@ -92,7 +97,7 @@ public abstract class ACmd {
     protected void userLeftChatRoom(Session userSession, String chatRoomName, String userName) {
         DispatchAdapter.chatRoomName2listUser.get(chatRoomName).remove(userName);
         for (String user : DispatchAdapter.chatRoomName2listUser.get(chatRoomName)) {
-            if(!user.equals(userName)) {
+            if (!user.equals(userName)) {
                 Session session = DispatchAdapter.userName2session.get(user);
                 sendWSMsg(session, Constant.ROOM, Constant.REQUEST_UPDATEUSERLIST, Constant.SYS_SR, userName + " left the room!");
                 // TODO: notify all other session in chat

@@ -1,4 +1,4 @@
-import {Menu, Tag, Button} from "antd";
+import {Menu, Tag, Button, Dropdown, Col, Popover} from "antd";
 import {GroupOutlined} from "@ant-design/icons";
 import React, {useState} from "react";
 import webSocket from "../websocket/Websocket";
@@ -8,6 +8,7 @@ import {JOIN_ROOM} from "../../actions/type";
 
 const {SubMenu} = Menu;
 const JoinedRoom = (props) => {
+    let keyId = 1;
     const dispatch = useDispatch();
     const {joinedRooms, userList, userName, setReport} = props;
     const report = (reportRoom, reportName) => {
@@ -26,33 +27,53 @@ const JoinedRoom = (props) => {
         )
     };
 
-    const getButton = (name, roomName, admin) => {
-        if (name === userName || name === admin) return null;
-        if (userName === admin) return <Button type="text" danger onClick={() => forceToLeave(name, roomName)}>Remove</Button>
-        return <Button type="text" danger onClick={() => {report(roomName, name)}}>Report</Button>
+    const block = (name) => {
+        webSocket.send(
+            JSON.stringify({
+                    command: "block",
+                    body: {
+                        userName: name
+                    }
+                }
+            )
+        )
+
     }
 
-    const handleJoinRoom = ({ key }) => {
+    const getRemoveButton = (name, roomName, admin) => {
+        if (name === userName || name === admin) return null;
+        if (userName === admin) return <Menu.Item key={name + "remove" + keyId++}
+                                                  onClick={() => forceToLeave(name, roomName)}>Remove</Menu.Item>
+        return <Menu.Item key={name + "report" + keyId++} onClick={() => {
+            report(roomName, name)
+        }}>Report</Menu.Item>
+    }
+
+    const getBlockButton = (name) => {
+        if (name !== userName) return <Menu.Item key={name + "block" + keyId++} onClick={() => block(name)}>Block</Menu.Item>
+        return null
+    }
+
+    const handleSelectedRoom = ({key}) => {
         dispatch({
             type: JOIN_ROOM,
             payload: key
         })
     }
-
     return (
         <Menu mode="inline" selectedKeys={['']}>
             <SubMenu title={<span><GroupOutlined/><span>Joined Rooms</span></span>}>
-                {console.log(joinedRooms)}
                 {
                     joinedRooms.map((name, index) => {
                         return (
-                            <SubMenu key={name} title={name} onTitleClick={handleJoinRoom}>
+                            <SubMenu key={name} title={name} onTitleClick={handleSelectedRoom}>
                                 {userList[index].map(name => {
                                     let color = (userList[index][0] === name) ? "magenta" : "green";
                                     let tag = (userList[index][0] === name) ? "Admin" : "Member";
-                                    return <Menu.Item key={name}><Tag color={color}>{tag}</Tag>{name}
-                                        {getButton(name, joinedRooms[index], userList[index][0])}
-                                    </Menu.Item>
+                                    return <SubMenu key={name + keyId++} title={<><Tag color={color}>{tag}</Tag>{name}</>}>
+                                        {getRemoveButton(name, joinedRooms[index], userList[index][0])}
+                                        {getBlockButton(name)}
+                                    </SubMenu>
 
                                 })
                                 }
