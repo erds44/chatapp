@@ -1,4 +1,4 @@
-import {Menu, Tag, Button, Dropdown, Col, Popover} from "antd";
+import {Badge, Menu, Tag, Button, Dropdown, Col, Popover} from "antd";
 import {GroupOutlined} from "@ant-design/icons";
 import React, {useState} from "react";
 import webSocket from "../websocket/Websocket";
@@ -50,7 +50,8 @@ const JoinedRoom = (props) => {
     }
 
     const getBlockButton = (name) => {
-        if (name !== userName) return <Menu.Item key={name + "block" + keyId++} onClick={() => block(name)}>Block</Menu.Item>
+        if (name !== userName) return <Menu.Item key={name + "block" + keyId++}
+                                                 onClick={() => block(name)}>Block</Menu.Item>
         return null
     }
 
@@ -66,19 +67,23 @@ const JoinedRoom = (props) => {
                 {
                     joinedRooms.map((name, index) => {
                         return (
-                            <SubMenu key={name} title={name} onTitleClick={handleSelectedRoom}>
-                                {userList[index].map(name => {
-                                    let color = (userList[index][0] === name) ? "magenta" : "green";
-                                    let tag = (userList[index][0] === name) ? "Admin" : "Member";
-                                    return <SubMenu key={name + keyId++} title={<><Tag color={color}>{tag}</Tag>{name}</>}>
-                                        {getRemoveButton(name, joinedRooms[index], userList[index][0])}
-                                        {getBlockButton(name)}
-                                    </SubMenu>
 
-                                })
-                                }
+                                <SubMenu key={name} title={name} onTitleClick={handleSelectedRoom}>
+                                    {userList[index].map(name => {
+                                        let color = (userList[index][0] === name) ? "magenta" : "green";
+                                        let tag = (userList[index][0] === name) ? "Admin" : "Member";
+                                        return (
+                                            <SubMenu key={name + keyId++}
+                                                     title={<><Tag color={color}>{tag}</Tag>{name}</>}>
+                                                {getRemoveButton(name, joinedRooms[index], userList[index][0])}
+                                                {getBlockButton(name)}
+                                            </SubMenu>
+                                        )
 
-                            </SubMenu>
+                                    })
+                                    }
+
+                                </SubMenu>
                         )
                     })
                 }

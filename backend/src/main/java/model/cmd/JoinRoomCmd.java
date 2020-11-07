@@ -53,7 +53,7 @@ public class JoinRoomCmd extends ACmd {
         for (String user : DispatchAdapter.chatRoomName2listUser.get(roomName)) {
             if (!user.equals(userName)) {
                 Session session = DispatchAdapter.userName2session.get(user);
-                sendWSMsg(session, Constant.ROOM, Constant.REQUEST_UPDATEUSERLIST, Constant.SYS_SR, userName + " joins the room!");
+                sendWSMsg(session, Constant.ROOM, Constant.REQUEST_UPDATEUSERLIST, Constant.SYS_SR, userName + " joins the room " + roomName);
                 // TODO: notify all other session in chat
             }
         }
