@@ -3,7 +3,7 @@ import {SIGN_IN, SIGN_OUT, ON_MESSAGE, CREATE_ROOM, ROOM, ON_REPORT} from './typ
 
 var mesId = 0;
 
-export const onMessage = (messages) => 
+export const onMessage = (messages) =>
     dispatch => {
         const data = JSON.parse(messages.data);
         switch (data.section) {
@@ -43,8 +43,9 @@ export const onMessage = (messages) =>
                 }});
                 break;
             case "message": {
-                const { type } = JSON.parse(data.payload);
-                dispatch({ type, payload: data.payload });
+                const type = data.request;
+                const payload = JSON.parse(data.msg);
+                dispatch({ type, payload });
                 break;
             }
             default:

@@ -11,7 +11,7 @@ const AllRooms = (props) => {
             JSON.stringify({
                     command: "joinRoom",
                     body: {
-                        name: values.key.replace(' ', '')
+                        name: values.key
                     }
                 }
             )

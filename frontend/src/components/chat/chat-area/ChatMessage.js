@@ -10,10 +10,10 @@ const ChatMessage = ({ message, onClickEdit }) => {
   const dispatch = useDispatch();
   const { id: messageId, text, time, sender } = message;
 
-  const user = { name: "Xiao Xia" };
-  const chatRoom = "CR1";
+  const currentUser = useSelector(state => state.login.user);
+  const chatRoom = useSelector(state => state.room.currentRoom);
 
-  const isMyMessage = user.name === message.sender;
+  const isMyMessage = currentUser === message.sender;
   const operationForMyMessage = ["edit", "delete", "recall"];
   const operationForOthersMessage = ["report"];
   const handleMenuClick = event => {
