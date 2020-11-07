@@ -32,7 +32,6 @@ const INITIAL_STATE = {
 
 export default function (state = INITIAL_STATE, action)  {
   console.log(action.type, action.payload);
-  // messageId format: CR1@3
   switch (action.type) {
     case ON_MESSAGE: {
       const { messages } = state;

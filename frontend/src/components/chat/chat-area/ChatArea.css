@@ -12,6 +12,8 @@
 
 #chat-area .ant-layout-content {
   padding: 0;
+  max-height: 70vh;
+  overflow: scroll;
   background-color: #f0f2f5;
 }
 

@@ -4,13 +4,14 @@ import "./Compose.css";
 import { useDispatch, useSelector } from "react-redux";
 import { ON_MESSAGE } from "../../../actions/type";
 import * as uuid from "uuid";
+import webSocket from "../../websocket/Websocket";
 const { TextArea } = Input;
 
 const Compose = () => {
   const dispatch = useDispatch();
   // const currentUser = useSelector(state => state.login.user);
-  const currentUser = 'Xiao Xia';
-  const selectedChatroom = 'CR1';
+  const currentUser = "Xiao Xia";
+  const selectedChatroom = "CR1";
   const handleMessageSend = () => {
     const composeTextArea = document.getElementById(`compose-textarea`);
     if (!composeTextArea.value) {
@@ -27,13 +28,28 @@ const Compose = () => {
       }
     });
     // TODO @Xiao web socket
+    webSocket.send(
+        JSON.stringify({
+              command: "createRoom",
+              body: {
+                name: values.name,
+                interests: values.interest
+              }
+            }
+        )
+    )
+
+    composeTextArea.value = null;
+    console.log(composeTextArea.value)
   };
+  console.log(document.getElementById(`compose-textarea`)?.value)
   return (
     <div id={"compose"}>
       <Row>
         <TextArea
           id={"compose-textarea"}
           rows={4}
+          defaultValue={""}
           showCount={true}
           onPressEnter={handleMessageSend}
         />

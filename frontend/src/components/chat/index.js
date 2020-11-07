@@ -69,7 +69,7 @@ const Chat = (props) => {
             <Sider width='300px' theme='light'>
                 <Room />
             </Sider>
-            <Layout>
+            <Layout style={{overFlow: 'hidden'}}>
                 <Header style={{padding: 0, backgroundColor: 'white', borderLeft: '2px solid rgba(0, 0, 0, 0.06)'}}>
                     <span id={"chat-area-header-room-name"} style={{fontSize: 'larger', fontWeight: 'bolder'}}>{selectedChatRoom}</span>
                     <span id={"chat-area-header-user-count"} style={{fontSize: 'medium'}}>{`  (${userMap[selectedChatRoom].length})`}</span>
