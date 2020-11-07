@@ -10,7 +10,6 @@ const { Content, Footer, Header } = Layout;
 
 const ChatArea = ({ chatRoom }) => {
   const messages = useSelector(state => {
-    console.log(state);
     return state.message.messages;
   });
 

@@ -2,10 +2,13 @@ import {Menu, Tag, Button} from "antd";
 import {GroupOutlined} from "@ant-design/icons";
 import React, {useState} from "react";
 import webSocket from "../websocket/Websocket";
+import {useDispatch} from "react-redux";
+import {JOIN_ROOM} from "../../actions/type";
 
 
 const {SubMenu} = Menu;
 const JoinedRoom = (props) => {
+    const dispatch = useDispatch();
     const {joinedRooms, userList, userName, setReport} = props;
     const report = (reportRoom, reportName) => {
         setReport({visible: true, reportRoom: reportRoom, reportName: reportName})
@@ -29,6 +32,12 @@ const JoinedRoom = (props) => {
         return <Button type="text" danger onClick={() => {report(roomName, name)}}>Report</Button>
     }
 
+    const handleJoinRoom = ({ key }) => {
+        dispatch({
+            type: JOIN_ROOM,
+            payload: key
+        })
+    }
 
     return (
         <Menu mode="inline" selectedKeys={['']}>
@@ -37,7 +46,7 @@ const JoinedRoom = (props) => {
                 {
                     joinedRooms.map((name, index) => {
                         return (
-                            <SubMenu key={name} title={name}>
+                            <SubMenu key={name} title={name} onTitleClick={handleJoinRoom}>
                                 {userList[index].map(name => {
                                     let color = (userList[index][0] === name) ? "magenta" : "green";
                                     let tag = (userList[index][0] === name) ? "Admin" : "Member";
