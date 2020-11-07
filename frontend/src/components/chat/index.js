@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import {Layout, Row, Col, Modal} from 'antd'
-import {Button, Popover} from 'antd'
+import {Button, Popover, notification} from 'antd'
 import {useHistory} from 'react-router-dom'
 import ChatArea from "./chat-area/ChatArea";
 import Room from "../room";
@@ -13,7 +13,7 @@ import {connect, useSelector} from "react-redux";
 const {Header, Content, Footer, Sider} = Layout;
 const Chat = (props) => {
     const history = useHistory();
-    const {dispatch, logIn} = props;
+    const {dispatch, logIn, priMsg} = props;
     const userMap = {
         'CR1': ["Xiao Xia", "Zhijian Yao", "Weiwei Zhou"]
     };
@@ -32,6 +32,12 @@ const Chat = (props) => {
             Modal.success(({content: logIn.msg}))
         }
     }, [logIn])
+
+    useEffect(() => {
+        if(priMsg.message !== null) {
+            notification.info({message: `${priMsg.sender} sends you a message`, description: priMsg.message.info});
+        }
+    }, [priMsg])
 
     // useEffect(() => {
     //     if (window.performance) {
@@ -95,7 +101,7 @@ const Chat = (props) => {
 }
 
 const mapStateToProps = (state, ownProps) => {
-    return { logIn: state.login }
+    return { logIn: state.login, priMsg: state.priMessage }
 };
 
 export default connect(mapStateToProps, {})(Chat);

@@ -108,6 +108,9 @@ public class DispatchAdapter {
             case "editMessage":
                 cmd = new EditMsgCmd();
                 break;
+            case "privateMessage":
+                cmd = new PrivateMsgCmd();
+                break;
             default:
                 break;
         }

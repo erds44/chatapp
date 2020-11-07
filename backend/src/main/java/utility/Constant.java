@@ -24,6 +24,7 @@ public class Constant {
     public static final String REQUEST_REPORTUSER ="reportUser";
     public static final String REQUEST_BANUSER ="banUser";
     public static final String REPORT ="report";
+    public static final String PRIMESSAGE ="privateMessage";
 
     // Message related constants
 
