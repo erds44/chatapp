@@ -1,11 +1,15 @@
 package controller;
 
 import model.DispatchAdapter;
+import model.cmd.ACmd;
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketClose;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketConnect;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketMessage;
 import org.eclipse.jetty.websocket.api.annotations.WebSocket;
+import utility.Constant;
+
+import java.util.List;
 
 /**
  * Create a web socket for the server.
@@ -27,7 +31,7 @@ public class WebSocketController {
      */
     @OnWebSocketClose
     public void onClose(Session user, int statusCode, String reason) {
-        String username = ChatAppController.userNameMap.get(user);
+        String userName = ChatAppController.userNameMap.get(user);
         ChatAppController.userNameMap.remove(user);
     }
 

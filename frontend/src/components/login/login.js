@@ -51,12 +51,13 @@ const Login = (props) => {
 
     useEffect(() => {
         console.log(logIn);
-        if(logIn.isSignedIn !== null) {
-            if(logIn.isSignedIn === true) {
-                history.push('/chat');
-            }
-            else {
-                Modal.error({content: "This user has been logged in"});
+        if(logIn) {
+            if (logIn.isSignedIn !== null) {
+                if (logIn.isSignedIn === true) {
+                    history.push('/chat');
+                } else {
+                    Modal.error({content: "This user has been logged in"});
+                }
             }
         }
     }, [logIn])

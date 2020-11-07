@@ -49,6 +49,21 @@ const Chat = (props) => {
         }
     }, [logIn])
 
+    // useEffect(() => {
+    //     if (window.performance) {
+    //         if (performance.navigation.type == 1) {
+    //             //alert( "This page is reloaded" );
+    //             history.push('/');
+    //             // webSocket.send(
+    //             //     JSON.stringify({
+    //             //         command: "logout",
+    //             //         body: {}
+    //             //     })
+    //             // );
+    //         }
+    //     }
+    // }, [])
+
     return (
         <Layout style={{height: '100vh'}}>
             <Sider width='300px' theme='light'>
