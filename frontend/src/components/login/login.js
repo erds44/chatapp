@@ -67,12 +67,12 @@ const Login = (props) => {
         <Card title="Login Chat Index" style={{width: '600px', margin: '80px auto'}}
               headStyle={{fontSize: '30px', backgroundColor: '#d9d9d9'}}
               bodyStyle={{backgroundColor: '#f5f5f5'}}>
-            <Form {...layout} name="nest-messages" onFinish={onFinish} validateMessages={validateMessages}>
+            <Form {...layout} name="nest-messages" onFinish={onFinish} validateMessages={validateMessages} align="left">
                 <Form.Item name={['user', 'name']} label="Name" rules={[{required: true}]}>
                     <Input placeholder="Your Name"/>
                 </Form.Item>
                 <Form.Item name={['user', 'age']} label="Age" rules={[{required: true}]}>
-                    <InputNumber />
+                    <InputNumber/>
                 </Form.Item>
                 <Form.Item name={['user', 'school']} label="School" rules={[{required: true}]}>
                     <Select style={{width: '100%', textAlign: 'left'}}
