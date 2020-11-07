@@ -1,5 +1,5 @@
 import {React, useEffect, useState} from 'react'
-import {Form, Input, message, Button, Select, Modal} from 'antd'
+import {Form, Input, message, Button, Select, Modal, InputNumber} from 'antd'
 import {Card} from 'antd'
 import {useHistory} from 'react-router-dom'
 import webSocket from "../websocket/Websocket"
@@ -42,6 +42,7 @@ const Login = (props) => {
                 command: "login",
                 body: {
                     name: values.user.name,
+                    age: values.user.age,
                     school: values.user.school,
                     interests: interest_string_list
                 }
@@ -70,12 +71,15 @@ const Login = (props) => {
                 <Form.Item name={['user', 'name']} label="Name" rules={[{required: true}]}>
                     <Input placeholder="Your Name"/>
                 </Form.Item>
-                <Form.Item name={['user', 'school']} label="School">
+                <Form.Item name={['user', 'age']} label="Age" rules={[{required: true}]}>
+                    <InputNumber />
+                </Form.Item>
+                <Form.Item name={['user', 'school']} label="School" rules={[{required: true}]}>
                     <Select style={{width: '100%', textAlign: 'left'}}
                             placeholder="Please select your school">{schools}</Select>
                     <br/>
                 </Form.Item>
-                <Form.Item name={['user', 'interests']} label="Interests">
+                <Form.Item name={['user', 'interests']} label="Interests" rules={[{required: true}]}>
                     <Select mode="multiple"
                             allowClear
                             style={{width: '100%', textAlign: 'left'}}
