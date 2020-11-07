@@ -8,6 +8,7 @@ import { useEffect } from 'react/cjs/react.production.min'
 import webSocket from "./components/websocket/Websocket"
 import { onMessage } from './actions/index'
 import { connect } from 'react-redux'
+import {Modal} from "antd";
 
 const history = createBrowserHistory();
 
@@ -21,6 +22,10 @@ const App = (props) => {
     webSocket.onmessage = (message) => {
       console.log(message);
       props.onMessage(message);
+    }
+
+    webSocket.onclose = () => {
+        Modal.error({content: "Websocket disconnected, please reenter the chat app"});
     }
 
     return (

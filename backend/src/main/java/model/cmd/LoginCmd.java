@@ -31,7 +31,7 @@ public class LoginCmd extends ACmd {
         DispatchAdapter.userName2session.put(userName, userSession);
         DispatchAdapter.userName2user.put(userName, user);
         DispatchAdapter.userName2chatRoomName.put(userName, new CopyOnWriteArrayList<>());
-        sendWSMsg(userSession, Constant.LOGIN, Constant.LOGIN, Constant.SYS_SR, null);
+        sendWSMsg(userSession, Constant.LOGIN, Constant.LOGIN, Constant.SYS_SR, userName);
         sendWSMsg(userSession, Constant.ROOM, Constant.ROOM, Constant.SYS_SR, Constant.LOGIN_SR);
         updateAllSession();
     }

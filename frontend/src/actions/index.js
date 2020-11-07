@@ -6,24 +6,13 @@ var mesId = 0;
 export const onMessage = (messages) => 
     dispatch => {
         const data = JSON.parse(messages.data);
-        // if (data.request === "login") {
-        //     if (data.type === "err") {
-        //         dispatch({type: SIGN_IN, payload: {mesId: mesId++, isSignedIn: false, user: null}});
-        //     } else {
-        //         dispatch({type: SIGN_IN, payload: {mesId: mesId++, isSignedIn: true, user: data.user}});
-        //     }
-        // } else if (data.request === "createRoom") {
-        //     dispatch({type: CREATE_ROOM, payload: {type: data.type, msg: data.msg, body: data.body}});
-        // } else {
-        //     dispatch({type: ON_MESSAGE, payload: messages.data});
-        // }
         switch (data.section) {
             case "login":
                 if(data.type === "err") {
                     dispatch({type: SIGN_IN, payload: {mesId: mesId++, isSignedIn: false, user: null, msg: data.msg}});
                 }
                 else {
-                    dispatch({type: SIGN_IN, payload: {mesId: mesId++, isSignedIn: true, user: data.user, msg: data.msg}});
+                    dispatch({type: SIGN_IN, payload: {mesId: mesId++, isSignedIn: true, user: data.msg, msg: data.msg}});
                 }
                 break;
             case "logout":

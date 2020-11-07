@@ -1,5 +1,6 @@
 package model.cmd;
 
+import controller.ChatAppController;
 import model.ChatRoom;
 import model.DispatchAdapter;
 import model.User;
@@ -34,6 +35,7 @@ public class LogoutCmd extends ACmd{
         DispatchAdapter.userName2session.remove(userName);
         DispatchAdapter.userName2user.remove(userName);
         DispatchAdapter.userName2chatRoomName.remove(userName);
+        ChatAppController.userNameMap.remove(userSession);
         sendWSMsg(userSession, Constant.LOGOUT, Constant.LOGOUT, Constant.SYS_SR, Constant.LOGOUT_SR);
         //sendWSMsg(userSession, Constant.ROOM, Constant.ROOM, Constant.SYS_SR, Constant.LOGOUT_SR);
         updateAllSession();

@@ -1,4 +1,5 @@
 import { SIGN_IN, SIGN_OUT } from '../actions/type';
+import userEvent from "@testing-library/user-event";
 
 const INTIAL_STATE = {
   isSignedIn: null,
@@ -10,6 +11,7 @@ const INTIAL_STATE = {
 export default (state = INTIAL_STATE, action) => {
   switch (action.type) {
     case SIGN_IN:
+      console.log("sign in " , state.user)
       if (action.payload.isSignedIn === true)
         return { ...state, isSignedIn: true, user: action.payload.user, mesId: action.payload.mesId, msg: action.payload.msg };
       else

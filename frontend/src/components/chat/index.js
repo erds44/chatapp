@@ -4,7 +4,7 @@ import {Button, Popover} from 'antd'
 import {useHistory} from 'react-router-dom'
 import ChatArea from "./chat-area/ChatArea";
 import Room from "../room";
-import UserList from "./UserList";
+import UserList from "./userList";
 import ReportForm from "../room/report/reportForm";
 import ReportAdminForm from "../room/report/reportAdminForm";
 import webSocket from "../websocket/Websocket";
@@ -48,6 +48,21 @@ const Chat = (props) => {
             Modal.success(({content: logIn.msg}))
         }
     }, [logIn])
+
+    // useEffect(() => {
+    //     if (window.performance) {
+    //         if (performance.navigation.type == 1) {
+    //             //alert( "This page is reloaded" );
+    //             history.push('/');
+    //             // webSocket.send(
+    //             //     JSON.stringify({
+    //             //         command: "logout",
+    //             //         body: {}
+    //             //     })
+    //             // );
+    //         }
+    //     }
+    // }, [])
 
     return (
         <Layout style={{height: '100vh'}}>

@@ -18,7 +18,7 @@ import static spark.Spark.webSocket;
  * The chat app controller communicates with all the clients on the web socket.
  */
 public class ChatAppController {
-    static Map<Session, String> userNameMap = new ConcurrentHashMap<>();
+    public static Map<Session, String> userNameMap = new ConcurrentHashMap<>();
     static int nextUserId = 1;
 
     /**
