@@ -37,7 +37,7 @@ const ChatMessages = ({ inputMessages }) => {
         inputMessages.map(message => {
           return (
             <Row className="message">
-              <ChatMessage message={message} onClickEdit={handleClickEdit} />
+              {/*<ChatMessage message={message} onClickEdit={handleClickEdit} />*/}
             </Row>
           );
         })}
