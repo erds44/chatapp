@@ -36,7 +36,7 @@ const ChatMessage = ({ message, onClickEdit }) => {
     if (isAdmin) {
       return ["delete"];
     }
-    return isAdminMessage ? [] : ["report"];
+    return [];
   };
   const handleMenuClick = event => {
     if (!event || !event.key) {
@@ -84,10 +84,6 @@ const ChatMessage = ({ message, onClickEdit }) => {
             }
           })
         );
-        break;
-      }
-      case "report": {
-        // TODO @Xiao web socket
         break;
       }
     }
@@ -168,7 +164,7 @@ const ChatMessage = ({ message, onClickEdit }) => {
             id={`${messageId}-dropdown`}
             className={"message-dropdown"}
           >
-            {(!isRecalled && (!isAdminMessage || isAdmin)) && (
+            {(!isRecalled && (isOwnMessage || isAdmin)) && (
               <Dropdown overlay={menu} placement="bottomLeft">
                 <Button>...</Button>
               </Dropdown>
