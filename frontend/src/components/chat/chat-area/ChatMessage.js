@@ -115,7 +115,7 @@ const ChatMessage = ({ message, onClickEdit }) => {
   };
 
   const getDisplayName = sender => {
-    return sender.split(" ").map(name => name[0]);
+    return sender.split("_").map(name => name[0]);
   };
 
   const getRecallText = (sender, recallTime) => {
