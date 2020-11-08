@@ -13,3 +13,5 @@ export const ON_REPORT = 'ON_REPORT';
 export const BAN = 'BAN';
 
 export const PRI_MESSAGE = 'PRI_MESSAGE';
+
+export const RESET = 'RESET';

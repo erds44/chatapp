@@ -30,6 +30,11 @@ public class PrivateMsgCmd extends ACmd{
         if(session == null) {
             return;
         }
+        if(DispatchAdapter.userName2blockList.get(userName).contains(person)) {
+            sendWSMsg(userSession, Constant.PRIMESSAGE, Constant.PRIMSG_FEEDBACK, Constant.SYS_ERR, Constant.PRIMSG_BLOCK);
+            return;
+        }
         sendWSMsg(session, Constant.PRIMESSAGE, userName, Constant.SYS_SR, new Gson().toJson(request));
+        sendWSMsg(userSession, Constant.PRIMESSAGE, Constant.PRIMSG_FEEDBACK, Constant.SYS_SR, Constant.PRIMSG_SUCCESS);
     }
 }

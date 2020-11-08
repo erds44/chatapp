@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {Layout, Row, Col, Modal} from 'antd'
+import {Layout, Row, Col, Modal, message} from 'antd'
 import {Button, Popover, notification} from 'antd'
 import {useHistory} from 'react-router-dom'
 import ChatArea from "./chat-area/ChatArea";
@@ -9,11 +9,12 @@ import ReportForm from "../room/report/reportForm";
 import ReportAdminForm from "../room/report/reportAdminForm";
 import webSocket from "../websocket/Websocket";
 import {connect, useSelector} from "react-redux";
+import notifications from "../notification";
 
 const {Header, Content, Footer, Sider} = Layout;
 const Chat = (props) => {
     const history = useHistory();
-    const {dispatch, logIn, priMsg} = props;
+    const {priMsg} = props;
     const userMap = {
         'CR1': ["Xiao Xia", "Zhijian Yao", "Weiwei Zhou"]
     };
@@ -26,33 +27,20 @@ const Chat = (props) => {
     });
     const currentUser = { name: 'Xiao Xia' };
 
-    useEffect(() => {
-        if(logIn.isSignedIn === null && logIn.user === null && logIn.msg !== null) {
-            history.push('/');
-            Modal.success(({content: logIn.msg}))
-        }
-    }, [logIn])
 
     useEffect(() => {
         if(priMsg.message !== null) {
             notification.info({message: `${priMsg.sender} sends you a message`, description: priMsg.message.info});
         }
+        else if(priMsg.feedback !== null) {
+            if(priMsg.feedback.indexOf("Sorry") < 0) {
+                notifications.success(priMsg.feedback);
+            }
+            else {
+                notifications.error(priMsg.feedback);
+            }
+        }
     }, [priMsg])
-
-    // useEffect(() => {
-    //     if (window.performance) {
-    //         if (performance.navigation.type == 1) {
-    //             //alert( "This page is reloaded" );
-    //             history.push('/');
-    //             // webSocket.send(
-    //             //     JSON.stringify({
-    //             //         command: "logout",
-    //             //         body: {}
-    //             //     })
-    //             // );
-    //         }
-    //     }
-    // }, [])
 
     return (
         <Layout style={{height: '100vh'}}>
@@ -101,7 +89,7 @@ const Chat = (props) => {
 }
 
 const mapStateToProps = (state, ownProps) => {
-    return { logIn: state.login, priMsg: state.priMessage }
+    return { priMsg: state.priMessage }
 };
 
 export default connect(mapStateToProps, {})(Chat);

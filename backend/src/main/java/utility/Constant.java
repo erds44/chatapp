@@ -25,6 +25,9 @@ public class Constant {
     public static final String REQUEST_BANUSER ="banUser";
     public static final String REPORT ="report";
     public static final String PRIMESSAGE ="privateMessage";
+    public static final String PRIMSG_SUCCESS = "Send successfully!";
+    public static final String PRIMSG_BLOCK = "Sorry, you are block by the user.";
+    public static final String PRIMSG_FEEDBACK = "priMsg_feedback";
 
     // Message related constants
 

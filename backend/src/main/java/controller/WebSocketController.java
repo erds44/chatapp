@@ -31,8 +31,7 @@ public class WebSocketController {
      */
     @OnWebSocketClose
     public void onClose(Session user, int statusCode, String reason) {
-        //String userName = ChatAppController.userNameMap.get(user);
-        //ChatAppController.userNameMap.remove(user);
+        System.out.println("disconnected");
         DispatchAdapter.getSingleton().leave(user);
     }
 

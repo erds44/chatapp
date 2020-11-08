@@ -3,6 +3,7 @@ import {Card, Form, Input, message, Button, Select, Modal, InputNumber} from 'an
 import {useHistory} from 'react-router-dom'
 import webSocket from "../websocket/Websocket"
 import { connect } from 'react-redux'
+import notification from "../notification";
 
 
 const layout = {
@@ -58,7 +59,7 @@ const Login = (props) => {
                 if (logIn.isSignedIn === true) {
                     history.push('/chat');
                 } else {
-                    Modal.error({content: "This user has been logged in"});
+                    notification.error("This user has been logged in");
                 }
             }
         }
@@ -72,20 +73,20 @@ const Login = (props) => {
                 <Form.Item name={['user', 'name']} label="Name" rules={[{required: true}]}>
                     <Input placeholder="Your Name"/>
                 </Form.Item>
-                <Form.Item name={['user', 'age']} label="Age" rules={[{required: true}]}>
-                    <InputNumber min={0} max={200}/>
-                </Form.Item>
-                <Form.Item name={['user', 'school']} label="School" rules={[{required: true}]}>
-                    <Select style={{width: '100%', textAlign: 'left'}}
-                            allowClear
-                            placeholder="Please select your school">{schools}</Select>
-                </Form.Item>
-                <Form.Item name={['user', 'interests']} label="Interests" rules={[{required: true}]}>
-                    <Select mode="multiple"
-                            allowClear
-                            style={{width: '100%', textAlign: 'left'}}
-                            placeholder="Please select your interests">{interests}</Select>
-                </Form.Item>
+                {/*<Form.Item name={['user', 'age']} label="Age" rules={[{required: true}]}>*/}
+                {/*    <InputNumber min={0} max={200}/>*/}
+                {/*</Form.Item>*/}
+                {/*<Form.Item name={['user', 'school']} label="School" rules={[{required: true}]}>*/}
+                {/*    <Select style={{width: '100%', textAlign: 'left'}}*/}
+                {/*            allowClear*/}
+                {/*            placeholder="Please select your school">{schools}</Select>*/}
+                {/*</Form.Item>*/}
+                {/*<Form.Item name={['user', 'interests']} label="Interests" rules={[{required: true}]}>*/}
+                {/*    <Select mode="multiple"*/}
+                {/*            allowClear*/}
+                {/*            style={{width: '100%', textAlign: 'left'}}*/}
+                {/*            placeholder="Please select your interests">{interests}</Select>*/}
+                {/*</Form.Item>*/}
 
                 <Form.Item wrapperCol={{...layout.wrapperCol, offset: 20}}>
                     <Button type="primary" htmlType="submit" size="large" >
