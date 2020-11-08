@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { ON_MESSAGE } from "../../../actions/type";
 import * as uuid from "uuid";
 import webSocket from "../../websocket/Websocket";
+import {messageCensor} from "../../../helpers/util";
 const { TextArea } = Input;
 
 const Compose = () => {
@@ -59,9 +60,7 @@ const Compose = () => {
           })
       );
   }
-  const messageCensor = (content) => {
-    return !content.toLowerCase().includes("hate");
-  }
+
   return (
     <div id={"compose"}>
       <Row>

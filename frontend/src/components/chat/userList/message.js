@@ -1,6 +1,7 @@
 import {React, useState} from "react";
 import { Modal, Input} from "antd";
 import webSocket from "../../websocket/Websocket";
+import {messageCensor} from "../../../helpers/util";
 
 const Message = (props) => {
 
@@ -8,6 +9,20 @@ const Message = (props) => {
     const {userName, visible, setVisible} = props;
     const { TextArea } = Input;
     const handleOk = () => {
+        if (!messageCensor(value)) {
+            webSocket.send(
+                JSON.stringify({
+                    command: "ban",
+                    body: {
+                        username: userName.trim(),
+                        room: null,
+                        isViaReport: false
+                    }
+                })
+            )
+
+            return;
+        }
         webSocket.send(
             JSON.stringify({
                 command: "privateMessage",
