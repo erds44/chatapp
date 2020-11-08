@@ -6,6 +6,7 @@ import { ON_MESSAGE } from "../../../actions/type";
 import * as uuid from "uuid";
 import webSocket from "../../websocket/Websocket";
 import {messageCensor} from "../../../helpers/util";
+import {BAN_BROADCAST} from "../../room/report/constant";
 const { TextArea } = Input;
 
 const Compose = () => {
@@ -25,7 +26,7 @@ const Compose = () => {
                   body: {
                     username: currentUser.trim(),
                     room: currentRoom.trim(),
-                    isViaReport: false
+                    source: BAN_BROADCAST
                   }
                 }
             )

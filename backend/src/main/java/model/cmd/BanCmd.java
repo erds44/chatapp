@@ -26,32 +26,41 @@ public class BanCmd extends ACmd {
     public void execute(Session userSession, Map<String, Object> request) {
         String username = (String) request.get("username");
         String room = (String) request.get("room");
-        Boolean isViaReport = (Boolean) request.get("isViaReport");
+        String source = (String) request.get("source");
 
-        if (!DispatchAdapter.userName2chatRoomName.containsKey(username) || !DispatchAdapter.userName2chatRoomName.get(username).remove(room)) {
-            return;
-        }
+        if (source.equals(Constant.BAN_BROADCAST) || source.equals(Constant.BAN_REPORT)) {
+            if (!DispatchAdapter.userName2chatRoomName.containsKey(username) || !DispatchAdapter.userName2chatRoomName.get(username).remove(room)) {
+                return;
+            }
 
-        if (!DispatchAdapter.chatRoomName2listUser.containsKey(room) || !DispatchAdapter.chatRoomName2listUser.get(room).remove(username)) {
-            return;
+            if (!DispatchAdapter.chatRoomName2listUser.containsKey(room) || !DispatchAdapter.chatRoomName2listUser.get(room).remove(username)) {
+                return;
+            }
+
+            // Notify the other user in the room.
+            for(String user: DispatchAdapter.chatRoomName2listUser.get(room)){
+                if(!user.equals(username)) {
+                    Session session = DispatchAdapter.userName2session.get(user);
+                    sendWSMsg(session, Constant.ROOM, Constant.REQUEST_UPDATEUSERLIST, Constant.SYS_SR, username + " has been banned due to inappropriate behaviors!");
+                }
+            }
         }
 
         // Ban the reported user to the chatRoomBanList.
         DispatchAdapter.chatRoomBanList.add(username);
 
         // Notify the reported user.
-        Session reportedUserSession = DispatchAdapter.userName2session.get(username);
-        if (reportedUserSession != null) {
-            sendWSMsg(reportedUserSession, Constant.ROOM, Constant.REQUEST_BANUSER, Constant.SYS_ERR, "You are banned from all rooms " + (isViaReport ? "due to report!" : "due to using hate!"));
-        }
-
-        // Notify the other user in the room.
-        for(String user: DispatchAdapter.chatRoomName2listUser.get(room)){
-            if(!user.equals(username)) {
-                Session session = DispatchAdapter.userName2session.get(user);
-                System.out.println("in ban");
-                sendWSMsg(session, Constant.ROOM, Constant.REQUEST_UPDATEUSERLIST, Constant.SYS_SR, username + " has been banned due to inappropriate behaviors!");
-            }
+        Session reportedUserSession = DispatchAdapter.userName2session.getOrDefault(username, null);
+        switch(source) {
+            case Constant.BAN_BROADCAST:
+                sendWSMsg(reportedUserSession, Constant.ROOM, Constant.REQUEST_BANUSER, Constant.SYS_ERR, "Your broadcast message includes inappropriate words. You are banned from all rooms.");
+                break;
+            case Constant.BAN_PRIVATEMSG:
+                sendWSMsg(reportedUserSession, Constant.ROOM, Constant.REQUEST_BANUSER, Constant.SYS_ERR, "Your private message includes inappropriate words. You are banned from all rooms.");
+                break;
+            case Constant.REPORT:
+                sendWSMsg(reportedUserSession, Constant.ROOM, Constant.REQUEST_BANUSER, Constant.SYS_ERR, "You are banned from all rooms due to report.");
+                break;
         }
 
         updateAllSession();

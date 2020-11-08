@@ -42,4 +42,9 @@ public class Constant {
     public static final String SYS_SR = "sr";
     public static final String SYS_ERR = "err";
     public static final String LOGOUT = "logout";
+
+    // Ban source
+    public static final String BAN_BROADCAST = "broadcast";
+    public static final String BAN_PRIVATEMSG = "privateMsg";
+    public static final String BAN_REPORT = "report";
 }

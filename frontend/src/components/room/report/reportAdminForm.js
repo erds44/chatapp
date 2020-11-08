@@ -2,6 +2,7 @@ import { Modal, Button } from 'antd';
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux'
 import webSocket from "../../websocket/Websocket";
+import {BAN_REPORT} from "./constant";
 
 const ReportAdminForm = (props) => {
     const {isReportAdminVisible, reportedReason, reportedUsername, reportedRoom} = props.reportStore;
@@ -19,7 +20,7 @@ const ReportAdminForm = (props) => {
                     body: {
                         username: reportedUsername.trim(),
                         room: reportedRoom.trim(),
-                        isViaReport: true
+                        source: BAN_REPORT
                     }
                 }
             )

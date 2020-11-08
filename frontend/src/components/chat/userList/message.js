@@ -2,6 +2,7 @@ import {React, useState} from "react";
 import { Modal, Input} from "antd";
 import webSocket from "../../websocket/Websocket";
 import {messageCensor} from "../../../helpers/util";
+import {BAN_PRIVATEMSG} from "../../room/report/constant";
 
 const Message = (props) => {
 
@@ -16,22 +17,22 @@ const Message = (props) => {
                     body: {
                         username: userName.trim(),
                         room: null,
-                        isViaReport: false
+                        source: BAN_PRIVATEMSG
                     }
                 })
             )
-
-            return;
         }
-        webSocket.send(
-            JSON.stringify({
-                command: "privateMessage",
-                body: {
-                    name: userName,
-                    info: value
-                }
-            })
-        )
+        else {
+            webSocket.send(
+                JSON.stringify({
+                    command: "privateMessage",
+                    body: {
+                        name: userName,
+                        info: value
+                    }
+                })
+            )
+        }
         setValue("");
         setVisible(false);
     }

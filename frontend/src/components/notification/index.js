@@ -6,17 +6,17 @@ message.config({
 });
 
 const notification = {
-  info: text => {
-    message.info({ content: text });
+  info: (text) => {
+    message.info({ content: text }, 5);
   },
   success: text => {
-    message.success({ content: text });
+    message.success({ content: text }, 5);
   },
   error: text => {
-    message.error({ content: text });
+    message.error({ content: text }, 5);
   },
   warn: text => {
-    message.warn({ content: text });
+    message.warn({ content: text }, 5);
   }
 };
 
