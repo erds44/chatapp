@@ -15,7 +15,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class BanCmd extends ACmd {
 
-    private void removeAndNotify (String username, String room) {
+    protected void removeAndNotify (String username, String room) {
         // remove user from room.
         DispatchAdapter.userName2chatRoomName.get(username).remove(room);
         DispatchAdapter.chatRoomName2listUser.get(room).remove(username);
