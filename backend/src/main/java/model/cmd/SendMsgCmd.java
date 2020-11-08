@@ -1,6 +1,7 @@
 package model.cmd;
 
 import com.google.gson.Gson;
+import model.DispatchAdapter;
 import org.eclipse.jetty.websocket.api.Session;
 import utility.Constant;
 
@@ -34,7 +35,7 @@ public class SendMsgCmd extends ACmd {
             return;
         }
         for (String user : userList) {
-            if (user.equals(userName)) {
+            if (user.equals(userName) || DispatchAdapter.userName2blockList.get(userName).contains(user)) {
                 continue;
             }
             Session otherSession = userName2session.get(user);

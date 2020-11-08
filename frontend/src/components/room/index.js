@@ -9,6 +9,7 @@ import webSocket from "../websocket/Websocket";
 import {connect} from "react-redux";
 import ReportForm from "./report/reportForm";
 import ReportAdminForm from "./report/reportAdminForm";
+import notification from "../notification";
 
 const Index = (props) => {
     const {room} = props;
@@ -34,8 +35,9 @@ const Index = (props) => {
             if (room.isPublic) setIsPublic(room.isPublic);
 
         } else {
-            if (room.type === "err") Modal.error({content: room.msg});
-            else Modal.success({content: room.msg});
+            if (room.type === "err") notification.error(room.msg);
+            else notification.success(room.msg);
+
         }
     }, [room])
 
