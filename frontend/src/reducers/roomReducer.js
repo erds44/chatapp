@@ -19,11 +19,11 @@ export default (state = INTIAL_STATE, action) => {
                 request: action.payload.request,
                 type: action.payload.type,
                 msg: action.payload.msg,
-                joinedRoom: parse(action.payload.param1),
-                userList: parseNestedList(action.payload.param1, action.payload.param2),
-                allRooms: parse(action.payload.param3),
-                userName: action.payload.param4,
-                isPublic: parse(action.payload.param5)
+                joinedRoom: parse(action.payload.param1) || state.joinedRoom,
+                userList: parseNestedList(action.payload.param1, action.payload.param2) || state.userList,
+                allRooms: parse(action.payload.param3) || state.allRooms,
+                userName: action.payload.param4 || state.userName,
+                isPublic: parse(action.payload.param5) || state.isPublic
             };
         case JOIN_ROOM: {
             return {
