@@ -15,6 +15,21 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class BanCmd extends ACmd {
 
+    private void removeAndNotify (String username, String room) {
+        // remove user from room.
+        DispatchAdapter.userName2chatRoomName.get(username).remove(room);
+        DispatchAdapter.chatRoomName2listUser.get(room).remove(username);
+        updateAllSession();
+
+        // Notify the other user in the room.
+        for(String user: DispatchAdapter.chatRoomName2listUser.get(room)){
+            if(!user.equals(username)) {
+                Session session = DispatchAdapter.userName2session.get(user);
+                sendWSMsg(session, Constant.ROOM, Constant.REQUEST_UPDATEUSERLIST, Constant.SYS_SR, username + " " + Constant.BAN_BEHAVIOR);
+            }
+        }
+    }
+
 
     /**
      * Perform the execution of a command.
@@ -29,11 +44,7 @@ public class BanCmd extends ACmd {
         String source = (String) request.get("source");
 
         if (source.equals(Constant.BAN_BROADCAST) || source.equals(Constant.BAN_REPORT)) {
-            if (!DispatchAdapter.userName2chatRoomName.containsKey(username) || !DispatchAdapter.userName2chatRoomName.get(username).remove(room)) {
-                return;
-            }
-
-            if (!DispatchAdapter.chatRoomName2listUser.containsKey(room)) {
+            if (!DispatchAdapter.userName2chatRoomName.containsKey(username) || !DispatchAdapter.chatRoomName2listUser.containsKey(room)) {
                 return;
             }
 
@@ -42,17 +53,7 @@ public class BanCmd extends ACmd {
                 dismissChatRoom(room);
             }
             else {
-                // remove user from room.
-                DispatchAdapter.chatRoomName2listUser.get(room).remove(username);
-                updateAllSession();
-
-                // Notify the other user in the room.
-                for(String user: DispatchAdapter.chatRoomName2listUser.get(room)){
-                    if(!user.equals(username)) {
-                        Session session = DispatchAdapter.userName2session.get(user);
-                        sendWSMsg(session, Constant.ROOM, Constant.REQUEST_UPDATEUSERLIST, Constant.SYS_SR, username + " " + Constant.BAN_BEHAVIOR);
-                    }
-                }
+                removeAndNotify(username, room);
             }
         }
 
