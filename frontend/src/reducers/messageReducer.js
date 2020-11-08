@@ -13,7 +13,7 @@ export default function (state = INITIAL_STATE, action)  {
   switch (action.type) {
     case ON_MESSAGE: {
       const { messages } = state;
-      const { id, text, time, sender, chatRoom } = action.payload;
+      const { id, text, time, sender, chatRoom, received } = action.payload;
       if (!messages[chatRoom]) {
         messages[chatRoom] = [];
       }
@@ -21,7 +21,8 @@ export default function (state = INITIAL_STATE, action)  {
         id,
         text,
         time,
-        sender
+        sender,
+        received
       });
       return { ...state, messages: { ...messages } };
     }

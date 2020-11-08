@@ -76,7 +76,7 @@ const Login = (props) => {
                     label={
                         <span>
                             Name&nbsp;
-                            <Tooltip title="5-20 alphanumeric characters">
+                            <Tooltip title="5-20 alphanumeric characters or underscores">
                                 <QuestionCircleOutlined />
                             </Tooltip>
                         </span>
@@ -87,8 +87,8 @@ const Login = (props) => {
                             message: 'Name is required!',
                         },
                         {
-                            pattern: /^[a-zA-Z0-9]{5,20}$/,
-                            message: 'Name should be 5-20 alphanumeric characters',
+                            pattern: /^[a-zA-Z0-9_]{5,20}$/,
+                            message: 'Name should be 5-20 alphanumeric characters or underscores',
                         },
                     ]}>
                     <Input placeholder="Your Name"/>
