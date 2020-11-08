@@ -14,7 +14,15 @@ import { BAN_BROADCAST } from "../../room/report/constant";
 
 const ChatMessage = ({ message, onClickEdit }) => {
   const dispatch = useDispatch();
-  const { id: messageId, text, time, sender, isRecalled, recallTime } = message;
+  const {
+    id: messageId,
+    text,
+    time,
+    sender,
+    isRecalled,
+    recallTime,
+    received
+  } = message;
 
   const currentUser = useSelector(state => state.login.user);
   const chatRoom = useSelector(state => state.room.currentRoom);
@@ -147,10 +155,12 @@ const ChatMessage = ({ message, onClickEdit }) => {
           <Col span={22}>
             <Row className="message-header">
               <Col className="message-sender">
-                {sender} {isAdminMessage && " (admin)"}
+                {(isOwnMessage && "ME") || sender}{" "}
+                {isAdminMessage && " (admin)"}
               </Col>
               <Col className="message-time">
                 {!isRecalled && moment(time).format("ddd MMM DD hh:mm:ss")}
+                {received && " (received)"}
               </Col>
             </Row>
             <Row>
@@ -164,7 +174,7 @@ const ChatMessage = ({ message, onClickEdit }) => {
             id={`${messageId}-dropdown`}
             className={"message-dropdown"}
           >
-            {(!isRecalled && (isOwnMessage || isAdmin)) && (
+            {!isRecalled && (isOwnMessage || isAdmin) && (
               <Dropdown overlay={menu} placement="bottomLeft">
                 <Button>...</Button>
               </Dropdown>

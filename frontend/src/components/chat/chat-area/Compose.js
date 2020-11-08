@@ -50,7 +50,10 @@ const Compose = () => {
     };
     dispatch({
       type: ON_MESSAGE,
-      payload
+      payload: {
+        ...payload,
+        received: true
+      }
     });
     webSocket.send(
       JSON.stringify({
