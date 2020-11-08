@@ -4,18 +4,36 @@ import moment from "moment";
 import "./ChatMessage.css";
 import colorHelper from "../../../helpers/color-user-helper";
 import { useSelector, useDispatch } from "react-redux";
-import { DELETE_MESSAGE, RECALL_MESSAGE, EDIT_MESSAGE } from "../../../actions/type";
+import {
+  DELETE_MESSAGE,
+  RECALL_MESSAGE,
+  EDIT_MESSAGE
+} from "../../../actions/type";
+import webSocket from "../../websocket/Websocket";
+import { BAN_BROADCAST } from "../../room/report/constant";
 
 const ChatMessage = ({ message, onClickEdit }) => {
   const dispatch = useDispatch();
-  const { id: messageId, text, time, sender } = message;
+  const { id: messageId, text, time, sender, isRecalled, recallTime } = message;
 
   const currentUser = useSelector(state => state.login.user);
   const chatRoom = useSelector(state => state.room.currentRoom);
-
-  const isMyMessage = currentUser === message.sender;
-  const operationForMyMessage = ["edit", "delete", "recall"];
-  const operationForOthersMessage = ["report"];
+  const userList = useSelector(state => state.room.userList);
+  const roomState = useSelector(state => state.room);
+  const roomAdmin = useSelector(state => {
+    if (!state.room.userList || !state.room.joinedRoom) {
+      return null;
+    }
+    return state.room.userList[state.room.joinedRoom.indexOf(chatRoom)][0];
+  });
+  const isOwnMessage = currentUser === message.sender;
+  const isAdmin = currentUser === roomAdmin;
+  const getOperationsForMessage = (isAdmin, isOwnMessage) => {
+    if (isOwnMessage) {
+      return ["edit", "delete", "recall"];
+    }
+    return isAdmin ? ["delete"] : ["report"];
+  };
   const handleMenuClick = event => {
     if (!event || !event.key) {
       return;
@@ -33,7 +51,15 @@ const ChatMessage = ({ message, onClickEdit }) => {
             chatRoom
           }
         });
-        // TODO @Xiao web socket
+        webSocket.send(
+          JSON.stringify({
+            command: "deleteMessage",
+            body: {
+              messageId,
+              chatRoom
+            }
+          })
+        );
         break;
       }
       case "recall": {
@@ -44,7 +70,16 @@ const ChatMessage = ({ message, onClickEdit }) => {
             chatRoom
           }
         });
-        // TODO @Xiao web socket
+        webSocket.send(
+          JSON.stringify({
+            command: "recallMessage",
+            body: {
+              messageId,
+              chatRoom,
+              recallTime: new Date().getTime()
+            }
+          })
+        );
         break;
       }
       case "report": {
@@ -55,14 +90,9 @@ const ChatMessage = ({ message, onClickEdit }) => {
   };
   const menu = (
     <Menu onClick={handleMenuClick}>
-      {isMyMessage &&
-        operationForMyMessage.map(operation => {
-          return <Menu.Item key={operation}>{operation}</Menu.Item>;
-        })}
-      {!isMyMessage &&
-        operationForOthersMessage.map(operation => {
-          return <Menu.Item key={operation}>{operation}</Menu.Item>;
-        })}
+      {getOperationsForMessage(isAdmin, isOwnMessage).map(operation => {
+        return <Menu.Item key={operation}>{operation}</Menu.Item>;
+      })}
     </Menu>
   );
 
@@ -88,6 +118,12 @@ const ChatMessage = ({ message, onClickEdit }) => {
     return sender.split(" ").map(name => name[0]);
   };
 
+  const getRecallText = (sender, recallTime) => {
+    return `******* This message was recalled at ${moment(recallTime).format(
+      "MMM DD hh:mm"
+    )} *******`;
+  };
+
   return (
     <Row>
       <Col span={1} className="avatar-container">
@@ -111,10 +147,14 @@ const ChatMessage = ({ message, onClickEdit }) => {
           <Col span={22}>
             <Row className="message-header">
               <Col className="message-sender">{sender}</Col>
-              <Col className="message-time">{moment(time).format('ddd MMM DD hh:mm:ss')}</Col>
+              <Col className="message-time">
+                {!isRecalled && moment(time).format("ddd MMM DD hh:mm:ss")}
+              </Col>
             </Row>
             <Row>
-              <Col className="message-text">{text}</Col>
+              <Col className="message-text">
+                {(!isRecalled && text) || getRecallText(sender, recallTime)}
+              </Col>
             </Row>
           </Col>
           <Col
@@ -122,9 +162,11 @@ const ChatMessage = ({ message, onClickEdit }) => {
             id={`${messageId}-dropdown`}
             className={"message-dropdown"}
           >
-            <Dropdown overlay={menu} placement="bottomLeft">
-              <Button>...</Button>
-            </Dropdown>
+            {!isRecalled && (
+              <Dropdown overlay={menu} placement="bottomLeft">
+                <Button>...</Button>
+              </Dropdown>
+            )}
           </Col>
         </Row>
       </Col>

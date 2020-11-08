@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import { Row, Layout } from "antd";
 import ChatMessages from "./ChatMessages";
 import Compose from "./Compose";
-import ChatAreaHeader from "./ChatAreaHeader";
 import "./ChatArea.css";
 
 const { Content, Footer, Header } = Layout;

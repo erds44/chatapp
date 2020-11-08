@@ -14,13 +14,10 @@ import notifications from "../notification";
 const { Header, Content, Footer, Sider } = Layout;
 const Chat = props => {
   const history = useHistory();
-  const { priMsg } = props;
-  const userMap = {
-    CR1: ["Xiao Xia", "Zhijian Yao", "Weiwei Zhou"]
-  };
+  const { dispatch, logIn, priMsg } = props;
   const selectedChatRoom = useSelector(state => state.room.currentRoom);
   const userList = useSelector(state => {
-    if (state.room.userList || !state.room.joinedRoom) {
+    if (!state.room.userList || !state.room.joinedRoom) {
       return null;
     }
     return state.room.userList[state.room.joinedRoom.indexOf(selectedChatRoom)];
@@ -55,18 +52,22 @@ const Chat = props => {
             borderLeft: "2px solid rgba(0, 0, 0, 0.06)"
           }}
         >
-          <span
-            id={"chat-area-header-room-name"}
-            style={{ fontSize: "larger", fontWeight: "bolder" }}
-          >
-            {selectedChatRoom || ""}
-          </span>
-          <span
-            id={"chat-area-header-user-count"}
-            style={{ fontSize: "medium" }}
-          >
-            {(userList && `(${userList.length})`) || ""}
-          </span>
+          {selectedChatRoom && (
+            <span
+              id={"chat-area-header-room-name"}
+              style={{ fontSize: "larger", fontWeight: "bolder" }}
+            >
+              {selectedChatRoom || ""}
+            </span>
+          )}
+          {selectedChatRoom && (
+            <span
+              id={"chat-area-header-user-count"}
+              style={{ fontSize: "medium", marginLeft: "20px" }}
+            >
+              {(userList && `(${userList.length})`) || ""}
+            </span>
+          )}
           <Button
             style={{ right: "-500px" }}
             type="primary"
@@ -91,7 +92,7 @@ const Chat = props => {
                 className="site-layout-background"
                 style={{ minHeight: 360, height: "100%" }}
               >
-                <ChatArea chatRoom={selectedChatRoom} />
+                {selectedChatRoom && <ChatArea chatRoom={selectedChatRoom} />}
               </div>
             </Col>
             <Col
@@ -106,7 +107,7 @@ const Chat = props => {
         {/*TEMP FOR Report*/}
         {/*<ReportAdminForm report={report}/>*/}
         <Footer style={{ textAlign: "center" }}>
-          Chat App ©2020 Created by Summy the Owl
+          Chat App ©2020 Created by Sammy the Owl
         </Footer>
       </Layout>
     </Layout>
@@ -114,7 +115,7 @@ const Chat = props => {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  return { priMsg: state.priMessage };
+  return { logIn: state.login, priMsg: state.priMessage };
 };
 
 export default connect(mapStateToProps, {})(Chat);

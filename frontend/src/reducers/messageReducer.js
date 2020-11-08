@@ -10,7 +10,6 @@ const INITIAL_STATE = {
 };
 
 export default function (state = INITIAL_STATE, action)  {
-  console.log(action.type, action.payload);
   switch (action.type) {
     case ON_MESSAGE: {
       const { messages } = state;
@@ -41,11 +40,14 @@ export default function (state = INITIAL_STATE, action)  {
     }
     case RECALL_MESSAGE: {
       const { messages } = state;
-      const { messageId, chatRoom } = action.payload;
+      const { messageId, chatRoom, recallTime } = action.payload;
       const newChatRoomMessages = messages[chatRoom].map(m => {
         if (m.id === messageId) {
           m.isRecalled = true;
+          m.recallTime = recallTime;
+          m.text = "";
         }
+        return m;
       });
       const newMessages = { ...messages };
       newMessages[chatRoom] = newChatRoomMessages;

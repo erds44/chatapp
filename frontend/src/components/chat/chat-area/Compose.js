@@ -5,8 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { ON_MESSAGE } from "../../../actions/type";
 import * as uuid from "uuid";
 import webSocket from "../../websocket/Websocket";
-import {messageCensor} from "../../../helpers/util";
-import {BAN_BROADCAST} from "../../room/report/constant";
+import { messageCensor } from "../../../helpers/util";
+import { BAN_BROADCAST } from "../../room/report/constant";
 const { TextArea } = Input;
 
 const Compose = () => {
@@ -20,47 +20,45 @@ const Compose = () => {
     }
 
     if (!messageCensor(textAreaText)) {
-        webSocket.send(
-            JSON.stringify({
-                  command: "ban",
-                  body: {
-                    username: currentUser.trim(),
-                    room: currentRoom.trim(),
-                    source: BAN_BROADCAST
-                  }
-                }
-            )
-        );
-    }
-    else {
-        sendMessage();
+      webSocket.send(
+        JSON.stringify({
+          command: "ban",
+          body: {
+            username: currentUser.trim(),
+            room: currentRoom.trim(),
+            source: BAN_BROADCAST
+          }
+        })
+      );
+    } else {
+      sendMessage();
     }
 
     setTextAreaText("");
   };
   const handleMessageChange = event => {
-      setTextAreaText(event.target.value);
+    setTextAreaText(event.target.value);
   };
 
   const sendMessage = () => {
-      const payload = {
-        chatRoom: currentRoom,
-        text: textAreaText,
-        id: uuid.v4(),
-        time: new Date().getTime(),
-        sender: currentUser
-      };
-      dispatch({
-        type: ON_MESSAGE,
-        payload
-      });
-      webSocket.send(
-          JSON.stringify({
-            command: "broadcast",
-            body: payload
-          })
-      );
-  }
+    const payload = {
+      chatRoom: currentRoom,
+      text: textAreaText,
+      id: uuid.v4(),
+      time: new Date().getTime(),
+      sender: currentUser
+    };
+    dispatch({
+      type: ON_MESSAGE,
+      payload
+    });
+    webSocket.send(
+      JSON.stringify({
+        command: "broadcast",
+        body: payload
+      })
+    );
+  };
 
   return (
     <div id={"compose"}>
