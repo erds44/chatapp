@@ -84,12 +84,11 @@ public abstract class ACmd {
 
     protected void dismissChatRoom(String chatRoomName) {
         // update joined rooms
+        String owner = DispatchAdapter.chatRoomName2ChatRoom.get(chatRoomName).getOwner();
         for (String user : DispatchAdapter.chatRoomName2listUser.get(chatRoomName)) {
             DispatchAdapter.userName2chatRoomName.get(user).remove(chatRoomName);
             Session session = DispatchAdapter.userName2session.get(user);
-
-            sendWSMsg(session, Constant.ROOM, Constant.REQUEST_EXITROOM, Constant.SYS_SR, chatRoomName + " is dismissed");
-
+            sendWSMsg(session, Constant.ROOM, Constant.REQUEST_EXITROOM, Constant.SYS_SR, owner + ": " + chatRoomName + " is dismissed");
         }
         DispatchAdapter.chatRoomName2ChatRoom.remove(chatRoomName);
         DispatchAdapter.chatRoomName2listUser.remove(chatRoomName);
@@ -98,11 +97,11 @@ public abstract class ACmd {
 
     protected void userLeftChatRoom(Session userSession, String chatRoomName, String userName) {
         DispatchAdapter.chatRoomName2listUser.get(chatRoomName).remove(userName);
+        String owner = DispatchAdapter.chatRoomName2ChatRoom.get(chatRoomName).getOwner();
         for (String user : DispatchAdapter.chatRoomName2listUser.get(chatRoomName)) {
             if (!user.equals(userName)) {
                 Session session = DispatchAdapter.userName2session.get(user);
-                sendWSMsg(session, Constant.ROOM, Constant.REQUEST_UPDATEUSERLIST, Constant.SYS_SR, userName + " left the room!");
-                // TODO: notify all other session in chat
+                sendWSMsg(session, Constant.ROOM, Constant.REQUEST_UPDATEUSERLIST, Constant.SYS_SR, owner + ": " + userName + " left the room!");
             }
         }
         sendWSMsg(userSession, Constant.ROOM, Constant.REQUEST_EXITROOM, Constant.SYS_SR, chatRoomName + Constant.CHATROOM_EXIT);

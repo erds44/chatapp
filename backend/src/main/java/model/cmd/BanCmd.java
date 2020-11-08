@@ -15,17 +15,17 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class BanCmd extends ACmd {
 
-    protected void removeAndNotify (String username, String room) {
+    protected void removeAndNotify(String username, String room) {
         // remove user from room.
         DispatchAdapter.userName2chatRoomName.get(username).remove(room);
         DispatchAdapter.chatRoomName2listUser.get(room).remove(username);
         updateAllSession();
-
+        String owner = DispatchAdapter.chatRoomName2ChatRoom.get(room).getOwner();
         // Notify the other user in the room.
-        for(String user: DispatchAdapter.chatRoomName2listUser.get(room)){
-            if(!user.equals(username)) {
+        for (String user : DispatchAdapter.chatRoomName2listUser.get(room)) {
+            if (!user.equals(username)) {
                 Session session = DispatchAdapter.userName2session.get(user);
-                sendWSMsg(session, Constant.ROOM, Constant.REQUEST_UPDATEUSERLIST, Constant.SYS_SR, username + " " + Constant.BAN_BEHAVIOR);
+                sendWSMsg(session, Constant.ROOM, Constant.REQUEST_UPDATEUSERLIST, Constant.SYS_SR, owner + ": " + username + " " + Constant.BAN_BEHAVIOR);
             }
         }
     }
@@ -51,8 +51,7 @@ public class BanCmd extends ACmd {
             // if user is the owner, remove chat room
             if (DispatchAdapter.chatRoomName2ChatRoom.get(room).getOwner().equals(username)) {
                 dismissChatRoom(room);
-            }
-            else {
+            } else {
                 removeAndNotify(username, room);
             }
         }
@@ -62,7 +61,7 @@ public class BanCmd extends ACmd {
 
         // Notify the reported user.
         Session reportedUserSession = DispatchAdapter.userName2session.getOrDefault(username, null);
-        switch(source) {
+        switch (source) {
             case Constant.BAN_BROADCAST:
                 sendWSMsg(reportedUserSession, Constant.ROOM, Constant.REQUEST_BANUSER, Constant.SYS_ERR, Constant.BAN_BROADCAST_MSG);
                 break;

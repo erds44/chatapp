@@ -7,13 +7,13 @@ import utility.Constant;
 import java.util.Map;
 
 /**
-* @CLassName RemoveUserCmd
-* @Description TODO
-* @Author  Weiwei Zhou
-* @Date 11/6/20  9:15 PM
-*/
+ * @CLassName RemoveUserCmd
+ * @Description TODO
+ * @Author Weiwei Zhou
+ * @Date 11/6/20  9:15 PM
+ */
 
-public class RemoveUserCmd extends ACmd{
+public class RemoveUserCmd extends ACmd {
     /**
      * Perform the execution of a command.
      *
@@ -42,12 +42,12 @@ public class RemoveUserCmd extends ACmd{
         if (removedUserSession != null) {
             sendWSMsg(removedUserSession, Constant.ROOM, Constant.REQUEST_BANUSER, Constant.SYS_ERR, "You were removed from " + roomName + "!");
         }
-
+        String owner = DispatchAdapter.chatRoomName2ChatRoom.get(roomName).getOwner();
         // Notify the other user in the room.
-        for(String user: DispatchAdapter.chatRoomName2listUser.get(roomName)){
-            if(!user.equals(userName)) {
+        for (String user : DispatchAdapter.chatRoomName2listUser.get(roomName)) {
+            if (!user.equals(userName)) {
                 Session session = DispatchAdapter.userName2session.get(user);
-                sendWSMsg(session, Constant.ROOM, Constant.REQUEST_UPDATEUSERLIST, Constant.SYS_SR, userName + " was removed from the room!");
+                sendWSMsg(session, Constant.ROOM, Constant.REQUEST_UPDATEUSERLIST, Constant.SYS_SR, owner + ": " + userName + " was removed from the room!");
             }
         }
 

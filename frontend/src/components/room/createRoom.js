@@ -17,11 +17,12 @@ const validateMessages = {
 
 const CreateRoom = (props) => {
     const interests = [];
+    const interest_string_list = ["Traveling", "Reading", "Music", "Sports", "Movies", "Games"];
     const {Option} = Select;
     const {visible, setVisible} = props;
     const [interestDisabled, setInterestDisabled] = useState(true);
     for (let i = 1; i < 10; i++) {
-        interests.push(<Option key={i}>{"Interest " + i}</Option>);
+        interests.push(<Option value={interest_string_list[i]}>{interest_string_list[i]}</Option>);
     }
     const onFinish = (values) => {
         webSocket.send(
@@ -47,7 +48,16 @@ const CreateRoom = (props) => {
                                 style={{outerWidth: "500"}}>
                      <Form.Item name={"name"}
                                 label="Name"
-                                rules={[{required: true}]}><Input/>
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Name is required!',
+                                    },
+                                    {
+                                        pattern: /^[a-zA-Z0-9_]{1,20}$/,
+                                        message: 'Name should be 1-20 alphanumeric characters or underscores',
+                                    },
+                                ]}><Input/>
                      </Form.Item>
                      <Form.Item name="switch" label="Private" valuePropName="checked"><Switch onClick={() => {
                          setInterestDisabled(prevState => !prevState)
