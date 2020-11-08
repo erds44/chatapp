@@ -10,6 +10,7 @@ public class User {
     private String name;
     private String school;
     private List<String> interest;
+    private Boolean isWarned;
 
     /**
      * Public constructor.
@@ -24,6 +25,7 @@ public class User {
         this.name = name;
         this.school = school;
         this.interest = interest;
+        this.isWarned = false;
     }
 
     public int getAge() {
@@ -52,5 +54,13 @@ public class User {
 
     public void setInterest(List<String> interest) {
         this.interest = interest;
+    }
+
+    public Boolean getIsWarned() {
+        return isWarned;
+    }
+
+    public void setIsWarned(Boolean isWarned) {
+        this.isWarned = isWarned;
     }
 }

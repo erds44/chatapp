@@ -45,6 +45,7 @@ public class Constant {
     public static final String INTERESTS = "interests";
     public static final String SYS_SR = "sr";
     public static final String SYS_ERR = "err";
+    public static final String SYS_INFO = "info";
     public static final String LOGOUT = "logout";
 
     // Ban source
@@ -55,4 +56,5 @@ public class Constant {
     public static final String BAN_PRIVATE_MSG = "Your private message includes inappropriate words. You are banned from all rooms.";
     public static final String BAN_REPORT_MSG = "You are banned from all rooms due to report.";
     public static final String BAN_BEHAVIOR = "has been banned due to inappropriate behaviors!";
+    public static final String BAN_WARN = "Inappropriate words are detected! (You will be banned next time)";
 }

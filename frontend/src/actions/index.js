@@ -36,11 +36,10 @@ export const onMessage = (messages) =>
                 });
                 break;
             case "report":
-                //console.log(data.msg);
                 const body = JSON.parse(data.msg);
-                //console.log(body);
                 dispatch({
-                    type: ON_REPORT, payload: {
+                    type: ON_REPORT,
+                    payload: {
                         reportedUsername: body.reportedUsername,
                         reportedReason: body.reportedReason,
                         reportedRoom: body.reportedRoom

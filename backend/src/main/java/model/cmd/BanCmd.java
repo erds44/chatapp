@@ -1,14 +1,11 @@
 package model.cmd;
 
 import model.DispatchAdapter;
+import model.User;
 import org.eclipse.jetty.websocket.api.Session;
 import utility.Constant;
-import utility.Debug;
-
-import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
+
 
 /**
  * Login model.cmd create the user and stored in dispatchAdapter map.
@@ -43,6 +40,19 @@ public class BanCmd extends ACmd {
         String room = (String) request.get("room");
         String source = (String) request.get("source");
 
+        Session reportedUserSession = DispatchAdapter.userName2session.getOrDefault(username, null);
+
+        // If the user triggers "hate" in broadcast / private.
+        if (!source.equals(Constant.BAN_REPORT)) {
+            User user = DispatchAdapter.userName2user.get(username);
+            // Just warn the user if he has no previous record.
+            if (!user.getIsWarned()) {
+                user.setIsWarned(true);
+                sendWSMsg(reportedUserSession, Constant.ROOM, Constant.REQUEST_BANUSER, Constant.SYS_INFO, Constant.BAN_WARN);
+                return;
+            }
+        }
+
         if (source.equals(Constant.BAN_BROADCAST) || source.equals(Constant.BAN_REPORT)) {
             if (!DispatchAdapter.userName2chatRoomName.containsKey(username) || !DispatchAdapter.chatRoomName2listUser.containsKey(room)) {
                 return;
@@ -60,7 +70,6 @@ public class BanCmd extends ACmd {
         DispatchAdapter.chatRoomBanList.add(username);
 
         // Notify the reported user.
-        Session reportedUserSession = DispatchAdapter.userName2session.getOrDefault(username, null);
         switch (source) {
             case Constant.BAN_BROADCAST:
                 sendWSMsg(reportedUserSession, Constant.ROOM, Constant.REQUEST_BANUSER, Constant.SYS_ERR, Constant.BAN_BROADCAST_MSG);

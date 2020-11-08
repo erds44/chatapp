@@ -36,6 +36,7 @@ const Index = (props) => {
 
         } else {
             if (room.type === "err") notification.error(room.msg);
+            else if (room.type === "info") notification.info(room.msg);
             else notification.success(room.msg);
 
         }
