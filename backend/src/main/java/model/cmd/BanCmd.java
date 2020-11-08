@@ -33,15 +33,25 @@ public class BanCmd extends ACmd {
                 return;
             }
 
-            if (!DispatchAdapter.chatRoomName2listUser.containsKey(room) || !DispatchAdapter.chatRoomName2listUser.get(room).remove(username)) {
+            if (!DispatchAdapter.chatRoomName2listUser.containsKey(room)) {
                 return;
             }
 
-            // Notify the other user in the room.
-            for(String user: DispatchAdapter.chatRoomName2listUser.get(room)){
-                if(!user.equals(username)) {
-                    Session session = DispatchAdapter.userName2session.get(user);
-                    sendWSMsg(session, Constant.ROOM, Constant.REQUEST_UPDATEUSERLIST, Constant.SYS_SR, username + " has been banned due to inappropriate behaviors!");
+            // if user is the owner, remove chat room
+            if (DispatchAdapter.chatRoomName2ChatRoom.get(room).getOwner().equals(username)) {
+                dismissChatRoom(room);
+            }
+            else {
+                // remove user from room.
+                DispatchAdapter.chatRoomName2listUser.get(room).remove(username);
+                updateAllSession();
+
+                // Notify the other user in the room.
+                for(String user: DispatchAdapter.chatRoomName2listUser.get(room)){
+                    if(!user.equals(username)) {
+                        Session session = DispatchAdapter.userName2session.get(user);
+                        sendWSMsg(session, Constant.ROOM, Constant.REQUEST_UPDATEUSERLIST, Constant.SYS_SR, username + " " + Constant.BAN_BEHAVIOR);
+                    }
                 }
             }
         }
@@ -53,17 +63,15 @@ public class BanCmd extends ACmd {
         Session reportedUserSession = DispatchAdapter.userName2session.getOrDefault(username, null);
         switch(source) {
             case Constant.BAN_BROADCAST:
-                sendWSMsg(reportedUserSession, Constant.ROOM, Constant.REQUEST_BANUSER, Constant.SYS_ERR, "Your broadcast message includes inappropriate words. You are banned from all rooms.");
+                sendWSMsg(reportedUserSession, Constant.ROOM, Constant.REQUEST_BANUSER, Constant.SYS_ERR, Constant.BAN_BROADCAST_MSG);
                 break;
             case Constant.BAN_PRIVATEMSG:
-                sendWSMsg(reportedUserSession, Constant.ROOM, Constant.REQUEST_BANUSER, Constant.SYS_ERR, "Your private message includes inappropriate words. You are banned from all rooms.");
+                sendWSMsg(reportedUserSession, Constant.ROOM, Constant.REQUEST_BANUSER, Constant.SYS_ERR, Constant.BAN_PRIVATE_MSG);
                 break;
             case Constant.REPORT:
-                sendWSMsg(reportedUserSession, Constant.ROOM, Constant.REQUEST_BANUSER, Constant.SYS_ERR, "You are banned from all rooms due to report.");
+                sendWSMsg(reportedUserSession, Constant.ROOM, Constant.REQUEST_BANUSER, Constant.SYS_ERR, Constant.BAN_REPORT_MSG);
                 break;
         }
-
-        updateAllSession();
 
     }
 

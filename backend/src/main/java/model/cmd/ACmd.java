@@ -87,7 +87,9 @@ public abstract class ACmd {
         for (String user : DispatchAdapter.chatRoomName2listUser.get(chatRoomName)) {
             DispatchAdapter.userName2chatRoomName.get(user).remove(chatRoomName);
             Session session = DispatchAdapter.userName2session.get(user);
+
             sendWSMsg(session, Constant.ROOM, Constant.REQUEST_EXITROOM, Constant.SYS_SR, chatRoomName + " is dismissed");
+
         }
         DispatchAdapter.chatRoomName2ChatRoom.remove(chatRoomName);
         DispatchAdapter.chatRoomName2listUser.remove(chatRoomName);
