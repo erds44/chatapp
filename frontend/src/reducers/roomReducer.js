@@ -15,7 +15,14 @@ const INTIAL_STATE = {
 export default (state = INTIAL_STATE, action) => {
     switch (action.type) {
         case ROOM:
+            if (action.payload.request === "banUser") {
+                return {
+                    ...state,
+                    currentRoom: null
+                }
+            }
             return {
+                ...state,
                 request: action.payload.request,
                 type: action.payload.type,
                 msg: action.payload.msg,

@@ -29,7 +29,7 @@ const ChatMessage = ({ message, onClickEdit }) => {
   const userList = useSelector(state => state.room.userList);
   const roomState = useSelector(state => state.room);
   const roomAdmin = useSelector(state => {
-    if (!state.room.userList || !state.room.joinedRoom) {
+    if (!state.room.userList || !state.room.joinedRoom || !state.room.userList[state.room.joinedRoom.indexOf(chatRoom)]) {
       return null;
     }
     return state.room.userList[state.room.joinedRoom.indexOf(chatRoom)][0];

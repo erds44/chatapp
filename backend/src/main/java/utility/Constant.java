@@ -18,11 +18,12 @@ public class Constant {
     public static final String REQUEST_CREATEROOM = "createRoom";
     public static final String REQUEST_JOINROOM ="joinRoom";
     public static final String REQUEST_EXITROOM = "exitRoom";
-    public static final String REQUEST_EXITALLROOM ="exitAllRoom";
-    public static final String REQUEST_UPDATEALLROOM ="updateAllRoom";
-    public static final String REQUEST_UPDATEUSERLIST ="updateUserList";
-    public static final String REQUEST_REPORTUSER ="reportUser";
-    public static final String REQUEST_BANUSER ="banUser";
+    public static final String REQUEST_EXITALLROOM = "exitAllRoom";
+    public static final String REQUEST_UPDATEALLROOM = "updateAllRoom";
+    public static final String REQUEST_UPDATEUSERLIST = "updateUserList";
+    public static final String REQUEST_REPORTUSER = "reportUser";
+    public static final String REQUEST_BANUSER = "banUser";
+    public static final String REQUEST_WARNUSER = "warnUser";
 
     public static final String REPORT ="report";
     public static final String PRIMESSAGE ="privateMessage";
@@ -52,9 +53,9 @@ public class Constant {
     public static final String BAN_BROADCAST = "broadcast";
     public static final String BAN_PRIVATEMSG = "privateMsg";
     public static final String BAN_REPORT = "report";
-    public static final String BAN_BROADCAST_MSG ="Your broadcast message includes inappropriate words. You are banned from all rooms.";
-    public static final String BAN_PRIVATE_MSG = "Your private message includes inappropriate words. You are banned from all rooms.";
-    public static final String BAN_REPORT_MSG = "You are banned from all rooms due to report.";
+    public static final String BAN_BROADCAST_MSG ="Your broadcast message includes inappropriate words. You are banned from joining other rooms.";
+    public static final String BAN_PRIVATE_MSG = "Your private message includes inappropriate words. You are banned from joining other rooms.";
+    public static final String BAN_REPORT_MSG = "You are banned from joining other rooms due to report.";
     public static final String BAN_BEHAVIOR = "has been banned due to inappropriate behaviors!";
     public static final String BAN_WARN = "Inappropriate words are detected! (You will be banned next time)";
 }

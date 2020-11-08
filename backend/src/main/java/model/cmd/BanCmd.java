@@ -48,7 +48,7 @@ public class BanCmd extends ACmd {
             // Just warn the user if he has no previous record.
             if (!user.getIsWarned()) {
                 user.setIsWarned(true);
-                sendWSMsg(reportedUserSession, Constant.ROOM, Constant.REQUEST_BANUSER, Constant.SYS_INFO, Constant.BAN_WARN);
+                sendWSMsg(reportedUserSession, Constant.ROOM, Constant.REQUEST_WARNUSER, Constant.SYS_INFO, Constant.BAN_WARN);
                 return;
             }
         }
