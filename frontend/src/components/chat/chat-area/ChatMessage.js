@@ -28,11 +28,15 @@ const ChatMessage = ({ message, onClickEdit }) => {
   });
   const isOwnMessage = currentUser === message.sender;
   const isAdmin = currentUser === roomAdmin;
+  const isAdminMessage = sender === roomAdmin;
   const getOperationsForMessage = (isAdmin, isOwnMessage) => {
     if (isOwnMessage) {
       return ["edit", "delete", "recall"];
     }
-    return isAdmin ? ["delete"] : ["report"];
+    if (isAdmin) {
+      return ["delete"];
+    }
+    return isAdminMessage ? [] : ["report"];
   };
   const handleMenuClick = event => {
     if (!event || !event.key) {
@@ -146,7 +150,9 @@ const ChatMessage = ({ message, onClickEdit }) => {
         >
           <Col span={22}>
             <Row className="message-header">
-              <Col className="message-sender">{sender}</Col>
+              <Col className="message-sender">
+                {sender} {isAdminMessage && " (admin)"}
+              </Col>
               <Col className="message-time">
                 {!isRecalled && moment(time).format("ddd MMM DD hh:mm:ss")}
               </Col>
@@ -162,7 +168,7 @@ const ChatMessage = ({ message, onClickEdit }) => {
             id={`${messageId}-dropdown`}
             className={"message-dropdown"}
           >
-            {!isRecalled && (
+            {(!isRecalled && (!isAdminMessage || isAdmin)) && (
               <Dropdown overlay={menu} placement="bottomLeft">
                 <Button>...</Button>
               </Dropdown>
