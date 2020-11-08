@@ -1,5 +1,6 @@
 import {React, useEffect, useState} from 'react'
-import {Card, Form, Input, message, Button, Select, Modal, InputNumber} from 'antd'
+import {Card, Form, Input, message, Button, Select, Modal, InputNumber, Tooltip} from 'antd'
+import { QuestionCircleOutlined } from '@ant-design/icons';
 import {useHistory} from 'react-router-dom'
 import webSocket from "../websocket/Websocket"
 import { connect } from 'react-redux'
@@ -26,14 +27,14 @@ const Login = (props) => {
     const {dispatch, logIn} = props;
     const [form] = Form.useForm();
     const {validateFields} = form;
-    const ss=[{value:'a', label:'a'}]
+    // const ss=[{value:'a', label:'a'}]
 
     for (let i = 0; i < school_string_list.length; i++) {
-        schools.push(<Option key={i}>{school_string_list[i]}</Option>);
+        schools.push(<Option value={school_string_list[i]}>{school_string_list[i]}</Option>);
     }
 
     for (let i = 0; i < interest_string_list.length; i++) {
-        interests.push(<Option key={i}>{interest_string_list[i]}</Option>);
+        interests.push(<Option value={interest_string_list[i]}>{interest_string_list[i]}</Option>);
     }
 
     const onFinish = values => {
@@ -45,7 +46,7 @@ const Login = (props) => {
                     name: values.user.name,
                     age: values.user.age,
                     school: values.user.school,
-                    interests: interest_string_list
+                    interests: values.user.interests
                 }
             })
         )
@@ -70,23 +71,45 @@ const Login = (props) => {
               headStyle={{fontSize: '30px', backgroundColor: '#d9d9d9'}}
               bodyStyle={{backgroundColor: '#f5f5f5'}}>
             <Form {...layout} name="LoginForm" form={form} onFinish={onFinish} validateMessages={validateMessages} align="left">
-                <Form.Item name={['user', 'name']} label="Name" rules={[{required: true}]}>
+                <Form.Item
+                    name={['user', 'name']}
+                    label={
+                        <span>
+                            Name&nbsp;
+                            <Tooltip title="5-20 alphanumeric characters">
+                                <QuestionCircleOutlined />
+                            </Tooltip>
+                        </span>
+                    }
+                    rules={[
+                        {
+                            required: true,
+                            message: 'Name is required!',
+                        },
+                        {
+                            pattern: /^[a-zA-Z0-9]{5,20}$/,
+                            message: 'Name should be 5-20 alphanumeric characters',
+                        },
+                    ]}>
                     <Input placeholder="Your Name"/>
                 </Form.Item>
-                {/*<Form.Item name={['user', 'age']} label="Age" rules={[{required: true}]}>*/}
-                {/*    <InputNumber min={0} max={200}/>*/}
-                {/*</Form.Item>*/}
-                {/*<Form.Item name={['user', 'school']} label="School" rules={[{required: true}]}>*/}
-                {/*    <Select style={{width: '100%', textAlign: 'left'}}*/}
-                {/*            allowClear*/}
-                {/*            placeholder="Please select your school">{schools}</Select>*/}
-                {/*</Form.Item>*/}
-                {/*<Form.Item name={['user', 'interests']} label="Interests" rules={[{required: true}]}>*/}
-                {/*    <Select mode="multiple"*/}
-                {/*            allowClear*/}
-                {/*            style={{width: '100%', textAlign: 'left'}}*/}
-                {/*            placeholder="Please select your interests">{interests}</Select>*/}
-                {/*</Form.Item>*/}
+
+                <Form.Item name={['user', 'age']} label="Age" rules={[{required: true}]}>
+                    <InputNumber min={0} max={200}/>
+                </Form.Item>
+
+                <Form.Item name={['user', 'school']} label="School" rules={[{required: true}]}>
+                    <Select style={{width: '100%', textAlign: 'left'}}
+                            allowClear
+                            placeholder="Please select your school">{schools}</Select>
+                </Form.Item>
+
+                <Form.Item name={['user', 'interests']} label="Interests" rules={[{required: true}]}>
+                    <Select mode="multiple"
+                            allowClear
+                            style={{width: '100%', textAlign: 'left'}}
+                            placeholder="Please select your interests">{interests}</Select>
+                </Form.Item>
 
                 <Form.Item wrapperCol={{...layout.wrapperCol, offset: 20}}>
                     <Button type="primary" htmlType="submit" size="large" >
