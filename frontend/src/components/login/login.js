@@ -60,7 +60,7 @@ const Login = (props) => {
                 if (logIn.isSignedIn === true) {
                     history.push('/chat');
                 } else {
-                    notification.error("This user has been logged in");
+                    notification.error("The username already exists. Please choose another one!");
                 }
             }
         }
