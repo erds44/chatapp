@@ -94,7 +94,7 @@ const Login = (props) => {
                     <Input placeholder="Your Name"/>
                 </Form.Item>
 
-                <Form.Item name={['user', 'age']} label="Age" rules={[{required: true}]}>
+                {/* <Form.Item name={['user', 'age']} label="Age" rules={[{required: true}]}>
                     <InputNumber min={0} max={200}/>
                 </Form.Item>
 
@@ -109,7 +109,7 @@ const Login = (props) => {
                             allowClear
                             style={{width: '100%', textAlign: 'left'}}
                             placeholder="Please select your interests">{interests}</Select>
-                </Form.Item>
+                </Form.Item> */}
 
                 <Form.Item wrapperCol={{...layout.wrapperCol, offset: 20}}>
                     <Button type="primary" htmlType="submit" size="large" >

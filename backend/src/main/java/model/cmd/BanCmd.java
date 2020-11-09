@@ -60,7 +60,7 @@ public class BanCmd extends ACmd {
 
             // if user is the owner, remove chat room
             if (DispatchAdapter.chatRoomName2ChatRoom.get(room).getOwner().equals(username)) {
-                dismissChatRoom(room);
+                dismissChatRoom(room, "ban");
             } else {
                 removeAndNotify(username, room);
             }

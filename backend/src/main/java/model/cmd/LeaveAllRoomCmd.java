@@ -24,9 +24,9 @@ public class LeaveAllRoomCmd extends ACmd {
         String userName = getUser(userSession);
         for (String chatRoomName : DispatchAdapter.userName2chatRoomName.get(userName)) {
             if (DispatchAdapter.chatRoomName2ChatRoom.get(chatRoomName).getOwner().equals(userName)) {
-                dismissChatRoom(chatRoomName);
+                dismissChatRoom(chatRoomName, "exit");
             } else {
-                userLeftChatRoom(userSession, chatRoomName, userName);
+                userLeftChatRoom(userSession, chatRoomName, userName, "exit");
             }
         }
         sendWSMsg(userSession, Constant.ROOM, Constant.REQUEST_EXITALLROOM, Constant.SYS_SR, Constant.CHATROOM_EXITALL);

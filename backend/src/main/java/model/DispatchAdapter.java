@@ -52,7 +52,9 @@ public class DispatchAdapter {
      */
     public synchronized void leave(Session user) {
         ACmd cmd = new LogoutCmd();
-        cmd.execute(user, new HashMap<>());
+        HashMap hash = new HashMap();
+        hash.put("disconnected", null);
+        cmd.execute(user, hash);
     }
 
     /**

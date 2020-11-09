@@ -22,14 +22,18 @@ public class LogoutCmd extends ACmd{
      */
     @Override
     public void execute(Session userSession, Map<String, Object> request) {
+        String type = "logout";
+        if(request != null && request.containsKey("disconnected")) {
+            type = "disconnected";
+        }
         String userName = DispatchAdapter.session2userName.get(userSession);;
         List<String> chatRooms = DispatchAdapter.userName2chatRoomName.get(userName);
         for(String chatRoom : chatRooms) {
             if (DispatchAdapter.chatRoomName2ChatRoom.get(chatRoom).getOwner().equals(userName)) {
-                dismissChatRoom(chatRoom);
+                dismissChatRoom(chatRoom, type);
             }
             else {
-                userLeftChatRoom(userSession, chatRoom, userName);
+                userLeftChatRoom(userSession, chatRoom, userName, type);
             }
         }
         DispatchAdapter.session2userName.remove(userSession);
