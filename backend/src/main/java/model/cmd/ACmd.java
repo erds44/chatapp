@@ -110,6 +110,7 @@ public abstract class ACmd {
 
     protected void userLeftChatRoom(Session userSession, String chatRoomName, String userName, String type) {
         DispatchAdapter.chatRoomName2listUser.get(chatRoomName).remove(userName);
+        DispatchAdapter.userName2chatRoomName.get(userName).remove(chatRoomName);
         String owner = DispatchAdapter.chatRoomName2ChatRoom.get(chatRoomName).getOwner();
         String method = "";
         if(type.equals("exit")) {
