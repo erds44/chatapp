@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Row, Col, Input, Button } from "antd";
+import { Popover, Space, Row, Col, Input, Button } from "antd";
 import "./Compose.css";
 import { useDispatch, useSelector } from "react-redux";
 import { ON_MESSAGE } from "../../../actions/type";
@@ -7,7 +7,13 @@ import * as uuid from "uuid";
 import webSocket from "../../websocket/Websocket";
 import { messageCensor } from "../../../helpers/util";
 import { BAN_BROADCAST } from "../../room/report/constant";
+import "emoji-mart/css/emoji-mart.css";
+import { Picker } from "emoji-mart";
+import { SmileOutlined  } from '@ant-design/icons';
+
+
 const { TextArea } = Input;
+
 
 const Compose = () => {
   const dispatch = useDispatch();
@@ -63,6 +69,20 @@ const Compose = () => {
     );
   };
 
+  const [showEmojiPicker, setshowEmojiPicker] = useState(false);
+
+  const toggleEmojiPicker = () => {
+    setshowEmojiPicker(!showEmojiPicker)
+  }
+
+  const emojiHandler = (emoji) => {
+    setTextAreaText(textAreaText + emoji.native);
+  }
+
+  const content = (
+        <Picker set = 'google' perLine = {12} exclude = {['search','recent','flags','custom']} onSelect={emojiHandler}/>
+  );
+
   return (
     <div id={"compose"}>
       <Row>
@@ -77,11 +97,17 @@ const Compose = () => {
           onChange={handleMessageChange}
         />
       </Row>
-      <Row>
-        <Col span={3} offset={21}>
+      <Space style = {{float:"right"}}>
+        <Popover content={content}  trigger="click"
+                 visible={showEmojiPicker}
+                 onVisibleChange={toggleEmojiPicker}
+        >
+          <Button ><SmileOutlined /></Button>
+        </Popover>
           <Button onClick={handleMessageSend}>Send</Button>
-        </Col>
-      </Row>
+      </Space>
+
+
     </div>
   );
 };

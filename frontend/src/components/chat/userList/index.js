@@ -12,11 +12,11 @@ const UserList = (props) => {
     const [userName, setUserName] = useState("");
 
     const allUsers = useSelector( state => state.userList.allUserList);
-
+    const currentUser = useSelector (state => state.login.user);
     const getDisplayName = sender => {
         return sender.split("_").map(name => name[0]);
     };
-
+    console.log(currentUser)
     return (
     <div>
         <Message userName={userName} visible={visible} setVisible={setVisible}/>
@@ -43,15 +43,17 @@ const UserList = (props) => {
               description={item.name}
               title={item.school}
             />
+              {item.name != currentUser?
+                  <Button
+                  type="primary"
+                  shape="round"
+                  size="small"
+                  onClick={() => {setUserName(item.name); setVisible(true)}}
+              >
+                  Chat!
+              </Button>
+              :  null}
 
-            <Button
-              type="primary"
-              shape="round"
-              size="small"
-              onClick={() => {setUserName(item.name); setVisible(true)}}
-            >
-              Chat!
-            </Button>
 
           </List.Item>
         )}

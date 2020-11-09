@@ -11,6 +11,8 @@ import {
 } from "../../../actions/type";
 import webSocket from "../../websocket/Websocket";
 import { BAN_BROADCAST } from "../../room/report/constant";
+import Interweave from 'interweave';
+import { UrlMatcher } from 'interweave-autolink';
 
 const ChatMessage = ({ message, onClickEdit }) => {
   const dispatch = useDispatch();
@@ -165,7 +167,10 @@ const ChatMessage = ({ message, onClickEdit }) => {
             </Row>
             <Row>
               <Col className="message-text">
-                {(!isRecalled && text) || getRecallText(sender, recallTime)}
+                <Interweave
+                    content={(!isRecalled && text) || getRecallText(sender, recallTime)}
+                    matchers={[new UrlMatcher('url')]}
+                />
               </Col>
             </Row>
           </Col>

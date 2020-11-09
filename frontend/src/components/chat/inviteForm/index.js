@@ -5,6 +5,7 @@ import webSocket from "../../websocket/Websocket"
 import notification from "../../notification";
 import {JOIN_ROOM} from "../../../actions/type";
 
+
 const InviteForm = (props) => {
     const {selectedChatRoom, rooms} = props;
     const [name, setName] = useState("");
