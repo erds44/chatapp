@@ -119,7 +119,7 @@ const Chat = props => {
           </Space>
         </Header>
         <Content style={{ margin: "24px 16px 0" }}>
-          <Row style={{ height: "100%", overflowY: 'auto'}}>
+          <Row style={{ height: "100%"}}>
             <Col span={17}>
               <div
                 className="site-layout-background"
@@ -130,7 +130,7 @@ const Chat = props => {
             </Col>
             <Col
               span={7}
-              style={{ borderLeft: "2px solid rgba(0, 0, 0, 0.06)" }}
+              style={{ borderLeft: "2px solid rgba(0, 0, 0, 0.06)", overflowY: 'auto' }}
             >
               {UserList()}
               {/*{ReportForm()}*/}
