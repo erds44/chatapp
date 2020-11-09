@@ -30,8 +30,7 @@ const InviteForm = (props) => {
         if (rooms.msg == null) {
             if (rooms.joinedRoom) setJoinedRooms(rooms.joinedRoom);
         } else {
-            if (rooms.type === "err") notification.error(rooms.msg);
-            else notification.success(rooms.msg);
+
         }
     }, [rooms])
 
