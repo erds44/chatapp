@@ -80,7 +80,7 @@ const Compose = () => {
   }
 
   const content = (
-        <Picker set = 'google' perLine = {12} exclude = {['search','recent','flags','custom']} onSelect={emojiHandler}/>
+        <Picker set = 'twitter' perLine = {12} include = {['smileys','people']} onSelect={emojiHandler}/>
   );
 
   return (
