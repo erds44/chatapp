@@ -9,7 +9,6 @@ const PrivateRoute = ({component: Component, ...props}) => {
         if (login){
             return <Component />
         } else {
-            message.info("You are not logged in. Please log in and try again!");
             return <Redirect to={{
                 pathname: '/'
             }}/>

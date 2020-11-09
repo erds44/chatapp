@@ -21,7 +21,7 @@ const CreateRoom = (props) => {
     const {Option} = Select;
     const {visible, setVisible} = props;
     const [interestDisabled, setInterestDisabled] = useState(true);
-    for (let i = 1; i < 10; i++) {
+    for (let i = 0; i < 6; i++) {
         interests.push(<Option value={interest_string_list[i]}>{interest_string_list[i]}</Option>);
     }
     const onFinish = (values) => {
