@@ -14,10 +14,11 @@ public class User {
 
     /**
      * Public constructor.
-     * @param name name of the user
-     * @param school name of the school
+     *
+     * @param name     name of the user
+     * @param school   name of the school
      * @param interest interest of the user
-     * @param age age of the user
+     * @param age      age of the user
      */
 
     public User(String name, String school, List<String> interest, int age) {
@@ -28,32 +29,8 @@ public class User {
         this.isWarned = false;
     }
 
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSchool() {
-        return school;
-    }
-
-    public void setSchool(String school) {
-        this.school = school;
-    }
-
     public List<String> getInterest() {
         return interest;
-    }
-
-    public void setInterest(List<String> interest) {
-        this.interest = interest;
     }
 
     public Boolean getIsWarned() {

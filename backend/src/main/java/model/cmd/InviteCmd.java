@@ -34,9 +34,9 @@ public class InviteCmd extends ACmd {
         }
 
         ChatRoom room = DispatchAdapter.chatRoomName2ChatRoom.getOrDefault(inviteRoom, null);
-        User inviteUser = DispatchAdapter.userName2user.getOrDefault(inviteUsername,  null);
-        List<String> interests = room.getInterestsRequirement();
-        List<String> userInterest = inviteUser.getInterest();
+//        User inviteUser = DispatchAdapter.userName2user.getOrDefault(inviteUsername,  null);
+//        List<String> interests = room.getInterestsRequirement();
+//        List<String> userInterest = inviteUser.getInterest();
         List<String> userList = DispatchAdapter.chatRoomName2listUser.getOrDefault(inviteRoom, null);
 
         if (!currentUser.equals(userList.get(0))) {
@@ -44,14 +44,13 @@ public class InviteCmd extends ACmd {
             return;
         }
 
-
         if (room.getIsPublic()) {
             // notification: public room can't invite
             sendWSMsg(userSession, Constant.ROOM, Constant.REQUEST_JOINROOM, Constant.SYS_ERR, Constant.PUBLIC_INVITE);
             return;
         }
 
-        if (inviteUsername==room.getOwner() || DispatchAdapter.chatRoomName2listUser.getOrDefault(inviteRoom, null).contains(inviteUsername)) {
+        if (inviteUsername.equals(room.getOwner()) || DispatchAdapter.chatRoomName2listUser.getOrDefault(inviteRoom, null).contains(inviteUsername)) {
             // notification: already exist
             sendWSMsg(userSession, Constant.ROOM, Constant.REQUEST_JOINROOM, Constant.SYS_ERR, Constant.ALREADY_INVITE);
             return;

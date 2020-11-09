@@ -30,10 +30,6 @@ public class BlockCmd extends ACmd {
                 return;
             }
             DispatchAdapter.userName2blockList.get(blockUserName).add(userName);
-        }else{
-            List<String> blockList = new CopyOnWriteArrayList<>();
-            blockList.add(userName);
-            DispatchAdapter.userName2blockList.put(blockUserName, blockList);
         }
         sendWSMsg(userSession, Constant.ROOM, Constant.ROOM, Constant.SYS_SR, blockUserName + " blocked successfully!");
     }

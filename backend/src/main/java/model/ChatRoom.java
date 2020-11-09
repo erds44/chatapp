@@ -25,11 +25,6 @@ public class ChatRoom {
         this.isPublic = !isPrivate;
     }
 
-    public String getName() {
-        return this.name;
-    }
-
-
     public String getOwner() {
         return this.owner;
     }

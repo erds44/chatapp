@@ -51,6 +51,12 @@
             <artifactId>websocket-api</artifactId>
             <version>9.4.12.v20180830</version>
         </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <build>
