@@ -67,7 +67,7 @@ const Chat = props => {
   return (
     <Layout style={{ height: "100vh" }}>
       <Message userName={userName} visible={visible} setVisible={setVisible}/>
-      <Sider width="300px" theme="light">
+      <Sider width="300px" theme="light" style={{overflowY: 'auto'}}>
         <Room />
       </Sider>
       <Layout style={{ overFlow: "hidden" }}>
@@ -119,7 +119,7 @@ const Chat = props => {
           </Space>
         </Header>
         <Content style={{ margin: "24px 16px 0" }}>
-          <Row style={{ height: "100%" }}>
+          <Row style={{ height: "100%", overflowY: 'auto'}}>
             <Col span={17}>
               <div
                 className="site-layout-background"
