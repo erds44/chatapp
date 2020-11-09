@@ -1,5 +1,5 @@
 import {message} from 'antd';
-import {SIGN_IN, SIGN_OUT, ON_MESSAGE, CREATE_ROOM, RESET, ROOM, ON_REPORT, PRI_MESSAGE} from './type';
+import {SIGN_IN, SIGN_OUT, ON_MESSAGE, CREATE_ROOM, RESET, ROOM, ON_REPORT, PRI_MESSAGE, SETALLUSERS} from './type';
 
 var mesId = 0;
 
@@ -59,6 +59,12 @@ export const onMessage = (messages) =>
                 const sender = data.request;
                 //const payload = JSON.parse(data.msg);
                 dispatch({type: PRI_MESSAGE, payload: JSON.parse(data.msg), sender: sender, feedback: null});
+                break;
+            case "setallusers":
+                dispatch({
+                    type: SETALLUSERS,
+                    payload: JSON.parse(data.msg)
+                });
                 break;
             default:
                 break;

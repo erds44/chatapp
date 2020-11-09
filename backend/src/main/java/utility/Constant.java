@@ -58,4 +58,16 @@ public class Constant {
     public static final String BAN_REPORT_MSG = "You are banned from joining other rooms due to report.";
     public static final String BAN_BEHAVIOR = "has been banned due to inappropriate behaviors!";
     public static final String BAN_WARN = "Inappropriate words are detected! (You will be banned next time)";
+
+    //invite and userlist
+    public static final String PUBLIC_INVITE = "Public room can't invite";
+    public static final String ALREADY_INVITE = "This user has joined the room";
+    public static final String BANNED_INVITE = "This user has been banned from entering all rooms";
+    public static final String NON_ADMIN_INVITE = "Only admin can invite";
+    public static final String NON_EXIST_USER = "This user not exist.";
+    public static final String SUCCESSFUL_INVITE = "invited you to ";
+
+    public static final String SETALLUSERS = "setallusers";
+    public static final String REQUEST_UPATEALLUSERLIST = "updateAllUsers";
+
 }

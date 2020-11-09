@@ -6,6 +6,7 @@ import model.DispatchAdapter;
 import model.User;
 import org.eclipse.jetty.websocket.api.Session;
 import utility.Constant;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +41,12 @@ public class LogoutCmd extends ACmd{
         ChatAppController.userNameMap.remove(userSession);
         sendWSMsg(userSession, Constant.LOGOUT, Constant.LOGOUT, Constant.SYS_SR, Constant.LOGOUT_SR);
         //sendWSMsg(userSession, Constant.ROOM, Constant.ROOM, Constant.SYS_SR, Constant.LOGOUT_SR);
+
+        for (String eachUser : DispatchAdapter.userName2user.keySet()){
+            Session session = DispatchAdapter.userName2session.get(eachUser);
+            sendWSMsg(session, Constant.SETALLUSERS, Constant.REQUEST_UPATEALLUSERLIST, Constant.SYS_SR, new Gson().toJson(DispatchAdapter.userName2user.values()) );
+        }
+
         updateAllSession();
     }
 }

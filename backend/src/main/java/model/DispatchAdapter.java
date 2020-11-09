@@ -117,6 +117,9 @@ public class DispatchAdapter {
             case "block":
                 cmd = new BlockCmd();
                 break;
+            case "invite":
+                cmd = new InviteCmd();
+                break;
             default:
                 break;
         }

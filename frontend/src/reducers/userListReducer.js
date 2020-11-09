@@ -1,10 +1,16 @@
-import { ON_MESSAGE } from '../actions/type';
+import { SETALLUSERS } from '../actions/type';
 
-export default (state = [], action) => {
+const INITIAL_STATE = {
+  allUserList : []
+}
+
+
+export default (state =  INITIAL_STATE, action) => {
   switch (action.type) {
-    // case ON_MESSAGE:
-    //     return { ...state, messages: action.payload.data };
+    case SETALLUSERS:
+      console.log(action.payload)
+      return {...state, allUserList: action.payload}
     default:
       return state;
   }
-};
+}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Layout, Row, Col, Modal, message } from "antd";
-import { Button, Popover, notification } from "antd";
+import { Space, Button, Popover, notification } from "antd";
 import { useHistory } from "react-router-dom";
 import ChatArea from "./chat-area/ChatArea";
 import Room from "../room";
@@ -10,6 +10,7 @@ import ReportAdminForm from "../room/report/reportAdminForm";
 import webSocket from "../websocket/Websocket";
 import { connect, useSelector } from "react-redux";
 import notifications from "../notification";
+import InviteForm from "./inviteForm";
 
 const { Header, Content, Footer, Sider } = Layout;
 const Chat = props => {
@@ -68,22 +69,29 @@ const Chat = props => {
               {(userList && `(${userList.length})`) || ""}
             </span>
           )}
-          <Button
-            style={{ right: "-500px" }}
-            type="primary"
-            shape="round"
-            size="small"
-            onClick={() => {
-              webSocket.send(
-                JSON.stringify({
-                  command: "logout",
-                  body: {}
-                })
-              );
-            }}
-          >
-            Logout
-          </Button>
+          <Space style={{float: 'right'}}
+                 size = "middle">
+            <div>
+
+              {selectedChatRoom != null ? <InviteForm selectedChatRoom = {selectedChatRoom}/>:null}
+            </div>
+
+            <Button
+                type="primary"
+                shape="round"
+                size="small"
+                onClick={() => {
+                  webSocket.send(
+                      JSON.stringify({
+                        command: "logout",
+                        body: {}
+                      })
+                  );
+                }}
+            >
+              Logout
+            </Button>
+          </Space>
         </Header>
         <Content style={{ margin: "24px 16px 0" }}>
           <Row style={{ height: "100%" }}>

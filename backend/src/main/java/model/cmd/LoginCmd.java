@@ -5,7 +5,7 @@ import model.DispatchAdapter;
 import model.User;
 import org.eclipse.jetty.websocket.api.Session;
 import utility.Constant;
-
+import com.google.gson.Gson;
 import java.security.cert.CertificateParsingException;
 import java.util.ArrayList;
 import java.util.Map;
@@ -35,6 +35,13 @@ public class LoginCmd extends ACmd {
         DispatchAdapter.userName2blockList.put(userName, new CopyOnWriteArrayList<>());
         sendWSMsg(userSession, Constant.LOGIN, Constant.LOGIN, Constant.SYS_SR, userName);
         sendWSMsg(userSession, Constant.ROOM, Constant.ROOM, Constant.SYS_SR, Constant.LOGIN_SR);
+
+        for (String eachUser : DispatchAdapter.userName2user.keySet()){
+            Session session = DispatchAdapter.userName2session.get(eachUser);
+            sendWSMsg(session, Constant.SETALLUSERS, Constant.REQUEST_UPATEALLUSERLIST, Constant.SYS_SR, new Gson().toJson(DispatchAdapter.userName2user.values()) );
+        }
+
+
         updateAllSession();
     }
 

@@ -15,3 +15,4 @@ export const BAN = 'BAN';
 export const PRI_MESSAGE = 'PRI_MESSAGE';
 
 export const RESET = 'RESET';
+export const SETALLUSERS = 'SETALLUSERS';

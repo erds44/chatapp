@@ -1,54 +1,28 @@
 import {React, useState} from "react";
 import { List, Avatar, Button } from "antd";
-import inviteForm from "../inviteForm";
 import webSocket from "../../websocket/Websocket";
 import colorHelper from "../../../helpers/color-user-helper";
 import Message from "./message";
+import {connect, useSelector} from "react-redux";
+import ChatMessage from "../chat-area/ChatMessage";
 
-const UserList = () => {
+const UserList = (props) => {
 
     const [visible, setVisible] = useState(false);
     const [userName, setUserName] = useState("");
-  const data = [
-    {
-      name: { title: "Miss", first: "Weiwei", last: "Zhou" },
-      school: "Rice University",
-      interest: "Reading"
-    },
-    {
-      name: { title: "Mr", first: "Xiao", last: "Xia" },
-      school: "Rice University",
-      interest: "Sports"
-    },
-    {
-      name: { title: "Mr", first: "Zhijian", last: "Yao" },
-      school: "Rice University",
-      interest: "Traveling"
-    },
-    {
-      name: { title: "Mr", first: "Xuyang", last: "Xiao" },
-      school: "Rice University",
-      interest: "Sports"
-    },
-    {
-      name: { title: "Mr", first: "Wenlong", last: "Yan" },
-      school: "Rice University",
-      interest: "Sports"
-    },
-    {
-      name: { title: "Miss", first: "Xinru", last: "Xiao" },
-      school: "Rice University",
-      interest: "Sports"
-    }
-  ];
-  const ColorList = ["#f56a00", "#7265e6", "#ffbf00", "#00a2ae"];
 
-  return (
+    const allUsers = useSelector( state => state.userList.allUserList);
+
+    const getDisplayName = sender => {
+        return sender.split("_").map(name => name[0]);
+    };
+
+    return (
     <div>
         <Message userName={userName} visible={visible} setVisible={setVisible}/>
       <List
         itemLayout="horizontal"
-        dataSource={data}
+        dataSource={allUsers}
         renderItem={item => (
           <List.Item style={{ padding: "15px" }}>
             <List.Item.Meta
@@ -56,17 +30,17 @@ const UserList = () => {
                 <Avatar
                   style={{
                     backgroundColor: colorHelper(
-                      `${item.name.first} ${item.name.last}`
+                      item.name
                     ),
                     verticalAlign: "middle"
                   }}
                   size="large"
                   gap={1}
                 >
-                  {item.name.first[0] + item.name.last[0]}
+                  {getDisplayName(item.name)}
                 </Avatar>
               }
-              description={item.name.first + " " + item.name.last}
+              description={item.name}
               title={item.school}
             />
 
@@ -74,7 +48,7 @@ const UserList = () => {
               type="primary"
               shape="round"
               size="small"
-              onClick={() => {setUserName(item.name.first + " " + item.name.last); setVisible(true)}}
+              onClick={() => {setUserName(item.name); setVisible(true)}}
             >
               Chat!
             </Button>
@@ -82,7 +56,6 @@ const UserList = () => {
           </List.Item>
         )}
       />
-      {inviteForm()}
     </div>
   );
 };
