@@ -44,7 +44,7 @@ const Index = (props) => {
 
 
     return (
-        <Menu mode="inline" onClick={handleClick} selectedKeys={['']}>
+        <Menu mode="inline" onClick={handleClick} selectedKeys={['']} defaultOpenKeys={['allRooms', 'joinedRooms']}>
             <Menu.Item key="create">
                 <CreateRoom visible={visible} setVisible={setVisible}/>
             </Menu.Item>

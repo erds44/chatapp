@@ -62,8 +62,8 @@ const JoinedRoom = (props) => {
         })
     }
     return (
-        <Menu mode="inline" selectedKeys={['']}>
-            <SubMenu title={<span><GroupOutlined/><span>Joined Rooms</span></span>}>
+        <Menu mode="inline" selectedKeys={['']} defaultOpenKeys={['joinedRooms']}>
+            <SubMenu key = "joinedRooms" title={<span><GroupOutlined/><span>Joined Rooms</span></span>}>
                 {
                     joinedRooms.map((name, index) => {
                         return (

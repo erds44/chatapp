@@ -20,9 +20,9 @@ const AllRooms = (props) => {
     };
 
     return (
-        <Menu mode="inline" onClick={(e) => {
+        <Menu mode="inline"  onClick={(e) => {
             onFinish(e)
-        }}>
+        }} defaultOpenKeys={['allRooms']} >
             <SubMenu key="allRooms" title={<span><GroupOutlined/><span>All Rooms</span></span>}>
                 {
                     allRooms.map((name, index) => {
