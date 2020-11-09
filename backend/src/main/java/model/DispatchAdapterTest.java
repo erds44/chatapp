@@ -3,9 +3,6 @@ package model;
 import junit.framework.TestCase;
 import org.eclipse.jetty.websocket.common.WebSocketSession;
 
-
-import javax.swing.*;
-
 import static org.mockito.Mockito.mock;
 
 public class DispatchAdapterTest extends TestCase {

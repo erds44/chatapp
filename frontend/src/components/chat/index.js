@@ -27,7 +27,6 @@ const Chat = props => {
     }
     return state.room.userList[state.room.joinedRoom.indexOf(selectedChatRoom)];
   });
-  //const currentUser = { name: "Xiao Xia" };
 
   const mes = (description, userName) => {
     return(
@@ -52,7 +51,7 @@ const Chat = props => {
       notification.info({
         message: `${priMsg.sender} sends you a message`,
         description: mes(priMsg.message.info, priMsg.sender),
-        duration: 3,
+        duration: 5,
         styles: {paddingTop: '10px'}
       });
     } else if (priMsg.feedback !== null) {
