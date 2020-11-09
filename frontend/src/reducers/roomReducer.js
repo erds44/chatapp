@@ -15,14 +15,9 @@ const INTIAL_STATE = {
 export default (state = INTIAL_STATE, action) => {
     switch (action.type) {
         case ROOM:
-            if (action.payload.request === "banUser") {
-                return {
-                    ...state,
-                    currentRoom: null
-                }
-            }
+           let selectedRoom = state.currentRoom;
+           if(action.payload.param1 === "[]") selectedRoom = null;
             return {
-                ...state,
                 request: action.payload.request,
                 type: action.payload.type,
                 msg: action.payload.msg,
@@ -30,7 +25,8 @@ export default (state = INTIAL_STATE, action) => {
                 userList: parseNestedList(action.payload.param1, action.payload.param2) || state.userList,
                 allRooms: parse(action.payload.param3) || state.allRooms,
                 userName: action.payload.param4 || state.userName,
-                isPublic: parse(action.payload.param5) || state.isPublic
+                isPublic: parse(action.payload.param5) || state.isPublic,
+                currentRoom: selectedRoom
             };
         case JOIN_ROOM: {
             return {
