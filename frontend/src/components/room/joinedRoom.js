@@ -1,4 +1,4 @@
-import {Badge, Menu, Tag, Button, Dropdown, Col, Popover} from "antd";
+import {Tooltip, Menu, Tag, Button, Dropdown, Col, Popover} from "antd";
 import {GroupOutlined} from "@ant-design/icons";
 import React, {useState} from "react";
 import webSocket from "../websocket/Websocket";
@@ -42,16 +42,16 @@ const JoinedRoom = (props) => {
 
     const getRemoveButton = (name, roomName, admin) => {
         if (name === userName || name === admin) return null;
-        if (userName === admin) return <Menu.Item key={name + "remove" + keyId++}
-                                                  onClick={() => forceToLeave(name, roomName)}>Remove</Menu.Item>
-        return <Menu.Item key={name + "report" + keyId++} onClick={() => {
+        if (userName === admin) return (<Tooltip title="Remove"><Button ghost = "true" size = "small" key={name + "remove" + keyId++} type="primary" shape="circle"
+                                                                        onClick={() => forceToLeave(name, roomName)}>R</Button></Tooltip>)
+        return (<Tooltip title="Report"><Button  ghost = "true" size = "small" type="primary"  shape="circle" key={name + "report" + keyId++} onClick={() => {
             report(roomName, name)
-        }}>Report</Menu.Item>
+        }}>!</Button></Tooltip>)
     }
 
     const getBlockButton = (name) => {
-        if (name !== userName) return <Menu.Item key={name + "block" + keyId++}
-                                                 onClick={() => block(name)}>Block</Menu.Item>
+        if (name !== userName) return<Tooltip title="Block"> <Button  ghost = "true" size = "small" type="primary" shape="circle"  key={name + "block" + keyId++}
+                                              onClick={() => block(name)}>B</Button></Tooltip>
         return null
     }
 
@@ -68,22 +68,21 @@ const JoinedRoom = (props) => {
                     joinedRooms.map((name, index) => {
                         return (
 
-                                <SubMenu key={name} title={name} onTitleClick={handleSelectedRoom}>
-                                    {userList[index].map(name => {
-                                        let color = (userList[index][0] === name) ? "magenta" : "green";
-                                        let tag = (userList[index][0] === name) ? "Admin" : "Member";
-                                        return (
-                                            <SubMenu key={name + keyId++}
-                                                     title={<><Tag color={color}>{tag}</Tag>{name}</>}>
-                                                {getRemoveButton(name, joinedRooms[index], userList[index][0])}
-                                                {getBlockButton(name)}
-                                            </SubMenu>
-                                        )
+                            <SubMenu key={name} title={name} onTitleClick={handleSelectedRoom}>
+                                {userList[index].map(name => {
+                                    let color = (userList[index][0] === name) ? "magenta" : "green";
+                                    let tag = (userList[index][0] === name) ? "Admin" : "Member";
+                                    return (
+                                        <Menu.Item key={name + keyId++}><Tag color={color}>{tag}</Tag>{name}
+                                            {getRemoveButton(name, joinedRooms[index], userList[index][0])}
+                                            {getBlockButton(name)}
+                                        </Menu.Item>
+                                    )
 
-                                    })
-                                    }
+                                })
+                                }
 
-                                </SubMenu>
+                            </SubMenu>
                         )
                     })
                 }
