@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Layout, Row, Col, Modal, message } from "antd";
+import { Layout, Row, Col } from "antd";
 import { Space, Button, Popover, notification } from "antd";
 import { useHistory } from "react-router-dom";
 import ChatArea from "./chat-area/ChatArea";
@@ -11,25 +11,49 @@ import webSocket from "../websocket/Websocket";
 import { connect, useSelector } from "react-redux";
 import notifications from "../notification";
 import InviteForm from "./inviteForm";
+import Message from "./userList/message";
+import './index.css';
 
 const { Header, Content, Footer, Sider } = Layout;
 const Chat = props => {
   const history = useHistory();
   const { dispatch, logIn, priMsg } = props;
   const selectedChatRoom = useSelector(state => state.room.currentRoom);
+  const [visible, setVisible] = useState(false);
+  const [userName, setUserName] = useState("");
   const userList = useSelector(state => {
     if (!state.room.userList || !state.room.joinedRoom) {
       return null;
     }
     return state.room.userList[state.room.joinedRoom.indexOf(selectedChatRoom)];
   });
-  const currentUser = { name: "Xiao Xia" };
+  //const currentUser = { name: "Xiao Xia" };
+
+  const mes = (description, userName) => {
+    return(
+      <div>
+        <div className="message">
+          {description}
+        </div>
+        <div className="message">
+          <Button onClick={() => handleReply(userName)}>Reply</Button>
+        </div>
+      </div>
+    )
+  }
+
+  const handleReply = (userName) => {
+    setUserName(userName); 
+    setVisible(true);
+  }
 
   useEffect(() => {
     if (priMsg.message !== null) {
       notification.info({
         message: `${priMsg.sender} sends you a message`,
-        description: priMsg.message.info
+        description: mes(priMsg.message.info, priMsg.sender),
+        duration: 3,
+        styles: {paddingTop: '10px'}
       });
     } else if (priMsg.feedback !== null) {
       if (priMsg.feedback.indexOf("Sorry") < 0) {
@@ -42,6 +66,7 @@ const Chat = props => {
 
   return (
     <Layout style={{ height: "100vh" }}>
+      <Message userName={userName} visible={visible} setVisible={setVisible}/>
       <Sider width="300px" theme="light">
         <Room />
       </Sider>
@@ -50,7 +75,7 @@ const Chat = props => {
           style={{
             padding: 0,
             backgroundColor: "white",
-            borderLeft: "2px solid rgba(0, 0, 0, 0.06)"
+            //borderLeft: "2px solid rgba(0, 0, 0, 0.06)"
           }}
         >
           {selectedChatRoom && (

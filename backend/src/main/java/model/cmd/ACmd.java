@@ -82,26 +82,49 @@ public abstract class ACmd {
         }
     }
 
-    protected void dismissChatRoom(String chatRoomName) {
+    protected void dismissChatRoom(String chatRoomName, String type) {
         // update joined rooms
         String owner = DispatchAdapter.chatRoomName2ChatRoom.get(chatRoomName).getOwner();
+        String method = "";
+        if(type.equals("exit")) {
+            method = "because the admin exits!";
+        }
+        else if(type.equals("logout")) {
+            method = "because the admin logs out!";
+        }
+        else if(type.equals("disconnected")) {
+            method = "because the admin web socket closes!";
+        }
+        else if(type.equals("ban")) {
+            method = "because the admin is banned!";
+        }
         for (String user : DispatchAdapter.chatRoomName2listUser.get(chatRoomName)) {
             DispatchAdapter.userName2chatRoomName.get(user).remove(chatRoomName);
             Session session = DispatchAdapter.userName2session.get(user);
-            sendWSMsg(session, Constant.ROOM, Constant.REQUEST_EXITROOM, Constant.SYS_SR, owner + ": " + chatRoomName + " is dismissed");
+            sendWSMsg(session, Constant.ROOM, Constant.REQUEST_EXITROOM, Constant.SYS_SR, owner + ": " + chatRoomName + " is dismissed " + method);
         }
         DispatchAdapter.chatRoomName2ChatRoom.remove(chatRoomName);
         DispatchAdapter.chatRoomName2listUser.remove(chatRoomName);
         updateAllSession();
     }
 
-    protected void userLeftChatRoom(Session userSession, String chatRoomName, String userName) {
+    protected void userLeftChatRoom(Session userSession, String chatRoomName, String userName, String type) {
         DispatchAdapter.chatRoomName2listUser.get(chatRoomName).remove(userName);
         String owner = DispatchAdapter.chatRoomName2ChatRoom.get(chatRoomName).getOwner();
+        String method = "";
+        if(type.equals("exit")) {
+            method = "through exiting!";
+        }
+        else if(type.equals("logout")) {
+            method = "through logout!";
+        }
+        else if(type.equals("disconnected")) {
+            method = "through closing the web socket!";
+        }
         for (String user : DispatchAdapter.chatRoomName2listUser.get(chatRoomName)) {
             if (!user.equals(userName)) {
                 Session session = DispatchAdapter.userName2session.get(user);
-                sendWSMsg(session, Constant.ROOM, Constant.REQUEST_UPDATEUSERLIST, Constant.SYS_SR, owner + ": " + userName + " left the room!");
+                sendWSMsg(session, Constant.ROOM, Constant.REQUEST_UPDATEUSERLIST, Constant.SYS_SR, owner + ": " + userName + " left the room - " + chatRoomName + " " + method);
             }
         }
         sendWSMsg(userSession, Constant.ROOM, Constant.REQUEST_EXITROOM, Constant.SYS_SR, chatRoomName + Constant.CHATROOM_EXIT);

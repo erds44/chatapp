@@ -23,9 +23,9 @@ public class LeaveRoomCmd extends ACmd {
         // if user is the owner, remove chat room
         if (DispatchAdapter.chatRoomName2ChatRoom.get(chatRoomName) != null
         && DispatchAdapter.chatRoomName2ChatRoom.get(chatRoomName).getOwner().equals(userName)) {
-            dismissChatRoom(chatRoomName);
+            dismissChatRoom(chatRoomName, "exit");
         } else { // remove user from list
-            userLeftChatRoom(userSession, chatRoomName, userName);
+            userLeftChatRoom(userSession, chatRoomName, userName, "exit");
         }
         DispatchAdapter.userName2chatRoomName.get(userName).remove(chatRoomName);
         updateAllSession();
