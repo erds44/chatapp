@@ -4,6 +4,8 @@ import junit.framework.TestCase;
 import org.eclipse.jetty.websocket.common.WebSocketSession;
 
 
+import javax.swing.*;
+
 import static org.mockito.Mockito.mock;
 
 public class DispatchAdapterTest extends TestCase {
@@ -12,6 +14,9 @@ public class DispatchAdapterTest extends TestCase {
     private WebSocketSession user3 = mock(WebSocketSession.class);
     private WebSocketSession user4 = mock(WebSocketSession.class);
     private WebSocketSession user5 = mock(WebSocketSession.class);
+    private WebSocketSession user6 = mock(WebSocketSession.class);
+    private WebSocketSession user7 = mock(WebSocketSession.class);
+    private WebSocketSession user8 = mock(WebSocketSession.class);
     private String message;
 
     public void test() {
@@ -68,7 +73,7 @@ public class DispatchAdapterTest extends TestCase {
         // test force to leave
         message = "{\"command\":\"forceToLeave\",\"body\":{\"userName\":\"432432423\",\"roomName\":\"2313\"}}";
         DispatchAdapter.getSingleton().process(user1, message);
-        assertEquals("Test report", 1, DispatchAdapter.chatRoomName2listUser.get("2313").size());
+        assertEquals("Test force to leave", 1, DispatchAdapter.chatRoomName2listUser.get("2313").size());
 
         // test broadcast
         message = "{\"command\":\"broadcast\",\"body\":{\"chatRoom\":\"2313\",\"text\":\"hate\",\"id\":\"bea635c0-3589-44f8-a842-894469932132\",\"time\":1604892867811,\"sender\":\"Zhijian\"}}";
@@ -78,24 +83,24 @@ public class DispatchAdapterTest extends TestCase {
         // test recallMessage
         message = "{\"command\":\"recallMessage\",\"body\":{\"messageId\":\"bea635c0-3589-44f8-a842-894469932132\",\"chatRoom\":\"2313\",\"recallTime\":1604893108364}}";
         DispatchAdapter.getSingleton().process(user1, message);
-        assertEquals("Test broadcast", 1, DispatchAdapter.chatRoomName2listUser.get("2313").size());
+        assertEquals("Test recall message", 1, DispatchAdapter.chatRoomName2listUser.get("2313").size());
 
         // test editMessage
         message = "{\"command\":\"editMessage\",\"body\":{\"messageId\":\"bea635c0-3589-44f8-a842-894469932132\",\"chatRoom\":\"2313\",\"editedText\":\"1232\"}}";
         DispatchAdapter.getSingleton().process(user1, message);
-        assertEquals("Test broadcast", 1, DispatchAdapter.chatRoomName2listUser.get("2313").size());
+        assertEquals("Test edit message", 1, DispatchAdapter.chatRoomName2listUser.get("2313").size());
 
         //test deleteMessage
         message = "{\"command\":\"broadcast\",\"body\":{\"chatRoom\":\"2313\",\"text\":\"2312\",\"id\":\"2c8ee1ae-79f9-4157-a363-59e579120da8\",\"time\":1604893627873,\"sender\":\"AAAAA\"}}";
         DispatchAdapter.getSingleton().process(user1, message);
         message = "{\"command\":\"deleteMessage\",\"body\":{\"messageId\":\"2c8ee1ae-79f9-4157-a363-59e579120da8\",\"chatRoom\":\"2313\"}}";
         DispatchAdapter.getSingleton().process(user1, message);
-        assertEquals("Test broadcast", 1, DispatchAdapter.chatRoomName2listUser.get("2313").size());
+        assertEquals("Test delete message", 1, DispatchAdapter.chatRoomName2listUser.get("2313").size());
 
         // test privateMessage
         message = "{\"command\":\"privateMessage\",\"body\":{\"name\":\"AAAAA\",\"info\":\"12312\"}}";
         DispatchAdapter.getSingleton().process(user1, message);
-        assertEquals("Test broadcast", 1, DispatchAdapter.chatRoomName2listUser.get("2313").size());
+        assertEquals("Test private message", 1, DispatchAdapter.chatRoomName2listUser.get("2313").size());
 
         // test block
         message = "{\"command\":\"block\",\"body\":{\"userName\":\"AAAAA\"}}";
@@ -109,13 +114,32 @@ public class DispatchAdapterTest extends TestCase {
         DispatchAdapter.getSingleton().process(user5, message);
         message = "{\"command\":\"broadcast\",\"body\":{\"chatRoom\":\"ABC\",\"text\":\"42131\",\"id\":\"4c768ddb-5432-4fc8-8cc4-f244f11134c5\",\"time\":1604895955521,\"sender\":\"AAAAA\"}}";
         DispatchAdapter.getSingleton().process(user4, message);
-        assertEquals("Test broadcast", 1, DispatchAdapter.chatRoomName2listUser.get("2313").size());
-
-
-
-
-
-
+        assertEquals("Test block", 1, DispatchAdapter.chatRoomName2listUser.get("2313").size());
+        message = "{\"command\":\"createRoom\",\"body\":{\"name\":\"123\",\"interests\":[\"Reading\",\"Music\",\"Sports\",\"Movies\",\"Games\"],\"isPrivate\":true}}";
+        DispatchAdapter.getSingleton().process(user1, message);
+        message = "{\"command\":\"login\",\"body\":{\"name\":\"BBBBB\",\"age\":1,\"school\":\"Rice University\",\"interests\":[\"Traveling\",\"Reading\",\"Sports\",\"Movies\"]}}";
+        DispatchAdapter.getSingleton().process(user7, message);
+        message = "{\"command\":\"invite\",\"body\":{\"currentUser\":\"AAAAAA\",\"inviteUserName\":\"BBBBB\",\"invitedRoom\":\"123\"}}";
+        DispatchAdapter.getSingleton().process(user6, message);
+        message = "{\"command\":\"login\",\"body\":{\"name\":\"CCCCC\",\"age\":1,\"school\":\"Duke University\",\"interests\":[\"Music\",\"Movies\",\"Games\",\"Traveling\",\"Reading\"]}}";
+        DispatchAdapter.getSingleton().process(user8, message);
+        message = "{\"command\":\"joinRoom\",\"body\":{\"name\":\"123\"}}";
+        DispatchAdapter.getSingleton().process(user8, message);
+        message = "{\"command\":\"forceToLeave\",\"body\":{\"userName\":\"CCCCC\",\"roomName\":\"123\"}}";
+        DispatchAdapter.getSingleton().process(user6, message);
+        message = "{\"command\":\"ban\",\"body\":{\"username\":\"BBBBB\",\"room\":\"123\",\"source\":\"broadcast\"}}";
+        DispatchAdapter.getSingleton().process(user7, message);
+        message = "{\"command\":\"ban\",\"body\":{\"username\":\"BBBBB\",\"room\":\"123\",\"source\":\"broadcast\"}}";
+        DispatchAdapter.getSingleton().process(user7, message);
+        message = "{\"command\":\"invite\",\"body\":{\"currentUser\":\"AAAAAA\",\"inviteUserName\":\"BBBBB\",\"invitedRoom\":\"123\"}}";
+        DispatchAdapter.getSingleton().process(user6, message);
+        message = "{\"command\":\"invite\",\"body\":{\"currentUser\":\"AAAAAA\",\"inviteUserName\":\"AAAAAA\",\"invitedRoom\":\"123\"}}";
+        DispatchAdapter.getSingleton().process(user6, message);
+        message = "{\"command\":\"joinRoom\",\"body\":{\"name\":\"123\"}}";
+        DispatchAdapter.getSingleton().process(user8, message);
+        message = "{\"command\":\"logout\",\"body\":{}}";
+        DispatchAdapter.getSingleton().process(user8, message);
+        assertEquals("Test block", 1, DispatchAdapter.chatRoomName2listUser.get("123").size());
 
         // test invite
         message = "{\"command\":\"invite\",\"body\":{\"currentUser\":\"AAAAA\",\"inviteUserName\":\"231\",\"invitedRoom\":\"2313\"}}";
@@ -126,22 +150,17 @@ public class DispatchAdapterTest extends TestCase {
         assertEquals("Test broadcast", 1, DispatchAdapter.chatRoomName2listUser.get("2313").size());
         message = "{\"command\":\"invite\",\"body\":{\"currentUser\":\"AAAAA\",\"inviteUserName\":\"789798\",\"invitedRoom\":\"ABC\"}}";
         DispatchAdapter.getSingleton().process(user4, message);
-        assertEquals("Test broadcast", 1, DispatchAdapter.chatRoomName2listUser.get("2313").size());
-
-
-
-
+        assertEquals("Test invite", 1, DispatchAdapter.chatRoomName2listUser.get("2313").size());
 
         // test hate
         message = "{\"command\":\"broadcast\",\"body\":{\"chatRoom\":\"2313\",\"text\":\"hate\",\"id\":\"bea635c0-3589-44f8-a842-894469932132\",\"time\":1604892867811,\"sender\":\"Zhijian\"}}";
         DispatchAdapter.getSingleton().process(user1, message);
-        assertEquals("Test broadcast", 3, DispatchAdapter.chatRoomName2ChatRoom.size());
+        assertEquals("Test hate", 4, DispatchAdapter.chatRoomName2ChatRoom.size());
 
         // test logout
         message = "{\"command\":\"logout\",\"body\":{}}";
         DispatchAdapter.getSingleton().process(user2, message);
-        assertEquals("Test logout", 4, DispatchAdapter.userName2user.size());
-
+        assertEquals("Test logout", 5, DispatchAdapter.userName2user.size());
 
 
     }
