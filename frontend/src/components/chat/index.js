@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Layout, Row, Col } from "antd";
-import { Space, Button, Popover, notification } from "antd";
+import { Space, Button, Popover, notification, Avatar, Drawer, List } from "antd";
+import { UserOutlined } from '@ant-design/icons';
 import { useHistory } from "react-router-dom";
 import ChatArea from "./chat-area/ChatArea";
 import Room from "../room";
@@ -20,6 +21,8 @@ const Chat = props => {
   const { dispatch, logIn, priMsg } = props;
   const selectedChatRoom = useSelector(state => state.room.currentRoom);
   const [visible, setVisible] = useState(false);
+  const [drawer_visible, setDrawerVisible] = useState(false);
+
   const [userName, setUserName] = useState("");
   const userList = useSelector(state => {
     if (!state.room.userList || !state.room.joinedRoom) {
@@ -27,6 +30,39 @@ const Chat = props => {
     }
     return state.room.userList[state.room.joinedRoom.indexOf(selectedChatRoom)];
   });
+
+  const currentUser = useSelector (state => state.login.user);
+  const allUsers = useSelector( state => state.userList.allUserList);
+  const profile = allUsers.find(user => user.name===currentUser);
+  var data;
+  if(profile!=undefined){
+    var myInterests = '';
+    for(var i = 0; i < profile.interest.length; i++) {
+      if(i>0){
+        myInterests += ', ';
+      }
+      myInterests += profile.interest[i];
+    }
+    data = [
+      {
+        title: 'Name',
+        description: profile.name,
+      },
+      {
+        title: 'Age',
+        description: profile.age,
+      },
+      {
+        title: 'School',
+        description: profile.school,
+      },
+      {
+        title: 'Interests',
+        description: myInterests,
+      },
+    ];
+  }
+
 
   const mes = (description, userName) => {
     return(
@@ -45,6 +81,14 @@ const Chat = props => {
     setUserName(userName); 
     setVisible(true);
   }
+
+  const showDrawer = () => {
+    setDrawerVisible(true);
+  };
+
+  const onClose = () => {
+    setDrawerVisible(false);
+  };
 
   useEffect(() => {
     if (priMsg.message !== null) {
@@ -100,21 +144,46 @@ const Chat = props => {
               {selectedChatRoom != null ? <InviteForm selectedChatRoom = {selectedChatRoom}/>:null}
             </div>
 
-            <Button
-                type="primary"
-                shape="round"
-                size="small"
-                onClick={() => {
-                  webSocket.send(
-                      JSON.stringify({
-                        command: "logout",
-                        body: {}
-                      })
-                  );
-                }}
+
+            <Button type="primary" shape="circle" icon={<UserOutlined />} onClick={showDrawer}/>
+            <Drawer
+                title="User Profile"
+                placement="left"
+                closable={false}
+                onClose={onClose}
+                visible={drawer_visible}
             >
-              Logout
-            </Button>
+              <List
+                  itemLayout="horizontal"
+                  dataSource={data}
+                  renderItem={item => (
+                      <List.Item>
+                        <List.Item.Meta
+                            title={item.title}
+                            description={item.description}
+                        />
+                      </List.Item>
+                  )}
+              />
+
+              <Button
+                  type="primary"
+                  shape="round"
+                  size="small"
+                  onClick={() => {
+                    webSocket.send(
+                        JSON.stringify({
+                          command: "logout",
+                          body: {}
+                        })
+                    );
+                  }}
+              >
+                Logout
+              </Button>
+
+            </Drawer>
+
           </Space>
         </Header>
         <Content style={{ margin: "24px 16px 0" }}>
