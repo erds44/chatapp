@@ -3,7 +3,6 @@ package model.cmd;
 import com.google.gson.JsonObject;
 import model.ChatRoom;
 import model.DispatchAdapter;
-import model.User;
 import org.eclipse.jetty.websocket.api.Session;
 import utility.Constant;
 
@@ -28,8 +27,6 @@ public class sendReportCmd extends ACmd {
         String reportedRoom = (String) request.get("reportedRoom");
 
         ChatRoom room = DispatchAdapter.chatRoomName2ChatRoom.getOrDefault(reportedRoom, null);
-
-        // TODO  if room is null ....
 
         String adminName = room.getOwner();
         Session adminSession = DispatchAdapter.userName2session.getOrDefault(adminName, null);
