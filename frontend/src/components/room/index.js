@@ -21,9 +21,7 @@ const Index = (props) => {
     const [isPublic, setIsPublic] = useState(() => []);
     const [report, setReport] = useState({visible: false, reportRoom: null, reportName: null})
     const handleClick = (e) => {
-        if (e.key === "create") {
-            setVisible(true);
-        }
+        if (e.key === "create") setVisible(true);
     }
 
     useEffect(() => {
@@ -48,7 +46,7 @@ const Index = (props) => {
             <Menu.Item key="create">
                 <CreateRoom visible={visible} setVisible={setVisible}/>
             </Menu.Item>
-            <ExitRoom joinedRooms={joinedRooms}/>
+            {/*<ExitRoom joinedRooms={joinedRooms}/>*/}
             <ExitAllRooms/>
             <JoinedRoom joinedRooms={joinedRooms} userList={userList} userName={userName} setReport={setReport}/>
             <AllRooms allRooms={allRooms} isPublic={isPublic}/>

@@ -16,3 +16,4 @@ export const PRI_MESSAGE = 'PRI_MESSAGE';
 
 export const RESET = 'RESET';
 export const SETALLUSERS = 'SETALLUSERS';
+export const EXIT_ROOM = 'EXIT_ROOM';

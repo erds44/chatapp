@@ -1,4 +1,4 @@
-import {ROOM, JOIN_ROOM} from "../actions/type";
+import {ROOM, JOIN_ROOM, EXIT_ROOM} from "../actions/type";
 import {act} from "@testing-library/react";
 
 const INTIAL_STATE = {
@@ -32,6 +32,13 @@ export default (state = INTIAL_STATE, action) => {
             return {
                 ...state,
                 msg: null,
+                currentRoom: action.payload
+            }
+        }
+        case EXIT_ROOM:{
+            return {
+                ...state,
+                msg:null,
                 currentRoom: action.payload
             }
         }

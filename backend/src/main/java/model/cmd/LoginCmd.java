@@ -27,7 +27,7 @@ public class LoginCmd extends ACmd {
             sendWSMsg(userSession, Constant.LOGIN, Constant.LOGIN, Constant.SYS_ERR, Constant.USERNAME_USED);
             return;
         }
-        User user = new User(userName, (String) request.get(Constant.SCHOOL), (ArrayList<String>)request.get(Constant.INTERESTS), 10);
+        User user = new User(userName, (String) request.get(Constant.SCHOOL), (ArrayList<String>)request.get(Constant.INTERESTS), (int)Math.round((Double) request.get("age")));
         DispatchAdapter.session2userName.put(userSession, userName);
         DispatchAdapter.userName2session.put(userName, userSession);
         DispatchAdapter.userName2user.put(userName, user);
