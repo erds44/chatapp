@@ -20,7 +20,8 @@ const Compose = () => {
   const currentUser = useSelector(state => state.login.user);
   const currentRoom = useSelector(state => state.room.currentRoom);
   const [textAreaText, setTextAreaText] = useState("");
-  const handleMessageSend = () => {
+  const handleMessageSend = event => {
+    event.preventDefault();
     if (!textAreaText) {
       return;
     }
@@ -40,7 +41,7 @@ const Compose = () => {
       sendMessage();
     }
 
-    setTextAreaText("");
+    setTextAreaText('');
   };
   const handleMessageChange = event => {
     setTextAreaText(event.target.value);
