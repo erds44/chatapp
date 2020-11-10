@@ -21,7 +21,7 @@ const UserList = (props) => {
     console.log(currentUser)
 
     return (
-    <div>
+    <div style={{overflowY: 'auto'}} >
         <Message userName={userName} visible={visible} setVisible={setVisible}/>
             <List
                 style = {{width:"100%", height:"100%",position:"absolute", overflow:"scroll"}}
