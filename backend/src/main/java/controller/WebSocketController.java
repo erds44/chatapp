@@ -10,10 +10,11 @@ import org.eclipse.jetty.websocket.api.annotations.WebSocket;
 /**
  * Create a web socket for the server.
  */
-@WebSocket(maxIdleTime=900000000)
+@WebSocket(maxIdleTime = 900000000)
 public class WebSocketController {
     /**
      * Open user's session.
+     *
      * @param user The user whose session is opened.
      */
     @OnWebSocketConnect
@@ -22,6 +23,7 @@ public class WebSocketController {
 
     /**
      * Close the user's session.
+     *
      * @param user The use whose session is closed.
      */
     @OnWebSocketClose
@@ -31,7 +33,8 @@ public class WebSocketController {
 
     /**
      * Send a message.
-     * @param user  The session user sending the message.
+     *
+     * @param user    The session user sending the message.
      * @param message The message to be sent.
      */
     @OnWebSocketMessage
