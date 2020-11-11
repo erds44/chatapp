@@ -10,36 +10,4 @@ Documentation: https://docs.google.com/document/d/14ERNyOHXrQthazaYi3XmTf1jPK-Vm
  Developer: Xinru Xiao
  Developer: Wenlong Yan
 ```
-# TODO: 
-Login  
-- [ ] school interests required  
-- [ ] add ages
-- [ ] complete onFinish (returns name, school, ages, interests[])
-- [ ] catch username exists error  
-  
-UserList  
-- [ ] complete onFinish(start private chat, invite users)  
-- [ ] invite friends: catch username not exists error, user already in the room error, user has been banned error  
-- [ ] add "force leave" button for admin  
 
-Chat Message  
-- [x] message area to show message text, sender, sender avatar, and date time
-- [ ] dropdown for each message for user to edit, delete, recall, or report
-- [ ] user could only edit, delete, or recall his/her own messages, and only report other's messages
-- [ ] compose area to compose a new message & edit an existing message
-- [ ] detect the hate word and ban the user
-- [ ] message could include images & emojis
-
-Index  
-- [x] create room check for duplicates  
-- [x] complete onFinish (returns room name, interest)
-- [x] generate joined room with user
-- [x] generate all rooms
-- [x] implement joining room
-- [x] implement existing room
-- [x] imeplement existing all rooms
-- [ ] update userlist of a room for invite, ban event
-- [ ] switch room changing message history
-- [ ] add unread bubble tag (optional)
-- [ ] ban user
-- [ ] block user
