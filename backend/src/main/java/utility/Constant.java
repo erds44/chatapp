@@ -16,7 +16,7 @@ public class Constant {
     public static final String CHATROOM_JOINED = "Room is joined!";
     public static final String CHATROOM_JOIN = "joins successfully!";
     public static final String REQUEST_CREATEROOM = "createRoom";
-    public static final String REQUEST_JOINROOM ="joinRoom";
+    public static final String REQUEST_JOINROOM = "joinRoom";
     public static final String REQUEST_EXITROOM = "exitRoom";
     public static final String REQUEST_EXITALLROOM = "exitAllRoom";
     public static final String REQUEST_UPDATEALLROOM = "updateAllRoom";
@@ -25,15 +25,15 @@ public class Constant {
     public static final String REQUEST_BANUSER = "banUser";
     public static final String REQUEST_WARNUSER = "warnUser";
 
-    public static final String REPORT ="report";
-    public static final String PRIMESSAGE ="privateMessage";
+    public static final String REPORT = "report";
+    public static final String PRIMESSAGE = "privateMessage";
     public static final String PRIMSG_SUCCESS = "Send successfully!";
     public static final String PRIMSG_BLOCK = "Sorry, you are block by the user.";
     public static final String PRIMSG_FEEDBACK = "priMsg_feedback";
 
     // Message related constants
 
-    public static final String MESSAGE ="message";
+    public static final String MESSAGE = "message";
     public static final String ON_MESSAGE = "ON_MESSAGE";
     public static final String ON_MESSAGE_ERR = "ON_MESSAGE_ERR";
     public static final String DELETE_MESSAGE = "DELETE_MESSAGE";
@@ -55,7 +55,7 @@ public class Constant {
     public static final String BAN_BROADCAST = "broadcast";
     public static final String BAN_PRIVATEMSG = "privateMsg";
     public static final String BAN_REPORT = "report";
-    public static final String BAN_BROADCAST_MSG ="Your broadcast message includes inappropriate words. You are banned from joining other rooms.";
+    public static final String BAN_BROADCAST_MSG = "Your broadcast message includes inappropriate words. You are banned from joining other rooms.";
     public static final String BAN_PRIVATE_MSG = "Your private message includes inappropriate words. You are banned from joining other rooms.";
     public static final String BAN_REPORT_MSG = "You are banned from joining other rooms due to report.";
     public static final String BAN_BEHAVIOR = "has been banned due to inappropriate behaviors!";
@@ -78,9 +78,13 @@ public class Constant {
     public static final String PROPERTY_TYPE = "type";
     public static final String PROPERTY_MSG = "msg";
     public static final String PROPERTY_PARAM = "param";
+    public static final String PROPERTY_COMMAND = "command";
+    public static final String PROPERTY_BODY = "body";
+    public static final String PROPERTY_NAME = "name";
     public static final String PROPERTY_REPORTEDUSERNAME = "reportedUsername";
     public static final String PROPERTY_REPORTEDREASON = "reportedReason";
     public static final String PROPERTY_REPORTEDROOM = "reportedRoom";
+    public static final String PROPERTY_DISCONNECTED = "disconnected";
 
     // Dismissed methods and reasons
     public static final String TYPE_EXIT = "exit";
@@ -91,16 +95,20 @@ public class Constant {
     public static final String REASON_DISMISS_LOGOUT = "because the admin logs out!";
     public static final String REASON_DISMISS_DISCONNECTED = "because the admin web socket closes!";
     public static final String REASON_DISMISS_BAN = "because the admin is banned!";
+    public static final String REASON_REMOVE = "You were removed from ";
+    public static final String REASON_REMOVED = " was removed from the room!";
 
     // Reason of user lefting room
     public static final String REASON_LEFT_EXIT = "through exiting!";
     public static final String REASON_LEFT_LOGOUT = "through logout!";
     public static final String REASON_LEFT_DISCONNECTED = "through closing the web socket!";
 
+
     // Requests
     public static final String REQUEST_USERNAME = "userName";
     public static final String REQUEST_BAN_USERNAME = "username";
     public static final String REQUEST_ROOM = "room";
+    public static final String REQUEST_ROOMNAME = "roomName";
     public static final String REQUEST_SOURCE = "source";
     public static final String REQUEST_ISPRIVATE = "isPrivate";
     public static final String REQUEST_CHATROOM = "chatRoom";

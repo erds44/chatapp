@@ -13,16 +13,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class LogoutCmd extends ACmd{
+/**
+ * Log out command.
+ */
+public class LogoutCmd extends ACmd {
     private static LogoutCmd singleton = new LogoutCmd();
 
     /**
      * Constructor pf LogoutCmd.
      */
-    private LogoutCmd() {}
+    private LogoutCmd() {
+    }
 
     /**
      * Get singleton.
+     *
      * @return singleton
      */
     public static LogoutCmd getSingleton() {
@@ -30,18 +35,18 @@ public class LogoutCmd extends ACmd{
     }
 
     /**
-     * Dismiss rooms
-     * @param chatRooms list of chatrooms
-     * @param userName name of user
-     * @param type type
+     * Dismiss rooms.
+     *
+     * @param chatRooms   list of chatrooms
+     * @param userName    name of user
+     * @param type        type
      * @param userSession session of user
      */
     private void dismissRoom(List<String> chatRooms, String userName, String type, Session userSession) {
-        for(String chatRoom : chatRooms) {
+        for (String chatRoom : chatRooms) {
             if (DispatchAdapter.chatRoomName2ChatRoom.get(chatRoom).getOwner().equals(userName)) {
                 dismissChatRoom(chatRoom, type);
-            }
-            else {
+            } else {
                 userLeftChatRoom(userSession, chatRoom, userName, type);
             }
         }
@@ -49,8 +54,9 @@ public class LogoutCmd extends ACmd{
 
     /**
      * Update related data structures.
+     *
      * @param userSession session of user
-     * @param userName name of user
+     * @param userName    name of user
      */
     private void updateDataStructure(Session userSession, String userName) {
         DispatchAdapter.session2userName.remove(userSession);
@@ -67,9 +73,9 @@ public class LogoutCmd extends ACmd{
      * Notify all users.
      */
     private void notifyAllUsers() {
-        for (String eachUser : DispatchAdapter.userName2user.keySet()){
+        for (String eachUser : DispatchAdapter.userName2user.keySet()) {
             Session session = DispatchAdapter.userName2session.get(eachUser);
-            sendWSMsg(session, Constant.SETALLUSERS, Constant.REQUEST_UPATEALLUSERLIST, Constant.SYS_SR, new Gson().toJson(DispatchAdapter.userName2user.values()) );
+            sendWSMsg(session, Constant.SETALLUSERS, Constant.REQUEST_UPATEALLUSERLIST, Constant.SYS_SR, new Gson().toJson(DispatchAdapter.userName2user.values()));
         }
         updateAllSession();
     }
@@ -83,10 +89,11 @@ public class LogoutCmd extends ACmd{
     @Override
     public void execute(Session userSession, Map<String, Object> request) {
         String type = Constant.TYPE_LOGOUT;
-        if(request != null && request.containsKey(Constant.TYPE_DISCONNECTED)) {
+        if (request != null && request.containsKey(Constant.TYPE_DISCONNECTED)) {
             type = Constant.TYPE_DISCONNECTED;
         }
-        String userName = DispatchAdapter.session2userName.get(userSession);;
+        String userName = DispatchAdapter.session2userName.get(userSession);
+        ;
         List<String> chatRooms = DispatchAdapter.userName2chatRoomName.get(userName);
 
         dismissRoom(chatRooms, userName, type, userSession);

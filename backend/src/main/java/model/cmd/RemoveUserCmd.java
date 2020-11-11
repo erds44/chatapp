@@ -7,21 +7,20 @@ import utility.Constant;
 import java.util.Map;
 
 /**
- * @CLassName RemoveUserCmd
- * @Description TODO
- * @Author Weiwei Zhou
- * @Date 11/6/20  9:15 PM
+ * Remove a user command.
  */
-
 public class RemoveUserCmd extends ACmd {
     private static RemoveUserCmd singleton = new RemoveUserCmd();
+
     /**
      * Constructor pf RemoveUserCmd.
      */
-    private RemoveUserCmd() {}
+    private RemoveUserCmd() {
+    }
 
     /**
      * Get singleton.
+     *
      * @return singleton
      */
     public static RemoveUserCmd getSingleton() {
@@ -30,6 +29,7 @@ public class RemoveUserCmd extends ACmd {
 
     /**
      * Remove the room of the joined list of the user.
+     *
      * @param userName name of user
      * @return flag
      */
@@ -44,6 +44,7 @@ public class RemoveUserCmd extends ACmd {
 
     /**
      * Remove the user from the joined room.
+     *
      * @param roomName name of room
      * @param userName name of user
      * @return flag
@@ -59,6 +60,7 @@ public class RemoveUserCmd extends ACmd {
 
     /**
      * Norify the removed user.
+     *
      * @param userName name of user
      * @param roomName name of room
      */
@@ -66,12 +68,13 @@ public class RemoveUserCmd extends ACmd {
         // Notify the removed user.
         Session removedUserSession = DispatchAdapter.userName2session.get(userName);
         if (removedUserSession != null) {
-            sendWSMsg(removedUserSession, Constant.ROOM, Constant.REQUEST_BANUSER, Constant.SYS_ERR, "You were removed from " + roomName + "!");
+            sendWSMsg(removedUserSession, Constant.ROOM, Constant.REQUEST_BANUSER, Constant.SYS_ERR, Constant.REASON_REMOVE + roomName + "!");
         }
     }
 
     /**
      * Notify other users in the room.
+     *
      * @param roomName name of room
      * @param userName name of user
      */
@@ -81,7 +84,7 @@ public class RemoveUserCmd extends ACmd {
         for (String user : DispatchAdapter.chatRoomName2listUser.get(roomName)) {
             if (!user.equals(userName)) {
                 Session session = DispatchAdapter.userName2session.get(user);
-                sendWSMsg(session, Constant.ROOM, Constant.REQUEST_UPDATEUSERLIST, Constant.SYS_SR, owner + ": " + userName + " was removed from the room!");
+                sendWSMsg(session, Constant.ROOM, Constant.REQUEST_UPDATEUSERLIST, Constant.SYS_SR, owner + ": " + userName + Constant.REASON_REMOVED);
             }
         }
         updateAllSession();
@@ -95,13 +98,13 @@ public class RemoveUserCmd extends ACmd {
      */
     @Override
     public void execute(Session userSession, Map<String, Object> request) {
-        String userName = (String) request.get("userName");
-        String roomName = (String) request.get("roomName");
+        String userName = (String) request.get(Constant.REQUEST_USERNAME);
+        String roomName = (String) request.get(Constant.REQUEST_ROOMNAME);
 
         if (removeJoinedList(userName, roomName)) {
             return;
         }
-        if(removeJoinedRoom(roomName, userName)) {
+        if (removeJoinedRoom(roomName, userName)) {
             return;
         }
         notifyRemovedUser(userName, roomName);

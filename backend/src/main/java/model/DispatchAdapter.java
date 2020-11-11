@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import model.cmd.*;
 import org.eclipse.jetty.websocket.api.Session;
+import utility.Constant;
 
 import java.util.HashMap;
 import java.util.List;
@@ -52,7 +53,7 @@ public class DispatchAdapter {
     public synchronized void leave(Session user) {
         ACmd cmd = LogoutCmd.getSingleton();
         HashMap hash = new HashMap();
-        hash.put("disconnected", null);
+        hash.put(Constant.PROPERTY_DISCONNECTED, null);
         cmd.execute(user, hash);
     }
 
@@ -65,13 +66,13 @@ public class DispatchAdapter {
     public synchronized void process(Session user, String request) {
         System.out.println(request);
         JsonObject jRequest = new JsonParser().parse(request).getAsJsonObject();
-        String command = jRequest.get("command").getAsString();
-        JsonObject body = jRequest.get("body").getAsJsonObject();
+        String command = jRequest.get(Constant.PROPERTY_COMMAND).getAsString();
+        JsonObject body = jRequest.get(Constant.PROPERTY_BODY).getAsJsonObject();
         HashMap bodyMap = new Gson().fromJson(body, HashMap.class);
 
         CmdFactory cmdFactory = CmdFactory.getSingleton();
         ACmd cmd = cmdFactory.createCmd(command);
-        if(cmd != null) {
+        if (cmd != null) {
             cmd.execute(user, bodyMap);
         }
     }

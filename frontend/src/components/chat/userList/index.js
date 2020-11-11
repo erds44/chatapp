@@ -21,10 +21,10 @@ const UserList = (props) => {
     console.log(currentUser)
 
     return (
-    <div style={{overflowY: 'auto'}} >
+    <div>
         <Message userName={userName} visible={visible} setVisible={setVisible}/>
             <List
-                style = {{width:"100%", height:"100%",position:"absolute", overflow:"scroll"}}
+                style = {{width:"100%", height:"100%",position:"absolute", overflow:"auto"}}
                 itemLayout="horizontal"
                 dataSource={allUsers}
                 renderItem={item => (

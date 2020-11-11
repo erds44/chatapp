@@ -16,6 +16,9 @@ public class DispatchAdapterTest extends TestCase {
     private WebSocketSession user8 = mock(WebSocketSession.class);
     private String message;
 
+    /**
+     * Test model class.
+     */
     public void test() {
         // test login
         message = "{\"command\":\"login\",\"body\":{\"name\":\"AAAAA\",\"age\":2,\"school\":\"Rice University\",\"interests\":[\"Reading\"]}}";
@@ -132,6 +135,14 @@ public class DispatchAdapterTest extends TestCase {
         DispatchAdapter.getSingleton().process(user6, message);
         message = "{\"command\":\"invite\",\"body\":{\"currentUser\":\"AAAAAA\",\"inviteUserName\":\"AAAAAA\",\"invitedRoom\":\"123\"}}";
         DispatchAdapter.getSingleton().process(user6, message);
+        message = "{\"command\":\"invite\",\"body\":{\"currentUser\":\"AAAAAA\",\"inviteUserName\":\"AAAAAA\",\"invitedRoom\":\"123\"}}";
+        DispatchAdapter.getSingleton().process(user6, message);
+        message = "{\"command\":\"invite\",\"body\":{\"currentUser\":\"AAAAAA\",\"inviteUserName\":\"AAAAAA\",\"invitedRoom\":\"123\"}}";
+        DispatchAdapter.getSingleton().process(user6, message);
+        message = "{\"command\":\"invite\",\"body\":{\"currentUser\":\"AAAAAA\",\"inviteUserName\":\"AAAAAA\",\"invitedRoom\":\"123\"}}";
+        DispatchAdapter.getSingleton().process(user6, message);
+        message = "{\"command\":\"invite\",\"body\":{\"currentUser\":\"AAAAAA\",\"inviteUserName\":\"AAAAAA\",\"invitedRoom\":\"123\"}}";
+        DispatchAdapter.getSingleton().process(user6, message);
         message = "{\"command\":\"joinRoom\",\"body\":{\"name\":\"123\"}}";
         DispatchAdapter.getSingleton().process(user8, message);
         message = "{\"command\":\"logout\",\"body\":{}}";
@@ -158,7 +169,5 @@ public class DispatchAdapterTest extends TestCase {
         message = "{\"command\":\"logout\",\"body\":{}}";
         DispatchAdapter.getSingleton().process(user2, message);
         assertEquals("Test logout", 5, DispatchAdapter.userName2user.size());
-
-
     }
 }

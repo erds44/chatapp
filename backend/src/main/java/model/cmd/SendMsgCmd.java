@@ -12,7 +12,7 @@ import static model.DispatchAdapter.chatRoomName2listUser;
 import static model.DispatchAdapter.userName2session;
 
 /**
- * Login model.cmd create the user and stored in dispatchAdapter map.
+ * Broadcast message command.
  */
 public class SendMsgCmd extends ACmd {
     private static SendMsgCmd singleton = new SendMsgCmd();

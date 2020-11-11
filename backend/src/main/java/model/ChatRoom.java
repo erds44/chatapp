@@ -25,15 +25,29 @@ public class ChatRoom {
         this.isPublic = !isPrivate;
     }
 
+    /**
+     * Get the owner of room.
+     *
+     * @return owner
+     */
     public String getOwner() {
         return this.owner;
     }
 
-
+    /**
+     * Get the interests requirement.
+     *
+     * @return requirement
+     */
     public List<String> getInterestsRequirement() {
         return this.interestsRequirement;
     }
 
+    /**
+     * Get is the room public.
+     *
+     * @return isPublic
+     */
     public boolean getIsPublic() {
         return this.isPublic;
     }
