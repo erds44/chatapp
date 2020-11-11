@@ -1,14 +1,11 @@
 package controller;
 
-import com.google.gson.JsonObject;
 import org.eclipse.jetty.websocket.api.Session;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static j2html.TagCreator.*;
-import static j2html.TagCreator.p;
-import static spark.Spark.*;
+
 import static spark.Spark.init;
 import static spark.Spark.port;
 import static spark.Spark.staticFiles;
