@@ -7,7 +7,7 @@ import utility.Constant;
 import java.util.Map;
 
 /**
- * Login model.cmd create the user and stored in dispatchAdapter map.
+ * Leave a single room command.
  */
 public class LeaveRoomCmd extends ACmd {
     private static LeaveRoomCmd singleton = new LeaveRoomCmd();
@@ -15,10 +15,12 @@ public class LeaveRoomCmd extends ACmd {
     /**
      * Constructor pf LeaveRoomCmd.
      */
-    private LeaveRoomCmd() {}
+    private LeaveRoomCmd() {
+    }
 
     /**
      * Get singleton.
+     *
      * @return singleton
      */
     public static LeaveRoomCmd getSingleton() {
@@ -38,7 +40,7 @@ public class LeaveRoomCmd extends ACmd {
         String chatRoomName = (String) request.get(Constant.NAME);
         // if user is the owner, remove chat room
         if (DispatchAdapter.chatRoomName2ChatRoom.get(chatRoomName) != null
-        && DispatchAdapter.chatRoomName2ChatRoom.get(chatRoomName).getOwner().equals(userName)) {
+                && DispatchAdapter.chatRoomName2ChatRoom.get(chatRoomName).getOwner().equals(userName)) {
             dismissChatRoom(chatRoomName, Constant.TYPE_EXIT);
         } else {
             // remove user from list
@@ -47,7 +49,6 @@ public class LeaveRoomCmd extends ACmd {
         DispatchAdapter.userName2chatRoomName.get(userName).remove(chatRoomName);
         updateAllSession();
     }
-
 
 
 }

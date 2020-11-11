@@ -19,7 +19,6 @@ import static spark.Spark.webSocket;
  */
 public class ChatAppController {
     public static Map<Session, String> userNameMap = new ConcurrentHashMap<>();
-    static int nextUserId = 1;
 
     /**
      * Chat App entry point.
@@ -32,27 +31,6 @@ public class ChatAppController {
 
         webSocket("/chatapp", WebSocketController.class);
         init();
-    }
-
-    /**
-     * Broadcast message to all users.
-     *
-     * @param user    The message sender.
-     * @param message The message.
-     */
-    static void broadcastMessage(Session user, String message) {
-        String sender = ChatAppController.userNameMap.get(user);
-        JsonObject jo = new JsonObject();
-        jo.addProperty("userMessage", p(sender + " says: " + message).render());
-        userNameMap.keySet().forEach(session -> {
-            if (session != user) {
-                try {
-                    session.getRemote().sendString(String.valueOf(jo));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
     }
 
     /**

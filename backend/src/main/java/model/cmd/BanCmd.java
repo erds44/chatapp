@@ -4,22 +4,25 @@ import model.DispatchAdapter;
 import model.User;
 import org.eclipse.jetty.websocket.api.Session;
 import utility.Constant;
+
 import java.util.Map;
 
 
 /**
- * Login model.cmd create the user and stored in dispatchAdapter map.
+ * Ban user command.
  */
 public class BanCmd extends ACmd {
     private static BanCmd singleton = new BanCmd();
 
     /**
-     * Constructor pf BanCmd
+     * Constructor pf BanCmd.
      */
-    private BanCmd() {}
+    private BanCmd() {
+    }
 
     /**
-     * get singleton
+     * get singleton.
+     *
      * @return singleton
      */
     public static BanCmd getSingleton() {
@@ -28,8 +31,9 @@ public class BanCmd extends ACmd {
 
     /**
      * Remove banned user from room.
+     *
      * @param username name of banned user
-     * @param room name of room
+     * @param room     name of room
      */
     protected void removeAndNotify(String username, String room) {
         // remove user from room.
@@ -47,9 +51,10 @@ public class BanCmd extends ACmd {
     }
 
     /**
-     * Warm user the first time he sending "hate"
+     * Warm user the first time he sending "hate".
+     *
      * @param reportedUserSession the session of reported user
-     * @param username the name of user
+     * @param username            the name of user
      * @return flag
      */
     private boolean warnUser(Session reportedUserSession, String username) {
@@ -65,8 +70,9 @@ public class BanCmd extends ACmd {
 
     /**
      * Deal with the banned user.
+     *
      * @param username name of banned user
-     * @param room name of room
+     * @param room     name of room
      * @return flag
      */
     private boolean handleBan(String username, String room) {
@@ -75,7 +81,7 @@ public class BanCmd extends ACmd {
         }
         // if user is the owner, remove chat room
         if (DispatchAdapter.chatRoomName2ChatRoom.get(room).getOwner().equals(username)) {
-            dismissChatRoom(room, "ban");
+            dismissChatRoom(room, Constant.TYPE_BAN);
         } else {
             removeAndNotify(username, room);
         }
@@ -84,7 +90,8 @@ public class BanCmd extends ACmd {
 
     /**
      * Notify the reported user.
-     * @param source name of source
+     *
+     * @param source              name of source
      * @param reportedUserSession session of reported user
      */
     private void notifyReportedUser(String source, Session reportedUserSession) {
@@ -98,11 +105,14 @@ public class BanCmd extends ACmd {
             case Constant.REPORT:
                 sendWSMsg(reportedUserSession, Constant.ROOM, Constant.REQUEST_BANUSER, Constant.SYS_ERR, Constant.BAN_REPORT_MSG);
                 break;
+            default:
+                break;
         }
     }
 
     /**
      * Perform the execution of a command.
+     *
      * @param userSession user session
      * @param request     request
      */
@@ -116,7 +126,7 @@ public class BanCmd extends ACmd {
 
         // If the user triggers "hate" in broadcast / private.
         if (!source.equals(Constant.BAN_REPORT)) {
-            if(warnUser(reportedUserSession, username)) {
+            if (warnUser(reportedUserSession, username)) {
                 return;
             }
         }

@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Login model.cmd create the user and stored in dispatchAdapter map.
+ * Leave all rooms command.
  */
 public class LeaveAllRoomCmd extends ACmd {
     private static LeaveAllRoomCmd singleton = new LeaveAllRoomCmd();

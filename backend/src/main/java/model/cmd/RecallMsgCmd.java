@@ -12,7 +12,7 @@ import static model.DispatchAdapter.chatRoomName2listUser;
 import static model.DispatchAdapter.userName2session;
 
 /**
- * Login model.cmd create the user and stored in dispatchAdapter map.
+ * Recall a message command.
  */
 public class RecallMsgCmd extends ACmd {
     private static RecallMsgCmd singleton = new RecallMsgCmd();
@@ -53,7 +53,7 @@ public class RecallMsgCmd extends ACmd {
     @Override
     public void execute(Session userSession, Map<String, Object> request) {
         String userName = getUser(userSession);
-        String chatRoom = (String) request.get("chatRoom");
+        String chatRoom = (String) request.get(Constant.REQUEST_CHATROOM);
         if (chatRoom == null) {
             return;
         }

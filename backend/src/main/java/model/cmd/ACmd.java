@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
+
 import utility.Constant;
 
 /**
@@ -69,7 +70,7 @@ public abstract class ACmd {
     protected void updateAllSession() {
         Set<String> allRooms = DispatchAdapter.chatRoomName2ChatRoom.keySet();
         List<Boolean> isPublic = new CopyOnWriteArrayList<>();
-        for(ChatRoom room : DispatchAdapter.chatRoomName2ChatRoom.values()){
+        for (ChatRoom room : DispatchAdapter.chatRoomName2ChatRoom.values()) {
             isPublic.add(room.getIsPublic());
         }
         for (Session session : DispatchAdapter.session2userName.keySet()) {
@@ -85,22 +86,20 @@ public abstract class ACmd {
 
     /**
      * Update joined rooms after dimissing some rooms.
+     *
      * @param chatRoomName the name of dismissed chatroom
-     * @param type the type of dismissing
+     * @param type         the type of dismissing
      */
     protected void dismissChatRoom(String chatRoomName, String type) {
         String owner = DispatchAdapter.chatRoomName2ChatRoom.get(chatRoomName).getOwner();
         String method = "";
-        if(type.equals(Constant.TYPE_EXIT)) {
+        if (type.equals(Constant.TYPE_EXIT)) {
             method = Constant.REASON_DISMISS_EXIT;
-        }
-        else if(type.equals(Constant.TYPE_LOGOUT)) {
+        } else if (type.equals(Constant.TYPE_LOGOUT)) {
             method = Constant.REASON_DISMISS_LOGOUT;
-        }
-        else if(type.equals(Constant.TYPE_DISCONNECTED)) {
+        } else if (type.equals(Constant.TYPE_DISCONNECTED)) {
             method = Constant.REASON_DISMISS_DISCONNECTED;
-        }
-        else if(type.equals(Constant.TYPE_BAN)) {
+        } else if (type.equals(Constant.TYPE_BAN)) {
             method = Constant.REASON_DISMISS_BAN;
         }
         for (String user : DispatchAdapter.chatRoomName2listUser.get(chatRoomName)) {
@@ -115,23 +114,22 @@ public abstract class ACmd {
 
     /**
      * Update userlist after user leaving chat room.
-     * @param userSession session of left user
+     *
+     * @param userSession  session of left user
      * @param chatRoomName name of chatroom
-     * @param userName name of user
-     * @param type type of leaving
+     * @param userName     name of user
+     * @param type         type of leaving
      */
     protected void userLeftChatRoom(Session userSession, String chatRoomName, String userName, String type) {
         DispatchAdapter.chatRoomName2listUser.get(chatRoomName).remove(userName);
         DispatchAdapter.userName2chatRoomName.get(userName).remove(chatRoomName);
         String owner = DispatchAdapter.chatRoomName2ChatRoom.get(chatRoomName).getOwner();
         String method = "";
-        if(type.equals(Constant.TYPE_EXIT)) {
+        if (type.equals(Constant.TYPE_EXIT)) {
             method = Constant.REASON_LEFT_EXIT;
-        }
-        else if(type.equals(Constant.TYPE_LOGOUT)) {
+        } else if (type.equals(Constant.TYPE_LOGOUT)) {
             method = Constant.REASON_LEFT_LOGOUT;
-        }
-        else if(type.equals(Constant.TYPE_DISCONNECTED)) {
+        } else if (type.equals(Constant.TYPE_DISCONNECTED)) {
             method = Constant.REASON_LEFT_DISCONNECTED;
         }
         for (String user : DispatchAdapter.chatRoomName2listUser.get(chatRoomName)) {

@@ -3,13 +3,14 @@ package model.cmd;
 import org.eclipse.jetty.websocket.api.Session;
 import model.ChatRoom;
 import model.DispatchAdapter;
+
 import java.util.Map;
-import java.util.Iterator;
 import java.util.List;
-import model.User;
+
 import utility.Constant;
+
 /**
- * Login model.cmd create the user and stored in dispatchAdapter map.
+ * Invite command.
  */
 public class InviteCmd extends ACmd {
     private static InviteCmd singleton = new InviteCmd();
@@ -17,10 +18,12 @@ public class InviteCmd extends ACmd {
     /**
      * Constructor pf InviteCmd.
      */
-    private InviteCmd() {}
+    private InviteCmd() {
+    }
 
     /**
      * Get singleton.
+     *
      * @return singleton
      */
     public static InviteCmd getSingleton() {
@@ -29,8 +32,9 @@ public class InviteCmd extends ACmd {
 
     /**
      * Check if no such user.
+     *
      * @param inviteUsername name of invited user
-     * @param userSession session of user
+     * @param userSession    session of user
      * @return flag
      */
     private boolean checkNoUser(String inviteUsername, Session userSession) {
@@ -43,8 +47,9 @@ public class InviteCmd extends ACmd {
 
     /**
      * Check if the invited user is the admin.
+     *
      * @param currentUser name of current user
-     * @param userList user list
+     * @param userList    user list
      * @param userSession session of user
      * @return flag
      */
@@ -58,7 +63,8 @@ public class InviteCmd extends ACmd {
 
     /**
      * Check if the room is private.
-     * @param room Room
+     *
+     * @param room        Room
      * @param userSession session of user
      * @return flag
      */
@@ -73,10 +79,11 @@ public class InviteCmd extends ACmd {
 
     /**
      * check if there is any duplicate.
+     *
      * @param inviteUsername name of invited user
-     * @param room Room
-     * @param userSession session of user
-     * @param inviteRoom name of invited room
+     * @param room           Room
+     * @param userSession    session of user
+     * @param inviteRoom     name of invited room
      * @return flag
      */
     private boolean checkDuplicate(String inviteUsername, ChatRoom room, Session userSession, String inviteRoom) {
@@ -90,8 +97,9 @@ public class InviteCmd extends ACmd {
 
     /**
      * Check if user has been banned.
+     *
      * @param inviteUsername name of invited user
-     * @param userSession session of user
+     * @param userSession    session of user
      * @return flag
      */
     private boolean checkBannedUser(String inviteUsername, Session userSession) {
@@ -105,9 +113,10 @@ public class InviteCmd extends ACmd {
 
     /**
      * Norify all users and update the data structures.
+     *
      * @param inviteUsername name of invited user
-     * @param inviteRoom name of invited room
-     * @param currentUser name of current user
+     * @param inviteRoom     name of invited room
+     * @param currentUser    name of current user
      */
     private void notifyUsers(String inviteUsername, String inviteRoom, String currentUser) {
         Session inviteUserSession = DispatchAdapter.userName2session.get(inviteUsername);
@@ -132,32 +141,25 @@ public class InviteCmd extends ACmd {
     @Override
     public void execute(Session userSession, Map<String, Object> request) {
         String inviteUsername = (String) request.get(Constant.REQUEST_INVITEUSERNAME);
-        String inviteRoom = (String)request.get(Constant.REQUEST_INVITEROOM);
+        String inviteRoom = (String) request.get(Constant.REQUEST_INVITEROOM);
         String currentUser = (String) request.get(Constant.REQUEST_CURRENTUSER);
-
         if (checkNoUser(inviteUsername, userSession)) {
             return;
         }
-
         ChatRoom room = DispatchAdapter.chatRoomName2ChatRoom.getOrDefault(inviteRoom, null);
         List<String> userList = DispatchAdapter.chatRoomName2listUser.getOrDefault(inviteRoom, null);
-
         if (checkAdmin(currentUser, userList, userSession)) {
             return;
         }
-
         if (checkPrivate(room, userSession)) {
             return;
         }
-
         if (checkDuplicate(inviteUsername, room, userSession, inviteRoom)) {
             return;
         }
-
-        if(checkBannedUser(inviteUsername, userSession)) {
+        if (checkBannedUser(inviteUsername, userSession)) {
             return;
         }
-
         notifyUsers(inviteUsername, inviteRoom, currentUser);
     }
 

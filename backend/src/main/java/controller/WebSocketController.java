@@ -31,7 +31,6 @@ public class WebSocketController {
      */
     @OnWebSocketClose
     public void onClose(Session user, int statusCode, String reason) {
-        System.out.println("disconnected");
         DispatchAdapter.getSingleton().leave(user);
     }
 
