@@ -50,7 +50,7 @@ public class DispatchAdapter {
      * Handle for websocket close.
      */
     public synchronized void leave(Session user) {
-        ACmd cmd = new LogoutCmd();
+        ACmd cmd = LogoutCmd.getSingleton();
         HashMap hash = new HashMap();
         hash.put("disconnected", null);
         cmd.execute(user, hash);

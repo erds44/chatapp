@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
+import utility.Constant;
 
 /**
  * Abstract command class for encapsulation.
@@ -45,13 +46,13 @@ public abstract class ACmd {
     protected void sendWSMsg(Session session, String section, String command, String type, String msg, String... body) {
         int param = 1;
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("section", section);
-        jsonObject.addProperty("request", command);
-        jsonObject.addProperty("type", type);
-        jsonObject.addProperty("msg", msg);
+        jsonObject.addProperty(Constant.PROPERTY_SECTION, section);
+        jsonObject.addProperty(Constant.PROPERTY_REQUEST, command);
+        jsonObject.addProperty(Constant.PROPERTY_TYPE, type);
+        jsonObject.addProperty(Constant.PROPERTY_MSG, msg);
 
         for (String parameter : body) {
-            jsonObject.addProperty("param" + param++, parameter);
+            jsonObject.addProperty(Constant.PROPERTY_PARAM + param++, parameter);
         }
         try {
             if (session.isOpen()) {
@@ -82,21 +83,25 @@ public abstract class ACmd {
         }
     }
 
+    /**
+     * Update joined rooms after dimissing some rooms.
+     * @param chatRoomName the name of dismissed chatroom
+     * @param type the type of dismissing
+     */
     protected void dismissChatRoom(String chatRoomName, String type) {
-        // update joined rooms
         String owner = DispatchAdapter.chatRoomName2ChatRoom.get(chatRoomName).getOwner();
         String method = "";
-        if(type.equals("exit")) {
-            method = "because the admin exits!";
+        if(type.equals(Constant.TYPE_EXIT)) {
+            method = Constant.REASON_DISMISS_EXIT;
         }
-        else if(type.equals("logout")) {
-            method = "because the admin logs out!";
+        else if(type.equals(Constant.TYPE_LOGOUT)) {
+            method = Constant.REASON_DISMISS_LOGOUT;
         }
-        else if(type.equals("disconnected")) {
-            method = "because the admin web socket closes!";
+        else if(type.equals(Constant.TYPE_DISCONNECTED)) {
+            method = Constant.REASON_DISMISS_DISCONNECTED;
         }
-        else if(type.equals("ban")) {
-            method = "because the admin is banned!";
+        else if(type.equals(Constant.TYPE_BAN)) {
+            method = Constant.REASON_DISMISS_BAN;
         }
         for (String user : DispatchAdapter.chatRoomName2listUser.get(chatRoomName)) {
             DispatchAdapter.userName2chatRoomName.get(user).remove(chatRoomName);
@@ -108,19 +113,26 @@ public abstract class ACmd {
         updateAllSession();
     }
 
+    /**
+     * Update userlist after user leaving chat room.
+     * @param userSession session of left user
+     * @param chatRoomName name of chatroom
+     * @param userName name of user
+     * @param type type of leaving
+     */
     protected void userLeftChatRoom(Session userSession, String chatRoomName, String userName, String type) {
         DispatchAdapter.chatRoomName2listUser.get(chatRoomName).remove(userName);
         DispatchAdapter.userName2chatRoomName.get(userName).remove(chatRoomName);
         String owner = DispatchAdapter.chatRoomName2ChatRoom.get(chatRoomName).getOwner();
         String method = "";
-        if(type.equals("exit")) {
-            method = "through exiting!";
+        if(type.equals(Constant.TYPE_EXIT)) {
+            method = Constant.REASON_LEFT_EXIT;
         }
-        else if(type.equals("logout")) {
-            method = "through logout!";
+        else if(type.equals(Constant.TYPE_LOGOUT)) {
+            method = Constant.REASON_LEFT_LOGOUT;
         }
-        else if(type.equals("disconnected")) {
-            method = "through closing the web socket!";
+        else if(type.equals(Constant.TYPE_DISCONNECTED)) {
+            method = Constant.REASON_LEFT_DISCONNECTED;
         }
         for (String user : DispatchAdapter.chatRoomName2listUser.get(chatRoomName)) {
             if (!user.equals(userName)) {

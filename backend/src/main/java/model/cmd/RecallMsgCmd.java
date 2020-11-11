@@ -15,9 +15,35 @@ import static model.DispatchAdapter.userName2session;
  * Login model.cmd create the user and stored in dispatchAdapter map.
  */
 public class RecallMsgCmd extends ACmd {
+    private static RecallMsgCmd singleton = new RecallMsgCmd();
+    /**
+     * Constructor pf RecallMsgCmd.
+     */
+    private RecallMsgCmd() {}
 
+    /**
+     * Get singleton.
+     * @return singleton
+     */
+    public static RecallMsgCmd getSingleton() {
+        return singleton;
+    }
 
-
+    /**
+     * Notify all users.
+     * @param userList list of user
+     * @param userName name of user
+     * @param request request
+     */
+    private void notifyAllUsers(List<String> userList, String userName, Map<String, Object> request) {
+        for (String user : userList) {
+            if (user.equals(userName) || DispatchAdapter.userName2blockList.get(userName).contains(user)) {
+                continue;
+            }
+            Session otherSession = userName2session.get(user);
+            sendWSMsg(otherSession, Constant.MESSAGE, Constant.RECALL_MESSAGE, Constant.SYS_SR, new Gson().toJson(request));
+        }
+    }
     /**
      * Perform the execution of a command.
      *
@@ -35,13 +61,7 @@ public class RecallMsgCmd extends ACmd {
         if (userList == null || userList.isEmpty()) {
             return;
         }
-        for (String user : userList) {
-            if (user.equals(userName) || DispatchAdapter.userName2blockList.get(userName).contains(user)) {
-                continue;
-            }
-            Session otherSession = userName2session.get(user);
-            sendWSMsg(otherSession, Constant.MESSAGE, Constant.RECALL_MESSAGE, Constant.SYS_SR, new Gson().toJson(request));
-        }
+        notifyAllUsers(userList, userName, request);
     }
 
 }

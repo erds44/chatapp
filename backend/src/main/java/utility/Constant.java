@@ -70,4 +70,65 @@ public class Constant {
     public static final String SETALLUSERS = "setallusers";
     public static final String REQUEST_UPATEALLUSERLIST = "updateAllUsers";
 
+    // Properties
+    public static final String PROPERTY_SECTION = "section";
+    public static final String PROPERTY_REQUEST = "request";
+    public static final String PROPERTY_TYPE = "type";
+    public static final String PROPERTY_MSG = "msg";
+    public static final String PROPERTY_PARAM = "param";
+    public static final String PROPERTY_REPORTEDUSERNAME = "reportedUsername";
+    public static final String PROPERTY_REPORTEDREASON = "reportedReason";
+    public static final String PROPERTY_REPORTEDROOM = "reportedRoom";
+
+    // Dismissed methods and reasons
+    public static final String TYPE_EXIT = "exit";
+    public static final String TYPE_LOGOUT = "logout";
+    public static final String TYPE_DISCONNECTED = "disconnected";
+    public static final String TYPE_BAN = "ban";
+    public static final String REASON_DISMISS_EXIT = "because the admin exits!";
+    public static final String REASON_DISMISS_LOGOUT = "because the admin logs out!";
+    public static final String REASON_DISMISS_DISCONNECTED = "because the admin web socket closes!";
+    public static final String REASON_DISMISS_BAN = "because the admin is banned!";
+
+    // Reason of user lefting room
+    public static final String REASON_LEFT_EXIT = "through exiting!";
+    public static final String REASON_LEFT_LOGOUT = "through logout!";
+    public static final String REASON_LEFT_DISCONNECTED = "through closing the web socket!";
+
+    // Requests
+    public static final String REQUEST_USERNAME = "userName";
+    public static final String REQUEST_BAN_USERNAME = "username";
+    public static final String REQUEST_ROOM = "room";
+    public static final String REQUEST_SOURCE = "source";
+    public static final String REQUEST_ISPRIVATE = "isPrivate";
+    public static final String REQUEST_CHATROOM = "chatRoom";
+    public static final String REQUEST_INVITEUSERNAME = "inviteUserName";
+    public static final String REQUEST_INVITEROOM = "invitedRoom";
+    public static final String REQUEST_CURRENTUSER = "currentUser";
+    public static final String REQUEST_AGE = "age";
+    public static final String REQUEST_REPORTEDUSERNAME = "reportedUsername";
+    public static final String REQUEST_REPORTEDREASON = "reportedReason";
+    public static final String REQUEST_REPORTEDROOM = "reportedRoom";
+
+    // Block
+    public static final String NOTIFY_BLOCK_ERR = " already blocked!";
+    public static final String NOTIFY_BLOCK_SUCCESS = " blocked successfully!";
+
+    // Command
+    public static final String COMMAND_LOGIN = "login";
+    public static final String COMMAND_LOGOUT = "logout";
+    public static final String COMMAND_CREATEROOM = "createRoom";
+    public static final String COMMAND_EXITROOM = "exitRoom";
+    public static final String COMMAND_EXITALLROOM = "exitAllRoom";
+    public static final String COMMAND_JOINROOM = "joinRoom";
+    public static final String COMMAND_REPORT = "report";
+    public static final String COMMAND_BAN = "ban";
+    public static final String COMMAND_FORCETOLEAVE = "forceToLeave";
+    public static final String COMMAND_BREOADCAST = "broadcast";
+    public static final String COMMAND_RECALL = "recallMessage";
+    public static final String COMMAND_EDIT = "editMessage";
+    public static final String COMMAND_DELETE = "deleteMessage";
+    public static final String COMMAND_PRIVATE = "privateMessage";
+    public static final String COMMAND_BLOCK = "block";
+    public static final String COMMAND_INVITE = "invite";
 }

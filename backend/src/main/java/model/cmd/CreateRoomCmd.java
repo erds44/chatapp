@@ -14,7 +14,20 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * Login model.cmd create the user and stored in dispatchAdapter map.
  */
 public class CreateRoomCmd extends ACmd {
+    private static CreateRoomCmd singleton = new CreateRoomCmd();
 
+    /**
+     * Constructor pf CreateRoomCmd.
+     */
+    private CreateRoomCmd() {}
+
+    /**
+     * Get singleton.
+     * @return singleton
+     */
+    public static CreateRoomCmd getSingleton() {
+        return singleton;
+    }
 
     /**
      * Perform the execution of a command.
@@ -23,7 +36,6 @@ public class CreateRoomCmd extends ACmd {
      * @param request     request
      */
     @Override
-    @SuppressWarnings("unchecked")
     public void execute(Session userSession, Map<String, Object> request) {
         String roomName = (String) request.get(Constant.NAME);
         String userName = getUser(userSession);
@@ -62,10 +74,10 @@ public class CreateRoomCmd extends ACmd {
     @SuppressWarnings("unchecked")
     private void createRoom(Map<String, Object> request, String roomName, String userName) {
         List<String> requirement = new CopyOnWriteArrayList<>();
-        if (request.containsKey(Constant.INTERESTS) && (boolean)request.get("isPrivate")) {
+        if (request.containsKey(Constant.INTERESTS) && (boolean)request.get(Constant.REQUEST_ISPRIVATE)) {
             requirement = (ArrayList<String>) request.get(Constant.INTERESTS);
         }
-        ChatRoom room = new ChatRoom(roomName, userName, requirement, (boolean)request.get("isPrivate"));
+        ChatRoom room = new ChatRoom(roomName, userName, requirement, (boolean)request.get(Constant.REQUEST_ISPRIVATE));
         DispatchAdapter.chatRoomName2ChatRoom.put(roomName, room);
         DispatchAdapter.chatRoomName2listUser.put(roomName, new CopyOnWriteArrayList<>());
         DispatchAdapter.chatRoomName2listUser.get(roomName).add(userName);
