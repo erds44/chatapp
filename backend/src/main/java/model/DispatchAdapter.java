@@ -64,7 +64,6 @@ public class DispatchAdapter {
      * @param request request body
      */
     public synchronized void process(Session user, String request) {
-        System.out.println(request);
         JsonObject jRequest = new JsonParser().parse(request).getAsJsonObject();
         String command = jRequest.get(Constant.PROPERTY_COMMAND).getAsString();
         JsonObject body = jRequest.get(Constant.PROPERTY_BODY).getAsJsonObject();

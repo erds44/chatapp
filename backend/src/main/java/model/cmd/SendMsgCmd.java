@@ -56,7 +56,6 @@ public class SendMsgCmd extends ACmd {
         String userName = getUser(userSession);
         String chatRoom = (String) request.get(Constant.REQUEST_CHATROOM);
         if (DispatchAdapter.chatRoomBanList.contains(userName)) {
-            System.out.println("aaaa");
             sendWSMsg(userSession, Constant.MESSAGE, Constant.ON_MESSAGE_ERR, Constant.SYS_ERR, "You sre banned!");
             return;
         }

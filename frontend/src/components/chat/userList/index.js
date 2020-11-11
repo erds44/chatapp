@@ -18,7 +18,6 @@ const UserList = (props) => {
     const getDisplayName = sender => {
         return sender.split("_").map(name => name[0]);
     };
-    console.log(currentUser)
 
     return (
     <div>

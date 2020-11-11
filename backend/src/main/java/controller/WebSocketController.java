@@ -1,20 +1,16 @@
 package controller;
 
 import model.DispatchAdapter;
-import model.cmd.ACmd;
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketClose;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketConnect;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketMessage;
 import org.eclipse.jetty.websocket.api.annotations.WebSocket;
-import utility.Constant;
-
-import java.util.List;
 
 /**
  * Create a web socket for the server.
  */
-@WebSocket
+@WebSocket(maxIdleTime=900000000)
 public class WebSocketController {
     /**
      * Open user's session.
@@ -22,7 +18,6 @@ public class WebSocketController {
      */
     @OnWebSocketConnect
     public void onConnect(Session user) {
-        System.out.println("connected");
     }
 
     /**

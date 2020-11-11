@@ -13,7 +13,6 @@ const INITIAL_STATE = {
 export default function (state = INITIAL_STATE, action)  {
   switch (action.type) {
     case ON_MESSAGE_ERR: {
-      console.log("kfkkf", action.payload.err_msg);
       return {
         err_msg: action.payload.err_msg,
         messages: {}

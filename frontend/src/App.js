@@ -17,11 +17,9 @@ const App = (props) => {
     const {dispatch, message} = props;
 
     webSocket.onopen = () => {
-      console.log("connected");
     }
 
     webSocket.onmessage = (message) => {
-      console.log(message);
       props.onMessage(message);
     }
 

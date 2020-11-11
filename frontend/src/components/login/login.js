@@ -38,7 +38,6 @@ const Login = (props) => {
     }
 
     const onFinish = values => {
-        console.log(values.user);
         webSocket.send(
             JSON.stringify({
                 command: "login",
@@ -54,7 +53,6 @@ const Login = (props) => {
     };
 
     useEffect(() => {
-        console.log(logIn);
         if(logIn) {
             if (logIn.isSignedIn !== null) {
                 if (logIn.isSignedIn === true) {

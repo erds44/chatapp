@@ -31,7 +31,6 @@ const ReportForm = (props) => {
     };
 
     const onChange = e => {
-        console.log('radio checked', e.target.value);
         setOkButtonDisabled(false);
         setValue(e.target.value);
 
@@ -41,8 +40,6 @@ const ReportForm = (props) => {
     };
 
     const onChangeInput = e => {
-        console.log('input', e.target.value);
-
         if (value === 3) {
             setCheckedReason(e.target.value);
         }
