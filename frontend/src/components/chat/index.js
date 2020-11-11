@@ -94,7 +94,7 @@ const Chat = props => {
 
     const exitRoom = () => {
 
-        return (<Button onClick={() => {
+        return (<Button className="exitButton" onClick={() => {
             exitDispatch({
                 type: EXIT_ROOM,
                 payload: null

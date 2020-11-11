@@ -42,15 +42,15 @@ const JoinedRoom = (props) => {
 
     const getRemoveButton = (name, roomName, admin) => {
         if (name === userName || name === admin) return null;
-        if (userName === admin) return (<Tooltip title="Remove"><Button ghost = "true" size = "small" key={name + "remove" + keyId++} type="primary" shape="circle"
+        if (userName === admin) return (<Tooltip title="Remove"><Button style={{marginLeft: '5px'}} ghost = "true" size = "small" key={name + "remove" + keyId++} type="primary" shape="circle"
                                                                         onClick={() => forceToLeave(name, roomName)}>R</Button></Tooltip>)
-        return (<Tooltip title="Report"><Button  ghost = "true" size = "small" type="primary"  shape="circle" key={name + "report" + keyId++} onClick={() => {
+        return (<Tooltip title="Report"><Button  style={{marginLeft: '5px'}} ghost = "true" size = "small" type="primary"  shape="circle" key={name + "report" + keyId++} onClick={() => {
             report(roomName, name)
         }}>!</Button></Tooltip>)
     }
 
     const getBlockButton = (name) => {
-        if (name !== userName) return<Tooltip title="Block"> <Button  ghost = "true" size = "small" type="primary" shape="circle"  key={name + "block" + keyId++}
+        if (name !== userName) return<Tooltip title="Block"> <Button ghost = "true" size = "small" type="primary" shape="circle"  key={name + "block" + keyId++}
                                               onClick={() => block(name)}>B</Button></Tooltip>
         return null
     }
