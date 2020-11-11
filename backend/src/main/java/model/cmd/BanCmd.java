@@ -73,7 +73,7 @@ public class BanCmd extends ACmd {
         if (!DispatchAdapter.userName2chatRoomName.containsKey(username) || !DispatchAdapter.chatRoomName2listUser.containsKey(room)) {
             return true;
         }
-        // if user is the owner, remove chat room
+        // if user is the owner, dismiss chat room
         if (DispatchAdapter.chatRoomName2ChatRoom.get(room).getOwner().equals(username)) {
             dismissChatRoom(room, "ban");
         } else {
@@ -114,7 +114,7 @@ public class BanCmd extends ACmd {
 
         Session reportedUserSession = DispatchAdapter.userName2session.getOrDefault(username, null);
 
-        // If the user triggers "hate" in broadcast / private.
+        // If the user triggers "hate" in broadcast / privateMsg.
         if (!source.equals(Constant.BAN_REPORT)) {
             if(warnUser(reportedUserSession, username)) {
                 return;

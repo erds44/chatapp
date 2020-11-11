@@ -1,5 +1,16 @@
 import {message} from 'antd';
-import {SIGN_IN, SIGN_OUT, ON_MESSAGE, CREATE_ROOM, RESET, ROOM, ON_REPORT, PRI_MESSAGE, SETALLUSERS} from './type';
+import {
+    SIGN_IN,
+    SIGN_OUT,
+    ON_MESSAGE,
+    CREATE_ROOM,
+    RESET,
+    ROOM,
+    ON_REPORT,
+    PRI_MESSAGE,
+    SETALLUSERS,
+    ON_MESSAGE_ERR
+} from './type';
 
 var mesId = 0;
 
@@ -47,6 +58,15 @@ export const onMessage = (messages) =>
                 });
                 break;
             case "message":
+                if (data.request === "ON_MESSAGE_ERR") {
+                    dispatch({
+                        type: ON_MESSAGE_ERR,
+                        payload: {
+                            err_msg: data.msg
+                        }
+                    })
+                    return;
+                }
                 const type = data.request;
                 const payload = JSON.parse(data.msg);
                 dispatch({ type, payload});

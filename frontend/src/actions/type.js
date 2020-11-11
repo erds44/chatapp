@@ -5,6 +5,7 @@ export const ON_MESSAGE = 'ON_MESSAGE';
 export const DELETE_MESSAGE = 'DELETE_MESSAGE';
 export const EDIT_MESSAGE = 'EDIT_MESSAGE';
 export const RECALL_MESSAGE = 'RECALL_MESSAGE';
+export const ON_MESSAGE_ERR = 'ON_MESSAGE_ERR';
 
 export const ROOM = 'ROOM';
 export const JOIN_ROOM = 'JOIN_ROOM';

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import { Popover, Space, Row, Col, Input, Button } from "antd";
 import "./Compose.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,6 +10,7 @@ import { BAN_BROADCAST } from "../../room/report/constant";
 import "emoji-mart/css/emoji-mart.css";
 import { Picker } from "emoji-mart";
 import { SmileOutlined  } from '@ant-design/icons';
+import notification from "../../notification";
 
 
 const { TextArea } = Input;
@@ -20,6 +21,9 @@ const Compose = () => {
   const currentUser = useSelector(state => state.login.user);
   const currentRoom = useSelector(state => state.room.currentRoom);
   const [textAreaText, setTextAreaText] = useState("");
+  const err_msg = useSelector(state => state.message.err_msg);
+
+
   const handleMessageSend = event => {
     event.preventDefault();
     if (!textAreaText) {
@@ -37,7 +41,11 @@ const Compose = () => {
           }
         })
       );
-    } else {
+    }
+    else if (err_msg.length > 0) {
+      notification.error(err_msg);
+    }
+    else {
       sendMessage();
     }
 

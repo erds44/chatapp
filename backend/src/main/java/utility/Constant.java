@@ -35,9 +35,11 @@ public class Constant {
 
     public static final String MESSAGE ="message";
     public static final String ON_MESSAGE = "ON_MESSAGE";
+    public static final String ON_MESSAGE_ERR = "ON_MESSAGE_ERR";
     public static final String DELETE_MESSAGE = "DELETE_MESSAGE";
     public static final String EDIT_MESSAGE = "EDIT_MESSAGE";
     public static final String RECALL_MESSAGE = "RECALL_MESSAGE";
+
 
     public static final String NAME = "name";
     public static final String ROOM = "room";

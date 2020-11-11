@@ -2,15 +2,23 @@ import {
   ON_MESSAGE,
   DELETE_MESSAGE,
   EDIT_MESSAGE,
-  RECALL_MESSAGE
+  RECALL_MESSAGE, ON_MESSAGE_ERR
 } from "../actions/type";
 
 const INITIAL_STATE = {
-  messages: {}
+  messages: {},
+  err_msg: ""
 };
 
 export default function (state = INITIAL_STATE, action)  {
   switch (action.type) {
+    case ON_MESSAGE_ERR: {
+      console.log("kfkkf", action.payload.err_msg);
+      return {
+        err_msg: action.payload.err_msg,
+        messages: {}
+      };
+    }
     case ON_MESSAGE: {
       const { messages } = state;
       const { id, text, time, sender, chatRoom, received } = action.payload;
