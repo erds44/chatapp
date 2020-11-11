@@ -11,7 +11,7 @@ import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * Login model.cmd create the user and stored in dispatchAdapter map.
+ * Create room command.
  */
 public class CreateRoomCmd extends ACmd {
     private static CreateRoomCmd singleton = new CreateRoomCmd();

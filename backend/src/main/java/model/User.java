@@ -29,14 +29,26 @@ public class User {
         this.isWarned = false;
     }
 
+    /**
+     * Get the user interests.
+     * @return interest
+     */
     public List<String> getInterest() {
         return interest;
     }
 
+    /**
+     * Get it the user warned.
+     * @return isWarned
+     */
     public Boolean getIsWarned() {
         return isWarned;
     }
 
+    /**
+     * Set the user warned.
+     * @param isWarned isWarned.
+     */
     public void setIsWarned(Boolean isWarned) {
         this.isWarned = isWarned;
     }

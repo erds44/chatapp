@@ -6,6 +6,7 @@ import model.User;
 import org.eclipse.jetty.websocket.api.Session;
 import utility.Constant;
 import com.google.gson.Gson;
+
 import java.security.cert.CertificateParsingException;
 import java.util.ArrayList;
 import java.util.Map;
@@ -14,7 +15,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import static j2html.TagCreator.p;
 
 /**
- * Login model.cmd create the user and stored in dispatchAdapter map.
+ * Login command.
  */
 public class LoginCmd extends ACmd {
     private static LoginCmd singleton = new LoginCmd();
@@ -22,10 +23,12 @@ public class LoginCmd extends ACmd {
     /**
      * Constructor pf LeaveRoomCmd.
      */
-    private LoginCmd() {}
+    private LoginCmd() {
+    }
 
     /**
      * Get singleton.
+     *
      * @return singleton
      */
     public static LoginCmd getSingleton() {
@@ -34,7 +37,8 @@ public class LoginCmd extends ACmd {
 
     /**
      * Check if the user is already login.
-     * @param userName name of user
+     *
+     * @param userName    name of user
      * @param userSession session of user
      * @return flag
      */
@@ -48,12 +52,13 @@ public class LoginCmd extends ACmd {
 
     /**
      * Update all related data structures.
-     * @param userName name of user
-     * @param request request
+     *
+     * @param userName    name of user
+     * @param request     request
      * @param userSession session of user
      */
     private void updateDataStructure(String userName, Map<String, Object> request, Session userSession) {
-        User user = new User(userName, (String) request.get(Constant.SCHOOL), (ArrayList<String>)request.get(Constant.INTERESTS), (int)Math.round((Double) request.get(Constant.REQUEST_AGE)));
+        User user = new User(userName, (String) request.get(Constant.SCHOOL), (ArrayList<String>) request.get(Constant.INTERESTS), (int) Math.round((Double) request.get(Constant.REQUEST_AGE)));
         DispatchAdapter.session2userName.put(userSession, userName);
         DispatchAdapter.userName2session.put(userName, userSession);
         DispatchAdapter.userName2user.put(userName, user);
@@ -67,9 +72,9 @@ public class LoginCmd extends ACmd {
      * Notidy all users.
      */
     private void notifyAllUser() {
-        for (String eachUser : DispatchAdapter.userName2user.keySet()){
+        for (String eachUser : DispatchAdapter.userName2user.keySet()) {
             Session session = DispatchAdapter.userName2session.get(eachUser);
-            sendWSMsg(session, Constant.SETALLUSERS, Constant.REQUEST_UPATEALLUSERLIST, Constant.SYS_SR, new Gson().toJson(DispatchAdapter.userName2user.values()) );
+            sendWSMsg(session, Constant.SETALLUSERS, Constant.REQUEST_UPATEALLUSERLIST, Constant.SYS_SR, new Gson().toJson(DispatchAdapter.userName2user.values()));
         }
         updateAllSession();
     }
@@ -82,7 +87,7 @@ public class LoginCmd extends ACmd {
      */
     @Override
     public void execute(Session userSession, Map<String, Object> request) {
-        String userName = (String)request.get(Constant.NAME);
+        String userName = (String) request.get(Constant.NAME);
         if (checkAlreadyLogin(userName, userSession)) {
             return;
         }

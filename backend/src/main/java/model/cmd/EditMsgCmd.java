@@ -12,18 +12,18 @@ import static model.DispatchAdapter.chatRoomName2listUser;
 import static model.DispatchAdapter.userName2session;
 
 /**
- * Login model.cmd create the user and stored in dispatchAdapter map.
+ * Edit message command.
  */
 public class EditMsgCmd extends ACmd {
     private static EditMsgCmd singleton = new EditMsgCmd();
 
     /**
-     * Constructor pf EditMsgCmd
+     * Constructor pf EditMsgCmd.
      */
     private EditMsgCmd() {}
 
     /**
-     * get singleton
+     * get singleton.
      * @return singleton
      */
     public static EditMsgCmd getSingleton() {
@@ -58,7 +58,7 @@ public class EditMsgCmd extends ACmd {
     @Override
     public void execute(Session userSession, Map<String, Object> request) {
         String userName = getUser(userSession);
-        String chatRoom = (String) request.get("chatRoom");
+        String chatRoom = (String) request.get(Constant.REQUEST_CHATROOM);
         if (chatRoom == null) {
             return;
         }

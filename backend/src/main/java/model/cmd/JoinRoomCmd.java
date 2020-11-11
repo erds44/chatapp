@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.SplittableRandom;
 
 /**
- * Login model.cmd create the user and stored in dispatchAdapter map.
+ * Join room command.
  */
 public class JoinRoomCmd extends ACmd {
     private static JoinRoomCmd singleton = new JoinRoomCmd();
@@ -19,10 +19,12 @@ public class JoinRoomCmd extends ACmd {
     /**
      * Constructor pf JoinRoomCmd.
      */
-    private JoinRoomCmd() {}
+    private JoinRoomCmd() {
+    }
 
     /**
      * Get singleton.
+     *
      * @return singleton
      */
     public static JoinRoomCmd getSingleton() {
@@ -31,8 +33,9 @@ public class JoinRoomCmd extends ACmd {
 
     /**
      * Check if user has joined the room.
-     * @param userName name of user
-     * @param roomName name of room
+     *
+     * @param userName    name of user
+     * @param roomName    name of room
      * @param userSession session of user
      * @return flag
      */
@@ -46,7 +49,8 @@ public class JoinRoomCmd extends ACmd {
 
     /**
      * Check if the user has been banned.
-     * @param userName name of user
+     *
+     * @param userName    name of user
      * @param userSession session of user
      * @return flag
      */
@@ -60,8 +64,9 @@ public class JoinRoomCmd extends ACmd {
 
     /**
      * If the room is private, notify users and update the data structure.
-     * @param roomName name of room
-     * @param userName name of user
+     *
+     * @param roomName    name of room
+     * @param userName    name of user
      * @param userSession session of user
      * @return flag
      */
@@ -84,8 +89,9 @@ public class JoinRoomCmd extends ACmd {
 
     /**
      * If the room if public, notify users and update the data structure.
-     * @param userName name of user
-     * @param roomName name of room
+     *
+     * @param userName    name of user
+     * @param roomName    name of room
      * @param userSession session of user
      */
     private void publicNotifyAllUsers(String userName, String roomName, Session userSession) {
@@ -113,19 +119,15 @@ public class JoinRoomCmd extends ACmd {
     public void execute(Session userSession, Map<String, Object> request) {
         String userName = getUser(userSession);
         String roomName = (String) request.get(Constant.NAME);
-
         if (checkHasJoined(userName, roomName, userSession)) {
             return;
         }
-
-        if(checkBannedUser(userName, userSession)) {
+        if (checkBannedUser(userName, userSession)) {
             return;
         }
-
-        if(privateNotifyAllUser(roomName, userName, userSession)) {
+        if (privateNotifyAllUser(roomName, userName, userSession)) {
             return;
         }
-
         publicNotifyAllUsers(userName, roomName, userSession);
     }
 }

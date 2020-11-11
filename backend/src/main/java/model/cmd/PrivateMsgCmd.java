@@ -12,15 +12,21 @@ import java.util.Map;
 import static model.DispatchAdapter.chatRoomName2listUser;
 import static model.DispatchAdapter.userName2session;
 
-public class PrivateMsgCmd extends ACmd{
+/**
+ * Send private message command.
+ */
+public class PrivateMsgCmd extends ACmd {
     private static PrivateMsgCmd singleton = new PrivateMsgCmd();
+
     /**
      * Constructor pf PrivateMsgCmd.
      */
-    private PrivateMsgCmd() {}
+    private PrivateMsgCmd() {
+    }
 
     /**
      * Get singleton.
+     *
      * @return singleton
      */
     public static PrivateMsgCmd getSingleton() {
@@ -28,14 +34,15 @@ public class PrivateMsgCmd extends ACmd{
     }
 
     /**
-     * Check if the user has been blocked
+     * Check if the user has been blocked.
+     *
      * @param userSession session of user
-     * @param userName name of user
-     * @param person person
+     * @param userName    name of user
+     * @param person      person
      * @return flag
      */
     private boolean checkBlockedUser(Session userSession, String userName, String person) {
-        if(DispatchAdapter.userName2blockList.get(userName).contains(person)) {
+        if (DispatchAdapter.userName2blockList.get(userName).contains(person)) {
             sendWSMsg(userSession, Constant.PRIMESSAGE, Constant.PRIMSG_FEEDBACK, Constant.SYS_ERR, Constant.PRIMSG_BLOCK);
             return true;
         }
@@ -51,12 +58,12 @@ public class PrivateMsgCmd extends ACmd{
     @Override
     public void execute(Session userSession, Map<String, Object> request) {
         String userName = getUser(userSession);
-        String person = (String) request.get("name");
+        String person = (String) request.get(Constant.PROPERTY_NAME);
         if (person == null) {
             return;
         }
         Session session = DispatchAdapter.userName2session.get(person);
-        if(session == null) {
+        if (session == null) {
             return;
         }
 

@@ -11,18 +11,18 @@ import java.util.Map;
 import static model.DispatchAdapter.*;
 
 /**
- * Login model.cmd create the user and stored in dispatchAdapter map.
+ * Delete message command.
  */
 public class DeleteMsgCmd extends ACmd {
     private static DeleteMsgCmd singleton = new DeleteMsgCmd();
 
     /**
-     * Constructor pf DeleteMsgCmd
+     * Constructor pf DeleteMsgCmd.
      */
     private DeleteMsgCmd() {}
 
     /**
-     * get singleton
+     * get singleton.
      * @return singleton
      */
     public static DeleteMsgCmd getSingleton() {
