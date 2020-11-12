@@ -10,7 +10,7 @@ import org.eclipse.jetty.websocket.api.annotations.WebSocket;
 /**
  * Create a web socket for the server.
  */
-@WebSocket(maxIdleTime=900000000)
+@WebSocket(maxIdleTime = 900000000)
 public class WebSocketController {
     /**
      * Open user's session.
