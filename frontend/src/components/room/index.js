@@ -40,6 +40,17 @@ const Index = (props) => {
         }
     }, [room])
 
+    useEffect(() => {
+        setInterval(() => {
+            webSocket.send(JSON.stringify({
+                    command: "preventTimeOut",
+                    body: {
+                        name: "preventTimeOut"
+                    }
+                }
+            ))
+        }, 10000);
+    }, []);
 
     return (
         <Menu mode="inline" onClick={handleClick} selectedKeys={['']} defaultOpenKeys={['allRooms', 'joinedRooms']}>
